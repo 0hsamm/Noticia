@@ -6,7 +6,7 @@ import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 
 public class ComentarioDTO {
 
-	private long id;
+	private Long id;
 	private String contenido;
 	private TipoPublicacion tipoPublicacion;
 	private long usuarioComentaristaId;

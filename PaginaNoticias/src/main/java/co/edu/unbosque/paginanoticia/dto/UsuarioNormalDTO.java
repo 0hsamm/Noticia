@@ -4,34 +4,22 @@ import java.util.Objects;
 
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
-public class UsuarioAdministradorDTO extends UsuarioDTO{
-
+public class UsuarioNormalDTO extends UsuarioDTO{
 	private Long id;
 	
-	public UsuarioAdministradorDTO() {
+	public UsuarioNormalDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioAdministradorDTO(long id) {
-		super();
-		this.id = id;
-	}
-
-	public UsuarioAdministradorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario, long id) {
+	public UsuarioNormalDTO(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
-		this.id = id;
 	}
 
-	public UsuarioAdministradorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario) {
-		super(nombre, contrasena, tipoUsuario);
-		// TODO Auto-generated constructor stub
-	}
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -53,13 +41,13 @@ public class UsuarioAdministradorDTO extends UsuarioDTO{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuarioAdministradorDTO other = (UsuarioAdministradorDTO) obj;
-		return id == other.id;
+		UsuarioNormalDTO other = (UsuarioNormalDTO) obj;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "UsuarioAdministradorDTO [id=" + id + "]";
+		return "UsuarioNormalDTO [id=" + id + "]";
 	}
 	
 	
