@@ -1,15 +1,10 @@
 package co.edu.unbosque.paginanoticia.repository;
 
-import java.util.Optional;
-
-import org.springframework.data.repository.CrudRepository;
-
 import co.edu.unbosque.paginanoticia.entity.UsuarioEditor;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioEditorRepository extends CrudRepository<UsuarioEditor, Long>{
+public interface UsuarioEditorRepository extends JpaRepository<UsuarioEditor, Long> {
 	
-	public Optional<UsuarioEditor> findByUsername(String username);
-
-	public void deleteByUsername(String username); 
-	
+	Optional<UsuarioEditor> findByNombre(String nombre);
 }

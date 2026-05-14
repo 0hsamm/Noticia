@@ -18,7 +18,7 @@ public class UsuarioComentarista extends Usuario{
 	
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuarioComentarista")
 	private List<Comentario> comentarios;
 	
 	
@@ -42,7 +42,14 @@ public class UsuarioComentarista extends Usuario{
 
 	public UsuarioComentarista(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
-		// TODO Auto-generated constructor stub
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 

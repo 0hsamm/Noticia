@@ -3,6 +3,7 @@ package co.edu.unbosque.paginanoticia.entity;
 import java.util.Objects;
 
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "horoscopos")
 public class Horoscopo {
 
 private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;

@@ -6,6 +6,7 @@ import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
 public class UsuarioNormalDTO extends UsuarioDTO{
 	private Long id;
+	private Double tarifa;
 	
 	public UsuarioNormalDTO() {
 		// TODO Auto-generated constructor stub
@@ -23,11 +24,19 @@ public class UsuarioNormalDTO extends UsuarioDTO{
 		this.id = id;
 	}
 
+	public Double getTarifa() {
+		return tarifa;
+	}
+
+	public void setTarifa(Double tarifa) {
+		this.tarifa = tarifa;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id);
+		result = prime * result + Objects.hash(id, tarifa);
 		return result;
 	}
 
@@ -42,12 +51,12 @@ public class UsuarioNormalDTO extends UsuarioDTO{
 		if (getClass() != obj.getClass())
 			return false;
 		UsuarioNormalDTO other = (UsuarioNormalDTO) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id, other.id) && Objects.equals(tarifa, other.tarifa);
 	}
 
 	@Override
 	public String toString() {
-		return "UsuarioNormalDTO [id=" + id + "]";
+		return "UsuarioNormalDTO [id=" + id + ", tarifa=" + tarifa + "]";
 	}
 	
 	

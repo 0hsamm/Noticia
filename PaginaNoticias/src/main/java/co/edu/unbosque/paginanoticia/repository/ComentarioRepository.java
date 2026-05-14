@@ -1,9 +1,10 @@
 package co.edu.unbosque.paginanoticia.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
 import co.edu.unbosque.paginanoticia.entity.Comentario;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ComentarioRepository extends CrudRepository<Comentario, Long>{
+public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
+	List<Comentario> findByUsuarioComentarista_Id(Long usuarioComentaristaId);
 }

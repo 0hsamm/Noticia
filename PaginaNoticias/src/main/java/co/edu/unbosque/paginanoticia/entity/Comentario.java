@@ -26,18 +26,19 @@ public class Comentario {
 	private TipoPublicacion tipoPublicacion;
 	
     @ManyToOne
-    @JoinColumn(name = "usuario_editor_id")
-    private UsuarioEditor usuarioEditor; 
+    @JoinColumn(name = "usuario_comentarista_id")
+    private UsuarioComentarista usuarioComentarista; 
 	
 	public Comentario() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comentario(String contenido, TipoPublicacion tipoPublicacion, UsuarioEditor usuarioEditor) {
+	public Comentario(String contenido, TipoPublicacion tipoPublicacion,
+			UsuarioComentarista usuarioComentarista) {
 		super();
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
-		this.usuarioEditor = usuarioEditor;
+		this.usuarioComentarista = usuarioComentarista;
 	}
 
 	public long getId() {
@@ -64,17 +65,17 @@ public class Comentario {
 		this.tipoPublicacion = tipoPublicacion;
 	}
 
-	public UsuarioEditor getUsuarioEditor() {
-		return usuarioEditor;
+	public UsuarioComentarista getUsuarioComentarista() {
+		return usuarioComentarista;
 	}
 
-	public void setUsuarioEditor(UsuarioEditor usuarioEditor) {
-		this.usuarioEditor = usuarioEditor;
+	public void setUsuarioComentarista(UsuarioComentarista usuarioComentarista) {
+		this.usuarioComentarista = usuarioComentarista;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoPublicacion, usuarioEditor);
+		return Objects.hash(contenido, id, tipoPublicacion, usuarioComentarista);
 	}
 
 	@Override
@@ -86,14 +87,15 @@ public class Comentario {
 		if (getClass() != obj.getClass())
 			return false;
 		Comentario other = (Comentario) obj;
-		return Objects.equals(contenido, other.contenido) && id == other.id && tipoPublicacion == other.tipoPublicacion
-				&& Objects.equals(usuarioEditor, other.usuarioEditor);
+		return Objects.equals(contenido, other.contenido) && id == other.id
+				&& tipoPublicacion == other.tipoPublicacion
+				&& Objects.equals(usuarioComentarista, other.usuarioComentarista);
 	}
 
 	@Override
 	public String toString() {
 		return "Comentario [id=" + id + ", contenido=" + contenido + ", tipoPublicacion=" + tipoPublicacion
-				+ ", usuarioEditor=" + usuarioEditor + "]";
+				+ ", usuarioComentarista=" + usuarioComentarista + "]";
 	}
 
 	
