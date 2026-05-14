@@ -20,7 +20,7 @@ import co.edu.unbosque.paginanoticia.service.UsuarioAdministradorService;
 
 
 @RestController
-@RequestMapping("/carta")
+@RequestMapping("/usuarioadministrador")
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioAdministradoController {
 

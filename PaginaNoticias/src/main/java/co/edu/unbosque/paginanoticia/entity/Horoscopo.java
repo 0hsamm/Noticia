@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Table(name = "horoscopos")
 public class Horoscopo {
 
-private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
 	
 	private String contenido;
 

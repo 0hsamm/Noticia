@@ -20,7 +20,7 @@ import co.edu.unbosque.paginanoticia.service.UsuarioComentaristaService;
 
 
 @RestController
-@RequestMapping("/carta")
+@RequestMapping("/usuariocomentarista")
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioComentaristaController {
 

@@ -1,6 +1,5 @@
 package co.edu.unbosque.paginanoticia.service;
 
-import co.edu.unbosque.paginanoticia.dto.RespuestaLoginDTO;
 import co.edu.unbosque.paginanoticia.dto.UsuarioNormalDTO;
 import co.edu.unbosque.paginanoticia.entity.UsuarioNormal;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
@@ -8,7 +7,6 @@ import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
-import co.edu.unbosque.paginanoticia.security.JwtUtil;
 
 import java.util.ArrayList;
 import java.util.List;
