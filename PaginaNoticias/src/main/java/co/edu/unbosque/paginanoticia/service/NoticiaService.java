@@ -1,9 +1,9 @@
 package co.edu.unbosque.paginanoticia.service;
 
-import co.edu.unbosque.paginanoticia.dto.ComentarioDTO;
-import co.edu.unbosque.paginanoticia.entity.Comentario;
+import co.edu.unbosque.paginanoticia.dto.NoticiaDTO;
+import co.edu.unbosque.paginanoticia.entity.Noticia;
 import co.edu.unbosque.paginanoticia.entity.UsuarioComentarista;
-import co.edu.unbosque.paginanoticia.repository.ComentarioRepository;
+import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +12,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ComentarioService implements CRUDOperation<ComentarioDTO> {
+public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 
-	private final ComentarioRepository comentarioRepo;
+	private final NoticiaRepository comentarioRepo;
 	private final UsuarioComentaristaRepository usuarioComentaristaRepo;
 	private final ModelMapper mapper;
 
-	public ComentarioService(
-			ComentarioRepository comentarioRepo,
+	public NoticiaService(
+			NoticiaRepository comentarioRepo,
 			UsuarioComentaristaRepository usuarioComentaristaRepo,
 			ModelMapper mapper) {
 		this.comentarioRepo = comentarioRepo;
@@ -28,7 +28,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 	}
 
 	@Override
-	public int create(ComentarioDTO data) {
+	public int create(NoticiaDTO data) {
 		if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
 			return 1;
 		}
@@ -42,22 +42,22 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 			return 3;
 		}
 
-		Comentario comentario = mapper.map(data, Comentario.class);
+		Noticia comentario = mapper.map(data, Noticia.class);
 		comentario.setUsuarioComentarista(usuarioOpt.get());
 		comentarioRepo.save(comentario);
 		return 0;
 	}
 
 	@Override
-	public List<ComentarioDTO> getAll() {
-		List<ComentarioDTO> dtoList = new ArrayList<>();
+	public List<NoticiaDTO> getAll() {
+		List<NoticiaDTO> dtoList = new ArrayList<>();
 		comentarioRepo.findAll().forEach(comentario -> dtoList.add(toDto(comentario)));
 		return dtoList;
 	}
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<Comentario> comentarioOpt = comentarioRepo.findById(id);
+		Optional<Noticia> comentarioOpt = comentarioRepo.findById(id);
 		if (comentarioOpt.isEmpty()) {
 			return 1;
 		}
@@ -67,8 +67,8 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 	}
 
 	@Override
-	public int updateById(Long id, ComentarioDTO data) {
-		Optional<Comentario> comentarioOpt = comentarioRepo.findById(id);
+	public int updateById(Long id, NoticiaDTO data) {
+		Optional<Noticia> comentarioOpt = comentarioRepo.findById(id);
 		if (comentarioOpt.isEmpty()) {
 			return 4;
 		}
@@ -85,7 +85,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 			return 3;
 		}
 
-		Comentario comentario = comentarioOpt.get();
+		Noticia comentario = comentarioOpt.get();
 		comentario.setContenido(data.getContenido());
 		comentario.setTipoPublicacion(data.getTipoPublicacion());
 		comentario.setUsuarioComentarista(usuarioOpt.get());
@@ -103,19 +103,19 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 		return comentarioRepo.existsById(id);
 	}
 
-	public List<ComentarioDTO> getByUsuarioComentarista(Long usuarioComentaristaId) {
+	public List<NoticiaDTO> getByUsuarioComentarista(Long usuarioComentaristaId) {
 		if (!usuarioComentaristaRepo.existsById(usuarioComentaristaId)) {
 			return null;
 		}
 
-		List<ComentarioDTO> dtoList = new ArrayList<>();
+		List<NoticiaDTO> dtoList = new ArrayList<>();
 		comentarioRepo.findByUsuarioComentarista_Id(usuarioComentaristaId)
 				.forEach(comentario -> dtoList.add(toDto(comentario)));
 		return dtoList;
 	}
 
-	private ComentarioDTO toDto(Comentario comentario) {
-		ComentarioDTO dto = mapper.map(comentario, ComentarioDTO.class);
+	private NoticiaDTO toDto(Noticia comentario) {
+		NoticiaDTO dto = mapper.map(comentario, NoticiaDTO.class);
 		if (comentario.getUsuarioComentarista() != null) {
 			dto.setUsuarioComentaristaId(comentario.getUsuarioComentarista().getId());
 		}

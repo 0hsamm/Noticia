@@ -14,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "comentarios")
-public class Comentario {
+@Table(name = "noticias")
+public class Noticia {
 
 	
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
@@ -29,11 +29,11 @@ public class Comentario {
     @JoinColumn(name = "usuario_comentarista_id")
     private UsuarioComentarista usuarioComentarista; 
 	
-	public Comentario() {
+	public Noticia() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comentario(String contenido, TipoPublicacion tipoPublicacion,
+	public Noticia(String contenido, TipoPublicacion tipoPublicacion,
 			UsuarioComentarista usuarioComentarista) {
 		super();
 		this.contenido = contenido;
@@ -86,7 +86,7 @@ public class Comentario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Comentario other = (Comentario) obj;
+		Noticia other = (Noticia) obj;
 		return Objects.equals(contenido, other.contenido) && id == other.id
 				&& tipoPublicacion == other.tipoPublicacion
 				&& Objects.equals(usuarioComentarista, other.usuarioComentarista);

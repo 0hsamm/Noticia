@@ -1,5 +1,6 @@
 package co.edu.unbosque.paginanoticia.service;
 
+import co.edu.unbosque.paginanoticia.dto.RespuestaLoginDTO;
 import co.edu.unbosque.paginanoticia.dto.UsuarioNormalDTO;
 import co.edu.unbosque.paginanoticia.entity.UsuarioNormal;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
@@ -7,6 +8,8 @@ import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
+import co.edu.unbosque.paginanoticia.security.JwtUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +53,6 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 
 		UsuarioNormal usuarioNormal = mapper.map(data, UsuarioNormal.class);
 		usuarioNormal.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		usuarioNormal.setTarifa(data.getTarifa() != null ? data.getTarifa() : 0.0);
 		usuarioNormal.setTipoUsuario(TipoUsuario.USUARIO);
 		usuarioNormalRepo.save(usuarioNormal);
 		return 0;
@@ -93,7 +95,6 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 		UsuarioNormal temp = encontrado.get();
 		temp.setNombre(data.getNombre());
 		temp.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		temp.setTarifa(data.getTarifa() != null ? data.getTarifa() : 0.0);
 		temp.setTipoUsuario(TipoUsuario.USUARIO);
 		usuarioNormalRepo.save(temp);
 		return 0;
@@ -121,4 +122,8 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 		dto.setContrasena(null);
 		return dto;
 	}
+	
+
+	
+	
 }

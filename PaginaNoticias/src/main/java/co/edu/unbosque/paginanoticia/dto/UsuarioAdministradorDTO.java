@@ -12,16 +12,6 @@ public class UsuarioAdministradorDTO extends UsuarioDTO{
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioAdministradorDTO(long id) {
-		super();
-		this.id = id;
-	}
-
-	public UsuarioAdministradorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario, long id) {
-		super(nombre, contrasena, tipoUsuario);
-		this.id = id;
-	}
-
 	public UsuarioAdministradorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
 		// TODO Auto-generated constructor stub

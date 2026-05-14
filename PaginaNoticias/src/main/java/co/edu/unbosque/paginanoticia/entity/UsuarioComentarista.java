@@ -19,7 +19,7 @@ public class UsuarioComentarista extends Usuario{
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
 
 	@OneToMany(mappedBy = "usuarioComentarista")
-	private List<Comentario> comentarios;
+	private List<Noticia> comentarios;
 	
 	
 	public UsuarioComentarista() {
@@ -27,14 +27,14 @@ public class UsuarioComentarista extends Usuario{
 	}
 
 
-	public UsuarioComentarista(List<Comentario> comentarios) {
+	public UsuarioComentarista(List<Noticia> comentarios) {
 		super();
 		this.comentarios = comentarios;
 	}
 
 
 	public UsuarioComentarista(String nombre, String contrasena, TipoUsuario tipoUsuario,
-			List<Comentario> comentarios) {
+			List<Noticia> comentarios) {
 		super(nombre, contrasena, tipoUsuario);
 		this.comentarios = comentarios;
 	}

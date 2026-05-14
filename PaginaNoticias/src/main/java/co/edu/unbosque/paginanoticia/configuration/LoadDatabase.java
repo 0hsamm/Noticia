@@ -86,7 +86,6 @@ public class LoadDatabase {
 								"normaluser",
 								passwordEncoder.encode("1234567890"),
 								TipoUsuario.USUARIO);
-				usuarioNormal.setTarifa(0.0);
 				usuarioNormalRepository.save(usuarioNormal);
 				log.info("Precargando usuario normal");
 			}

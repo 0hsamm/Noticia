@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 
-public class ComentarioDTO {
+public class NoticiaDTO {
 
 	private Long id;
 	private String contenido;
@@ -12,14 +12,13 @@ public class ComentarioDTO {
 	private long usuarioComentaristaId;
 	
 	
-	public ComentarioDTO() {
+	public NoticiaDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public ComentarioDTO(long id, String contenido, TipoPublicacion tipoPublicacion, long usuarioComentaristaId) {
+	public NoticiaDTO(String contenido, TipoPublicacion tipoPublicacion, long usuarioComentaristaId) {
 		super();
-		this.id = id;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioComentaristaId = usuarioComentaristaId;
@@ -80,7 +79,7 @@ public class ComentarioDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ComentarioDTO other = (ComentarioDTO) obj;
+		NoticiaDTO other = (NoticiaDTO) obj;
 		return Objects.equals(contenido, other.contenido) && id == other.id && tipoPublicacion == other.tipoPublicacion
 				&& usuarioComentaristaId == other.usuarioComentaristaId;
 	}

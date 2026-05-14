@@ -18,9 +18,8 @@ public class HoroscopoDTO {
 	}
 
 
-	public HoroscopoDTO(long id, String contenido, TipoPublicacion tipoPublicacion, long usuarioEditorId) {
+	public HoroscopoDTO(String contenido, TipoPublicacion tipoPublicacion, long usuarioEditorId) {
 		super();
-		this.id = id;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioEditorId = usuarioEditorId;
