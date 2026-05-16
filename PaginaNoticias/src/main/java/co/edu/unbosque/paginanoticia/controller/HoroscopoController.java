@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unbosque.paginanoticia.dto.HoroscopoDTO;
+import co.edu.unbosque.paginanoticia.enums.TipoHoroscopo;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 import co.edu.unbosque.paginanoticia.service.HoroscopoService;
 
@@ -32,8 +33,8 @@ public class HoroscopoController {
 	
 	
 	@PostMapping("/crear")
-	public ResponseEntity<String> crearHoroscopo(@RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
-		HoroscopoDTO nuevo = new HoroscopoDTO(contenido, tipoPublicacion, usuarioEditorId);
+	public ResponseEntity<String> crearHoroscopo(@RequestParam TipoHoroscopo tipoHoroscopo, @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
+		HoroscopoDTO nuevo = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditorId);
 		int status = hService.create(nuevo);
 
 		if (status == 0) {
@@ -55,8 +56,8 @@ public class HoroscopoController {
 	}
 	
 	@PutMapping("/actualizar")
-	public ResponseEntity<String> actualizarHoroscopo(@RequestParam Long id, @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
-		HoroscopoDTO actualizar = new HoroscopoDTO(contenido, tipoPublicacion, usuarioEditorId);
+	public ResponseEntity<String> actualizarHoroscopo(@RequestParam Long id,@RequestParam TipoHoroscopo tipoHoroscopo,  @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
+		HoroscopoDTO actualizar = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditorId);
 		int status = hService.updateById(id, actualizar);
 
 		if (status == 0) {

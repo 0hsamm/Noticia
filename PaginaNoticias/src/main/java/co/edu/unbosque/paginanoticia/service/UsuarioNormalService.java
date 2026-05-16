@@ -15,6 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
@@ -39,21 +41,38 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 
 	@Override
 	public int create(UsuarioNormalDTO data) {
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioNormal usuarioNormal = mapper.map(data, UsuarioNormal.class);
-		usuarioNormal.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		usuarioNormal.setTipoUsuario(TipoUsuario.USUARIO);
-		usuarioNormalRepo.save(usuarioNormal);
-		return 0;
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioNormal usuarioNormal =
+	            mapper.map(data, UsuarioNormal.class);
+
+	    usuarioNormal.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    usuarioNormal.setTipoUsuario(
+	            TipoUsuario.USUARIO);
+
+	    usuarioNormalRepo.save(
+	            usuarioNormal);
+
+	    return 0;
 	}
 
 	@Override
@@ -66,36 +85,99 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<UsuarioNormal> encontrado = usuarioNormalRepo.findById(id);
-		if (encontrado.isPresent()) {
-			usuarioNormalRepo.delete(encontrado.get());
-			return 0;
-		}
-		return 1;
+
+	    Optional<UsuarioNormal> encontrado =
+	            usuarioNormalRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 1;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioNormal> usuarioOpt =
+	            usuarioNormalRepo.findByNombre(username);
+
+	    if (usuarioOpt.isEmpty()) {
+	        return 2;
+	    }
+
+	    UsuarioNormal usuario = encontrado.get();
+
+	    if (usuario.getId()
+	            != usuarioOpt.get().getId()) {
+
+	        return 3;
+	    }
+
+	    usuarioNormalRepo.delete(usuario);
+
+	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioNormalDTO data) {
-		Optional<UsuarioNormal> encontrado = usuarioNormalRepo.findById(id);
-		if (encontrado.isEmpty()) {
-			return 4;
-		}
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (!encontrado.get().getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioNormal temp = encontrado.get();
-		temp.setNombre(data.getNombre());
-		temp.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		temp.setTipoUsuario(TipoUsuario.USUARIO);
-		usuarioNormalRepo.save(temp);
-		return 0;
+	    Optional<UsuarioNormal> encontrado =
+	            usuarioNormalRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 4;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioNormal> usuarioOpt =
+	            usuarioNormalRepo.findByNombre(username);
+
+	    if (usuarioOpt.isEmpty()) {
+	        return 5;
+	    }
+
+	    UsuarioNormal usuario = encontrado.get();
+
+	    if (usuario.getId()
+	            != usuarioOpt.get().getId()) {
+
+	        return 6;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (!usuario.getNombre().equals(data.getNombre())
+	            && findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    usuario.setNombre(data.getNombre());
+
+	    usuario.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    usuario.setTipoUsuario(
+	            TipoUsuario.USUARIO);
+
+	    usuarioNormalRepo.save(usuario);
+
+	    return 0;
 	}
 
 	@Override

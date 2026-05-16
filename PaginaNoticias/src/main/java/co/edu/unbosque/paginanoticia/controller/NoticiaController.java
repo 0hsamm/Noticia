@@ -30,8 +30,8 @@ public class NoticiaController {
 	
 	
 	@PostMapping("/crear")
-	public ResponseEntity<String> crearNoticia(@RequestParam String contenido, @RequestParam TipoPublicacion tipoPublicacion, @RequestParam long usuarioComentaristaId) {
-		NoticiaDTO nuevo = new NoticiaDTO(contenido, tipoPublicacion, usuarioComentaristaId);
+	public ResponseEntity<String> crearNoticia(@RequestParam String titulo, @RequestParam String contenido, @RequestParam TipoPublicacion tipoPublicacion, @RequestParam String usuarioComentarista) {
+		NoticiaDTO nuevo = new NoticiaDTO(titulo, contenido, tipoPublicacion, usuarioComentarista);
 		int status = nService.create(nuevo);
 
 		if (status == 0) {
@@ -53,8 +53,8 @@ public class NoticiaController {
 	}
 	
 	@PutMapping("/actualizar")
-	public ResponseEntity<String> actualizarNoticia(@RequestParam Long id, @RequestParam String contenido, @RequestParam TipoPublicacion tipoPublicacion, @RequestParam long usuarioComentaristaId) {
-		NoticiaDTO actualizar = new NoticiaDTO(contenido, tipoPublicacion, usuarioComentaristaId);
+	public ResponseEntity<String> actualizarNoticia(@RequestParam Long id, @RequestParam String titulo, @RequestParam String contenido, @RequestParam TipoPublicacion tipoPublicacion, @RequestParam String usuarioComentarista) {
+		NoticiaDTO actualizar = new NoticiaDTO(titulo, contenido, tipoPublicacion, usuarioComentarista);
 		int status = nService.updateById(id, actualizar);
 
 		if (status == 0) {

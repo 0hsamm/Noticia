@@ -2,12 +2,14 @@ package co.edu.unbosque.paginanoticia.dto;
 
 import java.util.Objects;
 
+import co.edu.unbosque.paginanoticia.enums.TipoHoroscopo;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 
 public class HoroscopoDTO {
 	
 	
 	private Long id;
+	private TipoHoroscopo tipoHoroscopo;
 	private String contenido;
 	private TipoPublicacion tipoPublicacion;
 	private long usuarioEditorId;
@@ -18,25 +20,41 @@ public class HoroscopoDTO {
 	}
 
 
-	public HoroscopoDTO(String contenido, TipoPublicacion tipoPublicacion, long usuarioEditorId) {
+	
+	
+
+	public HoroscopoDTO(TipoHoroscopo tipoHoroscopo, String contenido, TipoPublicacion tipoPublicacion,
+			long usuarioEditorId) {
 		super();
+		this.tipoHoroscopo = tipoHoroscopo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioEditorId = usuarioEditorId;
 	}
 
-	
-	
 
-	public long getId() {
-		return id;
+
+
+
+	public TipoHoroscopo getTipoHoroscopo() {
+		return tipoHoroscopo;
 	}
 
 
-	public void setId(long id) {
+
+
+
+	public void setTipoHoroscopo(TipoHoroscopo tipoHoroscopo) {
+		this.tipoHoroscopo = tipoHoroscopo;
+	}
+
+
+
+
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getContenido() {
 		return contenido;
@@ -68,10 +86,16 @@ public class HoroscopoDTO {
 	}
 
 
+
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoPublicacion, usuarioEditorId);
+		return Objects.hash(contenido, id, tipoHoroscopo, tipoPublicacion, usuarioEditorId);
 	}
+
+
+
 
 
 	@Override
@@ -83,16 +107,22 @@ public class HoroscopoDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		HoroscopoDTO other = (HoroscopoDTO) obj;
-		return Objects.equals(contenido, other.contenido) && id == other.id && tipoPublicacion == other.tipoPublicacion
+		return Objects.equals(contenido, other.contenido) && Objects.equals(id, other.id)
+				&& tipoHoroscopo == other.tipoHoroscopo && tipoPublicacion == other.tipoPublicacion
 				&& usuarioEditorId == other.usuarioEditorId;
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
-		return "HoroscopoDTO [id=" + id + ", contenido=" + contenido + ", tipoPublicacion=" + tipoPublicacion
-				+ ", usuarioEditorId=" + usuarioEditorId + "]";
+		return "HoroscopoDTO [id=" + id + ", tipoHoroscopo=" + tipoHoroscopo + ", contenido=" + contenido
+				+ ", tipoPublicacion=" + tipoPublicacion + ", usuarioEditorId=" + usuarioEditorId + "]";
 	}
+
+
 	
 	
 	

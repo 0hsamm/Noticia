@@ -1,6 +1,7 @@
 package co.edu.unbosque.paginanoticia.service;
 
 import co.edu.unbosque.paginanoticia.dto.UsuarioComentaristaDTO;
+import co.edu.unbosque.paginanoticia.entity.UsuarioAdministrador;
 import co.edu.unbosque.paginanoticia.entity.UsuarioComentarista;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
@@ -14,6 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentaristaDTO> {
@@ -35,24 +38,52 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	@Override
 	public int create(UsuarioComentaristaDTO data) {
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioComentarista usuarioComentarista = mapper.map(data, UsuarioComentarista.class);
-		usuarioComentarista.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		usuarioComentarista.setTipoUsuario(TipoUsuario.COMENTARISTA);
-		usuarioComentaristaRepo.save(usuarioComentarista);
-		return 0;
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 4;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioComentarista usuarioComentarista =
+	            mapper.map(data, UsuarioComentarista.class);
+
+	    usuarioComentarista.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    usuarioComentarista.setTipoUsuario(
+	            TipoUsuario.COMENTARISTA);
+
+	    usuarioComentaristaRepo.save(
+	            usuarioComentarista);
+
+	    return 0;
 	}
 
 	@Override
@@ -65,36 +96,86 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<UsuarioComentarista> encontrado = usuarioComentaristaRepo.findById(id);
-		if (encontrado.isPresent()) {
-			usuarioComentaristaRepo.delete(encontrado.get());
-			return 0;
-		}
-		return 1;
+
+	    Optional<UsuarioComentarista> encontrado =
+	            usuarioComentaristaRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 1;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 2;
+	    }
+
+	    usuarioComentaristaRepo.delete(
+	            encontrado.get());
+
+	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioComentaristaDTO data) {
-		Optional<UsuarioComentarista> encontrado = usuarioComentaristaRepo.findById(id);
-		if (encontrado.isEmpty()) {
-			return 4;
-		}
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (!encontrado.get().getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioComentarista temp = encontrado.get();
-		temp.setNombre(data.getNombre());
-		temp.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		temp.setTipoUsuario(TipoUsuario.COMENTARISTA);
-		usuarioComentaristaRepo.save(temp);
-		return 0;
+	    Optional<UsuarioComentarista> encontrado =
+	            usuarioComentaristaRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 4;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 5;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (!encontrado.get().getNombre().equals(data.getNombre())
+	            && findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioComentarista temp = encontrado.get();
+
+	    temp.setNombre(data.getNombre());
+
+	    temp.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    temp.setTipoUsuario(
+	            TipoUsuario.COMENTARISTA);
+
+	    usuarioComentaristaRepo.save(temp);
+
+	    return 0;
 	}
 
 	@Override

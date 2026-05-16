@@ -3,6 +3,7 @@ package co.edu.unbosque.paginanoticia.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import co.edu.unbosque.paginanoticia.enums.TipoHoroscopo;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 
 public class ComentarioDTO {
@@ -13,11 +14,11 @@ public class ComentarioDTO {
 
 	    private LocalDateTime fecha;
 
-	    private Long comentaristaId;
+	    private String nombreComentarista;
+	    
+	    private String tituloNoticia;
 
-	    private Long noticiaId;
-
-	    private Long horoscopoId;
+	    private TipoHoroscopo signoHoroscopo;
 
 	    private TipoPublicacion tipoPublicacion;
 
@@ -27,16 +28,38 @@ public class ComentarioDTO {
 		}
 
 
-		public ComentarioDTO(String contenido, LocalDateTime fecha, Long comentaristaId, Long noticiaId,
-				Long horoscopoId, TipoPublicacion tipoPublicacion) {
+	
+
+
+		public ComentarioDTO(String contenido, LocalDateTime fecha, String nombreComentarista, String tituloNoticia,
+				TipoHoroscopo signoHoroscopo, TipoPublicacion tipoPublicacion) {
 			super();
 			this.contenido = contenido;
 			this.fecha = fecha;
-			this.comentaristaId = comentaristaId;
-			this.noticiaId = noticiaId;
-			this.horoscopoId = horoscopoId;
+			this.nombreComentarista = nombreComentarista;
+			this.tituloNoticia = tituloNoticia;
+			this.signoHoroscopo = signoHoroscopo;
 			this.tipoPublicacion = tipoPublicacion;
 		}
+
+
+
+
+
+		public String getNombreComentarista() {
+			return nombreComentarista;
+		}
+
+
+
+
+
+		public void setNombreComentarista(String nombreComentarista) {
+			this.nombreComentarista = nombreComentarista;
+		}
+
+
+
 
 
 		public Long getId() {
@@ -69,33 +92,24 @@ public class ComentarioDTO {
 		}
 
 
-		public Long getComentaristaId() {
-			return comentaristaId;
+
+		public String getTituloNoticia() {
+			return tituloNoticia;
 		}
 
 
-		public void setComentaristaId(Long comentaristaId) {
-			this.comentaristaId = comentaristaId;
+		public void setTituloNoticia(String tituloNoticia) {
+			this.tituloNoticia = tituloNoticia;
 		}
 
 
-		public Long getNoticiaId() {
-			return noticiaId;
+		public TipoHoroscopo getSignoHoroscopo() {
+			return signoHoroscopo;
 		}
 
 
-		public void setNoticiaId(Long noticiaId) {
-			this.noticiaId = noticiaId;
-		}
-
-
-		public Long getHoroscopoId() {
-			return horoscopoId;
-		}
-
-
-		public void setHoroscopoId(Long horoscopoId) {
-			this.horoscopoId = horoscopoId;
+		public void setSignoHoroscopo(TipoHoroscopo signoHoroscopo) {
+			this.signoHoroscopo = signoHoroscopo;
 		}
 
 
@@ -109,10 +123,17 @@ public class ComentarioDTO {
 		}
 
 
+
+
+
 		@Override
 		public int hashCode() {
-			return Objects.hash(comentaristaId, contenido, fecha, horoscopoId, id, noticiaId, tipoPublicacion);
+			return Objects.hash(contenido, fecha, id, nombreComentarista, signoHoroscopo, tipoPublicacion,
+					tituloNoticia);
 		}
+
+
+
 
 
 		@Override
@@ -124,19 +145,28 @@ public class ComentarioDTO {
 			if (getClass() != obj.getClass())
 				return false;
 			ComentarioDTO other = (ComentarioDTO) obj;
-			return Objects.equals(comentaristaId, other.comentaristaId) && Objects.equals(contenido, other.contenido)
-					&& Objects.equals(fecha, other.fecha) && Objects.equals(horoscopoId, other.horoscopoId)
-					&& Objects.equals(id, other.id) && Objects.equals(noticiaId, other.noticiaId)
-					&& tipoPublicacion == other.tipoPublicacion;
+			return Objects.equals(contenido, other.contenido) && Objects.equals(fecha, other.fecha)
+					&& Objects.equals(id, other.id) && Objects.equals(nombreComentarista, other.nombreComentarista)
+					&& signoHoroscopo == other.signoHoroscopo && tipoPublicacion == other.tipoPublicacion
+					&& Objects.equals(tituloNoticia, other.tituloNoticia);
 		}
+
+
+
 
 
 		@Override
 		public String toString() {
-			return "ComentarioDTO [id=" + id + ", contenido=" + contenido + ", fecha=" + fecha + ", comentaristaId="
-					+ comentaristaId + ", noticiaId=" + noticiaId + ", horoscopoId=" + horoscopoId
+			return "ComentarioDTO [id=" + id + ", contenido=" + contenido + ", fecha=" + fecha + ", nombreComentarista="
+					+ nombreComentarista + ", tituloNoticia=" + tituloNoticia + ", signoHoroscopo=" + signoHoroscopo
 					+ ", tipoPublicacion=" + tipoPublicacion + "]";
 		}
+
+
+		
+
+
+		
 	    
 	    
 	    

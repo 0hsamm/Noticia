@@ -14,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdministradorDTO> {
@@ -38,21 +40,50 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 
 	@Override
 	public int create(UsuarioAdministradorDTO data) {
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioAdministrador usuarioAdministrador = mapper.map(data, UsuarioAdministrador.class);
-		usuarioAdministrador.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		usuarioAdministrador.setTipoUsuario(TipoUsuario.ADMIN);
-		usuarioAdministradorRepo.save(usuarioAdministrador);
-		return 0;
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+
+	        return 4;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioAdministrador usuarioAdministrador =
+	            mapper.map(data, UsuarioAdministrador.class);
+
+	    usuarioAdministrador.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    usuarioAdministrador.setTipoUsuario(
+	            TipoUsuario.ADMIN);
+
+	    usuarioAdministradorRepo.save(
+	            usuarioAdministrador);
+
+	    return 0;
 	}
 
 	@Override
@@ -65,36 +96,99 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<UsuarioAdministrador> encontrado = usuarioAdministradorRepo.findById(id);
-		if (encontrado.isPresent()) {
-			usuarioAdministradorRepo.delete(encontrado.get());
-			return 0;
-		}
-		return 1;
+
+	    Optional<UsuarioAdministrador> encontrado =
+	            usuarioAdministradorRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 1;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 2;
+	    }
+
+	    UsuarioAdministrador administrador = encontrado.get();
+
+	    if (administrador.getId()
+	            != adminOpt.get().getId()) {
+
+	        return 3;
+	    }
+
+	    usuarioAdministradorRepo.delete(administrador);
+
+	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioAdministradorDTO data) {
-		Optional<UsuarioAdministrador> encontrado = usuarioAdministradorRepo.findById(id);
-		if (encontrado.isEmpty()) {
-			return 4;
-		}
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (!encontrado.get().getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioAdministrador temp = encontrado.get();
-		temp.setNombre(data.getNombre());
-		temp.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		temp.setTipoUsuario(TipoUsuario.ADMIN);
-		usuarioAdministradorRepo.save(temp);
-		return 0;
+	    Optional<UsuarioAdministrador> encontrado =
+	            usuarioAdministradorRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 4;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 5;
+	    }
+
+	    UsuarioAdministrador administrador = encontrado.get();
+
+	    if (administrador.getId()
+	            != adminOpt.get().getId()) {
+
+	        return 6;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (!administrador.getNombre().equals(data.getNombre())
+	            && findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    administrador.setNombre(data.getNombre());
+
+	    administrador.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    administrador.setTipoUsuario(
+	            TipoUsuario.ADMIN);
+
+	    usuarioAdministradorRepo.save(administrador);
+
+	    return 0;
 	}
 
 	@Override

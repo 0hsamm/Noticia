@@ -11,6 +11,8 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
@@ -26,22 +28,29 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 
 	@Override
 	public int create(HoroscopoDTO data) {
-		if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getTipoPublicacion() == null) {
-			return 2;
-		}
 
-		Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findById(data.getUsuarioEditorId());
-		if (usuarioEditorOpt.isEmpty()) {
-			return 3;
-		}
+	    if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
+	        return 1;
+	    }
 
-		Horoscopo horoscopo = mapper.map(data, Horoscopo.class);
-		horoscopo.setUsuarioEditor(usuarioEditorOpt.get());
-		horoscopoRepo.save(horoscopo);
-		return 0;
+	    if (data.getTipoPublicacion() == null) {
+	        return 2;
+	    }
+
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String username = auth.getName();
+	    Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findByNombre(username);
+
+	    if (usuarioEditorOpt.isEmpty()) {
+
+	        return 3;
+	    }
+
+	    Horoscopo horoscopo = mapper.map(data, Horoscopo.class);
+	    horoscopo.setUsuarioEditor(usuarioEditorOpt.get());
+	    horoscopoRepo.save(horoscopo);
+
+	    return 0;
 	}
 
 	@Override
@@ -53,39 +62,105 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
-		if (horoscopoOpt.isEmpty()) {
-			return 1;
-		}
 
-		horoscopoRepo.delete(horoscopoOpt.get());
-		return 0;
+	    // BUSCAR HOROSCOPO
+	    Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
+
+	    if (horoscopoOpt.isEmpty()) {
+
+	        return 1;
+	    }
+
+	    // OBTENER USUARIO AUTENTICADO
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    // BUSCAR EDITOR
+	    Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findByNombre(username);
+
+	    if (usuarioEditorOpt.isEmpty()) {
+
+	        return 2;
+	    }
+
+	    Horoscopo horoscopo = horoscopoOpt.get();
+
+	    // VALIDAR QUE EL HOROSCOPO
+	    // PERTENEZCA AL EDITOR
+	    if (horoscopo.getUsuarioEditor().getId()
+	            != usuarioEditorOpt.get().getId()) {
+
+	        return 3;
+	    }
+
+	    // ELIMINAR
+	    horoscopoRepo.delete(horoscopo);
+
+	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, HoroscopoDTO data) {
-		Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
-		if (horoscopoOpt.isEmpty()) {
-			return 4;
-		}
-		if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getTipoPublicacion() == null) {
-			return 2;
-		}
 
-		Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findById(data.getUsuarioEditorId());
-		if (usuarioEditorOpt.isEmpty()) {
-			return 3;
-		}
+	    // BUSCAR HOROSCOPO
+	    Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
 
-		Horoscopo horoscopo = horoscopoOpt.get();
-		horoscopo.setContenido(data.getContenido());
-		horoscopo.setTipoPublicacion(data.getTipoPublicacion());
-		horoscopo.setUsuarioEditor(usuarioEditorOpt.get());
-		horoscopoRepo.save(horoscopo);
-		return 0;
+	    if (horoscopoOpt.isEmpty()) {
+
+	        return 4;
+	    }
+
+	    // VALIDAR CONTENIDO
+	    if (data.getContenido() == null
+	            || data.getContenido().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    // VALIDAR TIPO PUBLICACION
+	    if (data.getTipoPublicacion() == null) {
+
+	        return 2;
+	    }
+
+	    // OBTENER USUARIO AUTENTICADO
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    // BUSCAR EDITOR
+	    Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findByNombre(username);
+
+	    if (usuarioEditorOpt.isEmpty()) {
+
+	        return 3;
+	    }
+
+	    Horoscopo horoscopo = horoscopoOpt.get();
+
+	    // VALIDAR QUE EL HOROSCOPO
+	    // PERTENEZCA AL EDITOR
+	    if (horoscopo.getUsuarioEditor().getId()
+	            != usuarioEditorOpt.get().getId()) {
+
+	        return 5;
+	    }
+
+	    // ACTUALIZAR DATOS
+	    horoscopo.setContenido(data.getContenido());
+
+	    horoscopo.setTipoPublicacion(
+	            data.getTipoPublicacion());
+
+	    // SETEAR EDITOR AUTOMATICAMENTE
+	    horoscopo.setUsuarioEditor(
+	            usuarioEditorOpt.get());
+
+	    // GUARDAR
+	    horoscopoRepo.save(horoscopo);
+
+	    return 0;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package co.edu.unbosque.paginanoticia.entity;
 
 import java.util.Objects;
 
+import co.edu.unbosque.paginanoticia.enums.TipoHoroscopo;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,6 +20,7 @@ public class Horoscopo {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
 	
+	private TipoHoroscopo tipoHoroscopo;
 	private String contenido;
 
 	@Enumerated(EnumType.STRING)
@@ -32,12 +34,30 @@ public class Horoscopo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Horoscopo(String contenido, TipoPublicacion tipoPublicacion, UsuarioEditor usuarioEditor) {
+	
+
+	public Horoscopo(TipoHoroscopo tipoHoroscopo, String contenido, TipoPublicacion tipoPublicacion,
+			UsuarioEditor usuarioEditor) {
 		super();
+		this.tipoHoroscopo = tipoHoroscopo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioEditor = usuarioEditor;
 	}
+
+
+
+	public TipoHoroscopo getTipoHoroscopo() {
+		return tipoHoroscopo;
+	}
+
+
+
+	public void setTipoHoroscopo(TipoHoroscopo tipoHoroscopo) {
+		this.tipoHoroscopo = tipoHoroscopo;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -71,10 +91,14 @@ public class Horoscopo {
 		this.usuarioEditor = usuarioEditor;
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoPublicacion, usuarioEditor);
+		return Objects.hash(contenido, id, tipoHoroscopo, tipoPublicacion, usuarioEditor);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -85,15 +109,18 @@ public class Horoscopo {
 		if (getClass() != obj.getClass())
 			return false;
 		Horoscopo other = (Horoscopo) obj;
-		return Objects.equals(contenido, other.contenido) && id == other.id && tipoPublicacion == other.tipoPublicacion
-				&& Objects.equals(usuarioEditor, other.usuarioEditor);
+		return Objects.equals(contenido, other.contenido) && id == other.id && tipoHoroscopo == other.tipoHoroscopo
+				&& tipoPublicacion == other.tipoPublicacion && Objects.equals(usuarioEditor, other.usuarioEditor);
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "Horoscopo [id=" + id + ", contenido=" + contenido + ", tipoPublicacion=" + tipoPublicacion
-				+ ", usuarioEditor=" + usuarioEditor + "]";
+		return "Horoscopo [id=" + id + ", tipoHoroscopo=" + tipoHoroscopo + ", contenido=" + contenido
+				+ ", tipoPublicacion=" + tipoPublicacion + ", usuarioEditor=" + usuarioEditor + "]";
 	}
+
 	
 	
 	

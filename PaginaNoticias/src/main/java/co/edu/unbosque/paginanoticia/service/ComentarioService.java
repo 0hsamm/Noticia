@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import co.edu.unbosque.paginanoticia.dto.ComentarioDTO;
 import co.edu.unbosque.paginanoticia.entity.Comentario;
@@ -15,14 +17,15 @@ import co.edu.unbosque.paginanoticia.entity.Horoscopo;
 import co.edu.unbosque.paginanoticia.entity.Noticia;
 import co.edu.unbosque.paginanoticia.entity.UsuarioComentarista;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
+import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
+import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
 import co.edu.unbosque.paginanoticia.repository.ComentarioRepository;
 import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
 import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 
 @Service
-public class ComentarioService
-        implements CRUDOperation<ComentarioDTO> {
+public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 
     @Autowired
     private ComentarioRepository comentarioRepo;
@@ -41,46 +44,45 @@ public class ComentarioService
 
     @Override
     public int create(ComentarioDTO data) {
-        if (data.getContenido() == null
-                || data.getContenido().trim().isEmpty()) {
+
+        try {
+
+            LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+
+        } catch (EmptyWordException e) {
             return 1;
         }
 
-        if (data.getTipoPublicacion() == null) {
-            return 2;
-        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        Optional<UsuarioComentarista> comentaristaOpt = comentaristaRepo.findById(data.getComentaristaId());
+        String username = auth.getName();
+
+        Optional<UsuarioComentarista> comentaristaOpt = comentaristaRepo.findByNombre(username);
+
         if (comentaristaOpt.isEmpty()) {
             return 3;
         }
 
-        
-        Comentario comentario = mapper.map(data, Comentario.class);
+        Comentario comentario = new Comentario();
+        comentario.setContenido(data.getContenido());
         comentario.setFecha(LocalDateTime.now());
+        comentario.setTipoPublicacion(data.getTipoPublicacion());
         comentario.setComentarista(comentaristaOpt.get());
 
         if (data.getTipoPublicacion() == TipoPublicacion.NOTICIA) {
-            if (data.getNoticiaId() == null) {
-                return 4;
-            }
 
-            Optional<Noticia> noticiaOpt = noticiaRepo.findById(data.getNoticiaId());
+            Optional<Noticia> noticiaOpt = noticiaRepo.findByTitulo(data.getTituloNoticia());
 
             if (noticiaOpt.isEmpty()) {
                 return 5;
             }
+
             comentario.setNoticia(noticiaOpt.get());
             comentario.setHoroscopo(null);
         }
 
-
         if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
-            if (data.getHoroscopoId() == null) {
-                return 6;
-            }
-
-            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(data.getHoroscopoId());
+            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findBySigno(data.getSignoHoroscopo());
             if (horoscopoOpt.isEmpty()) {
                 return 7;
             }
@@ -88,7 +90,9 @@ public class ComentarioService
             comentario.setHoroscopo(horoscopoOpt.get());
             comentario.setNoticia(null);
         }
+
         comentarioRepo.save(comentario);
+
         return 0;
     }
 
@@ -107,7 +111,21 @@ public class ComentarioService
         if (comentarioOpt.isEmpty()) {
             return 1;
         }
-        comentarioRepo.delete(comentarioOpt.get());
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<UsuarioComentarista> usuarioOpt = comentaristaRepo.findByNombre(username);
+
+        if (usuarioOpt.isEmpty()) {
+            return 2;
+        }
+
+        Comentario comentario = comentarioOpt.get();
+        if (comentario.getComentarista().getId() != usuarioOpt.get().getId()) {
+            return 3;
+        }
+
+        comentarioRepo.delete(comentario);
         return 0;
     }
 
@@ -115,43 +133,60 @@ public class ComentarioService
     public int updateById(Long id, ComentarioDTO data) {
 
         Optional<Comentario> comentarioOpt = comentarioRepo.findById(id);
+
         if (comentarioOpt.isEmpty()) {
             return 5;
         }
 
-        if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
+        try {
+
+            LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+
+        } catch (EmptyWordException e) {
+
             return 1;
         }
 
-        Optional<UsuarioComentarista> comentaristaOpt = comentaristaRepo.findById(data.getComentaristaId());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<UsuarioComentarista> comentaristaOpt = comentaristaRepo.findByNombre(username);
+
         if (comentaristaOpt.isEmpty()) {
             return 2;
         }
 
         Comentario comentario = comentarioOpt.get();
+
         comentario.setContenido(data.getContenido());
+        comentario.setTipoPublicacion(data.getTipoPublicacion());
         comentario.setComentarista(comentaristaOpt.get());
 
-        if(data.getTipoPublicacion() == TipoPublicacion.NOTICIA) {
+        if (data.getTipoPublicacion() == TipoPublicacion.NOTICIA) {
 
-            Optional<Noticia> noticiaOpt = noticiaRepo.findById(data.getNoticiaId());
+            Optional<Noticia> noticiaOpt = noticiaRepo.findByTitulo(data.getTituloNoticia());
 
             if (noticiaOpt.isEmpty()) {
                 return 3;
             }
-            comentario.setNoticia(
-                    noticiaOpt.get());
+
+            comentario.setNoticia(noticiaOpt.get());
+
+            comentario.setHoroscopo(null);
         }
+        if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
 
-        if(data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
+            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findBySigno(data.getSignoHoroscopo());
 
-            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(data.getHoroscopoId());
             if (horoscopoOpt.isEmpty()) {
                 return 4;
             }
+            
             comentario.setHoroscopo(horoscopoOpt.get());
+            comentario.setNoticia(null);
         }
+
         comentarioRepo.save(comentario);
+
         return 0;
     }
 
@@ -184,24 +219,22 @@ public class ComentarioService
 
 
     private ComentarioDTO toDto(Comentario comentario) {
-    	
+
         ComentarioDTO dto = mapper.map(comentario, ComentarioDTO.class);
 
-
         if (comentario.getComentarista() != null) {
-
-            dto.setComentaristaId(comentario.getComentarista().getId());
+            dto.setNombreComentarista(comentario.getComentarista().getNombre());
         }
 
         if (comentario.getNoticia() != null) {
-
-            dto.setNoticiaId(comentario.getNoticia().getId());
+            dto.setTituloNoticia(comentario.getNoticia().getTitulo());
         }
 
         if (comentario.getHoroscopo() != null) {
 
-            dto.setHoroscopoId(comentario.getHoroscopo().getId());
+            dto.setSignoHoroscopo(comentario.getHoroscopo().getTipoHoroscopo());
         }
+
         dto.setTipoPublicacion(comentario.getTipoPublicacion());
 
         return dto;

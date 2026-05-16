@@ -20,6 +20,7 @@ public class Noticia {
 	
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
 	
+	private String titulo;
 	private String contenido;
 
 	@Enumerated(EnumType.STRING)
@@ -33,13 +34,30 @@ public class Noticia {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Noticia(String contenido, TipoPublicacion tipoPublicacion,
+	
+
+	public Noticia(String titulo, String contenido, TipoPublicacion tipoPublicacion,
 			UsuarioComentarista usuarioComentarista) {
 		super();
+		this.titulo = titulo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioComentarista = usuarioComentarista;
 	}
+
+
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -73,10 +91,14 @@ public class Noticia {
 		this.usuarioComentarista = usuarioComentarista;
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoPublicacion, usuarioComentarista);
+		return Objects.hash(contenido, id, tipoPublicacion, titulo, usuarioComentarista);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -87,16 +109,19 @@ public class Noticia {
 		if (getClass() != obj.getClass())
 			return false;
 		Noticia other = (Noticia) obj;
-		return Objects.equals(contenido, other.contenido) && id == other.id
-				&& tipoPublicacion == other.tipoPublicacion
+		return Objects.equals(contenido, other.contenido) && id == other.id && tipoPublicacion == other.tipoPublicacion
+				&& Objects.equals(titulo, other.titulo)
 				&& Objects.equals(usuarioComentarista, other.usuarioComentarista);
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Comentario [id=" + id + ", contenido=" + contenido + ", tipoPublicacion=" + tipoPublicacion
-				+ ", usuarioComentarista=" + usuarioComentarista + "]";
+		return "Noticia [id=" + id + ", titulo=" + titulo + ", contenido=" + contenido + ", tipoPublicacion="
+				+ tipoPublicacion + ", usuarioComentarista=" + usuarioComentarista + "]";
 	}
+	
 
 	
 	

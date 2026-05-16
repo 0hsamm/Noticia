@@ -1,6 +1,7 @@
 package co.edu.unbosque.paginanoticia.service;
 
 import co.edu.unbosque.paginanoticia.dto.UsuarioEditorDTO;
+import co.edu.unbosque.paginanoticia.entity.UsuarioAdministrador;
 import co.edu.unbosque.paginanoticia.entity.UsuarioEditor;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
@@ -14,6 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
@@ -38,21 +41,50 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 
 	@Override
 	public int create(UsuarioEditorDTO data) {
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioEditor usuarioEditor = mapper.map(data, UsuarioEditor.class);
-		usuarioEditor.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		usuarioEditor.setTipoUsuario(TipoUsuario.EDITOR);
-		usuarioEditorRepo.save(usuarioEditor);
-		return 0;
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 4;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioEditor usuarioEditor =
+	            mapper.map(data, UsuarioEditor.class);
+
+	    usuarioEditor.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    usuarioEditor.setTipoUsuario(
+	            TipoUsuario.EDITOR);
+
+	    usuarioEditorRepo.save(
+	            usuarioEditor);
+
+	    return 0;
 	}
 
 	@Override
@@ -65,36 +97,86 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 
 	@Override
 	public int deleteById(Long id) {
-		Optional<UsuarioEditor> encontrado = usuarioEditorRepo.findById(id);
-		if (encontrado.isPresent()) {
-			usuarioEditorRepo.delete(encontrado.get());
-			return 0;
-		}
-		return 1;
+
+	    Optional<UsuarioEditor> encontrado =
+	            usuarioEditorRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 1;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 2;
+	    }
+
+	    usuarioEditorRepo.delete(
+	            encontrado.get());
+
+	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioEditorDTO data) {
-		Optional<UsuarioEditor> encontrado = usuarioEditorRepo.findById(id);
-		if (encontrado.isEmpty()) {
-			return 4;
-		}
-		if (data.getNombre() == null || data.getNombre().trim().isEmpty()) {
-			return 1;
-		}
-		if (data.getContrasena() == null || data.getContrasena().length() < 8) {
-			return 2;
-		}
-		if (!encontrado.get().getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
-			return 3;
-		}
 
-		UsuarioEditor temp = encontrado.get();
-		temp.setNombre(data.getNombre());
-		temp.setContrasena(passwordEncoder.encode(data.getContrasena()));
-		temp.setTipoUsuario(TipoUsuario.EDITOR);
-		usuarioEditorRepo.save(temp);
-		return 0;
+	    Optional<UsuarioEditor> encontrado =
+	            usuarioEditorRepo.findById(id);
+
+	    if (encontrado.isEmpty()) {
+	        return 4;
+	    }
+
+	    Authentication auth =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String username = auth.getName();
+
+	    Optional<UsuarioAdministrador> adminOpt =
+	            usuarioAdministradorRepo.findByNombre(username);
+
+	    if (adminOpt.isEmpty()) {
+	        return 5;
+	    }
+
+	    if (data.getNombre() == null
+	            || data.getNombre().trim().isEmpty()) {
+
+	        return 1;
+	    }
+
+	    if (data.getContrasena() == null
+	            || data.getContrasena().length() < 8) {
+
+	        return 2;
+	    }
+
+	    if (!encontrado.get().getNombre().equals(data.getNombre())
+	            && findNombreAlreadyTaken(data.getNombre())) {
+
+	        return 3;
+	    }
+
+	    UsuarioEditor temp = encontrado.get();
+
+	    temp.setNombre(data.getNombre());
+
+	    temp.setContrasena(
+	            passwordEncoder.encode(
+	                    data.getContrasena()));
+
+	    temp.setTipoUsuario(
+	            TipoUsuario.EDITOR);
+
+	    usuarioEditorRepo.save(temp);
+
+	    return 0;
 	}
 
 	@Override

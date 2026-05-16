@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import co.edu.unbosque.paginanoticia.dto.ComentarioDTO;
+import co.edu.unbosque.paginanoticia.enums.TipoHoroscopo;
 import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 import co.edu.unbosque.paginanoticia.service.ComentarioService;
 
@@ -22,9 +23,9 @@ public class ComentarioController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> crearComentario(@RequestParam String contenido,@RequestParam LocalDateTime fecha,@RequestParam Long comentaristaId,@RequestParam Long noticiaId,@RequestParam
-			Long horoscopoId,@RequestParam TipoPublicacion tipoPublicacion) {
-    	ComentarioDTO  nuevo = new ComentarioDTO (contenido, fecha, comentaristaId, noticiaId, horoscopoId, tipoPublicacion);
+    public ResponseEntity<String> crearComentario(@RequestParam String contenido,@RequestParam LocalDateTime fecha,@RequestParam String nombreComentarista,@RequestParam String tituloNoticia,@RequestParam
+    		TipoHoroscopo signoHoroscopo,@RequestParam TipoPublicacion tipoPublicacion) {
+    	ComentarioDTO  nuevo = new ComentarioDTO (contenido, fecha, nombreComentarista, tituloNoticia, signoHoroscopo, tipoPublicacion);
     	int status = comentarioService.create(nuevo);
 
 		if (status == 0) {
@@ -65,9 +66,9 @@ public class ComentarioController {
   
 
     @PutMapping("/actualizar")
-	public ResponseEntity<String> actualizarComentario(@RequestParam Long id, @RequestParam String contenido,@RequestParam LocalDateTime fecha,@RequestParam Long comentaristaId,@RequestParam Long noticiaId,@RequestParam
-			Long horoscopoId,@RequestParam TipoPublicacion tipoPublicacion) {
-    	ComentarioDTO actualizar = new ComentarioDTO(contenido, fecha, comentaristaId, noticiaId, horoscopoId, tipoPublicacion);
+	public ResponseEntity<String> actualizarComentario(@RequestParam Long id, @RequestParam String contenido,@RequestParam LocalDateTime fecha,@RequestParam String nombreComentarista,@RequestParam String tituloNoticia,@RequestParam
+    		TipoHoroscopo signoHoroscopo,@RequestParam TipoPublicacion tipoPublicacion) {
+    	ComentarioDTO actualizar = new ComentarioDTO(contenido, fecha, nombreComentarista, tituloNoticia, signoHoroscopo, tipoPublicacion);
 		int status = comentarioService.updateById(id, actualizar);
 
 		if (status == 0) {
