@@ -3,6 +3,9 @@ package co.edu.unbosque.paginanoticia.service;
 import co.edu.unbosque.paginanoticia.dto.UsuarioNormalDTO;
 import co.edu.unbosque.paginanoticia.entity.UsuarioNormal;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
+import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
+import co.edu.unbosque.paginanoticia.exception.InvalidPasswordException;
+import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
@@ -42,36 +45,26 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 	@Override
 	public int create(UsuarioNormalDTO data) {
 
-	    if (data.getNombre() == null
-	            || data.getNombre().trim().isEmpty()) {
+		try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
 
-	        return 1;
-	    }
-
-	    if (data.getContrasena() == null
-	            || data.getContrasena().length() < 8) {
-
-	        return 2;
-	    }
+		try {
+			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
+		} catch (InvalidPasswordException e) {
+			return 2;
+		}
 
 	    if (findNombreAlreadyTaken(data.getNombre())) {
-
 	        return 3;
 	    }
 
-	    UsuarioNormal usuarioNormal =
-	            mapper.map(data, UsuarioNormal.class);
-
-	    usuarioNormal.setContrasena(
-	            passwordEncoder.encode(
-	                    data.getContrasena()));
-
-	    usuarioNormal.setTipoUsuario(
-	            TipoUsuario.USUARIO);
-
-	    usuarioNormalRepo.save(
-	            usuarioNormal);
-
+	    UsuarioNormal usuarioNormal = mapper.map(data, UsuarioNormal.class);
+	    usuarioNormal.setContrasena(passwordEncoder.encode(data.getContrasena()));
+	    usuarioNormal.setTipoUsuario(TipoUsuario.USUARIO);
+	    usuarioNormalRepo.save(usuarioNormal);
 	    return 0;
 	}
 
@@ -86,97 +79,72 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 	@Override
 	public int deleteById(Long id) {
 
-	    Optional<UsuarioNormal> encontrado =
-	            usuarioNormalRepo.findById(id);
+	    Optional<UsuarioNormal> encontrado = usuarioNormalRepo.findById(id);
 
 	    if (encontrado.isEmpty()) {
 	        return 1;
 	    }
 
-	    Authentication auth =
-	            SecurityContextHolder.getContext().getAuthentication();
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 	    String username = auth.getName();
-
-	    Optional<UsuarioNormal> usuarioOpt =
-	            usuarioNormalRepo.findByNombre(username);
+	    Optional<UsuarioNormal> usuarioOpt = usuarioNormalRepo.findByNombre(username);
 
 	    if (usuarioOpt.isEmpty()) {
 	        return 2;
 	    }
 
 	    UsuarioNormal usuario = encontrado.get();
-
-	    if (usuario.getId()
-	            != usuarioOpt.get().getId()) {
-
+	    if (usuario.getId() != usuarioOpt.get().getId()) {
 	        return 3;
 	    }
 
 	    usuarioNormalRepo.delete(usuario);
-
 	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioNormalDTO data) {
 
-	    Optional<UsuarioNormal> encontrado =
-	            usuarioNormalRepo.findById(id);
+	    Optional<UsuarioNormal> encontrado = usuarioNormalRepo.findById(id);
 
 	    if (encontrado.isEmpty()) {
 	        return 4;
 	    }
 
-	    Authentication auth =
-	            SecurityContextHolder.getContext().getAuthentication();
-
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username = auth.getName();
-
-	    Optional<UsuarioNormal> usuarioOpt =
-	            usuarioNormalRepo.findByNombre(username);
+	    Optional<UsuarioNormal> usuarioOpt = usuarioNormalRepo.findByNombre(username);
 
 	    if (usuarioOpt.isEmpty()) {
 	        return 5;
 	    }
 
 	    UsuarioNormal usuario = encontrado.get();
-
-	    if (usuario.getId()
-	            != usuarioOpt.get().getId()) {
-
+	    if (usuario.getId() != usuarioOpt.get().getId()) {
 	        return 6;
 	    }
 
-	    if (data.getNombre() == null
-	            || data.getNombre().trim().isEmpty()) {
+	    try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
 
-	        return 1;
-	    }
+	    try {
+			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
+		} catch (InvalidPasswordException e) {
+			return 2;
+		}
 
-	    if (data.getContrasena() == null
-	            || data.getContrasena().length() < 8) {
-
-	        return 2;
-	    }
-
-	    if (!usuario.getNombre().equals(data.getNombre())
-	            && findNombreAlreadyTaken(data.getNombre())) {
-
+	    if (!usuario.getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
 	        return 3;
 	    }
 
 	    usuario.setNombre(data.getNombre());
-
-	    usuario.setContrasena(
-	            passwordEncoder.encode(
-	                    data.getContrasena()));
-
-	    usuario.setTipoUsuario(
-	            TipoUsuario.USUARIO);
-
+	    usuario.setContrasena(passwordEncoder.encode(data.getContrasena()));
+	    usuario.setTipoUsuario(TipoUsuario.USUARIO);
 	    usuarioNormalRepo.save(usuario);
-
 	    return 0;
 	}
 

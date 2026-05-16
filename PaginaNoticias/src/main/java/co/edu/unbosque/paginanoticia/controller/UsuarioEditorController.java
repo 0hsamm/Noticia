@@ -25,23 +25,38 @@ import co.edu.unbosque.paginanoticia.service.UsuarioEditorService;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioEditorController {
 
-	
+
 	@Autowired
 	private UsuarioEditorService uEditorService;
-	
-	
+
+
 	@PostMapping("/crear")
 	public ResponseEntity<String> crearUsuarioEditor(@RequestParam String nombre,@RequestParam String contrasena,@RequestParam TipoUsuario tipoUsuario) {
 		UsuarioEditorDTO nuevo = new UsuarioEditorDTO(nombre, contrasena, tipoUsuario);
 		int status = uEditorService.create(nuevo);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Creado satisfactoriamente", HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario editor creado correctamente", HttpStatus.CREATED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		case 4:
+			return new ResponseEntity<String>( "Usuario administrador no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+		default:
+			return new ResponseEntity<String>("Error al crear el usuario editor", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/mostrartodo")
 	public ResponseEntity<List<UsuarioEditorDTO>> obtenerTodo(){
 		List<UsuarioEditorDTO> usuarioeditorlist = uEditorService.getAll();
@@ -52,27 +67,56 @@ public class UsuarioEditorController {
 			return new ResponseEntity<List<UsuarioEditorDTO>>(usuarioeditorlist, HttpStatus.ACCEPTED);
 		}
 	}
-	
+
 	@PutMapping("/actualizar")
 	public ResponseEntity<String> actualizarUsuarioEditor(@RequestParam Long id, @RequestParam String nombre,@RequestParam String contrasena,@RequestParam TipoUsuario tipoUsuario) {
 		UsuarioEditorDTO actualizar = new UsuarioEditorDTO(nombre, contrasena, tipoUsuario);
 		int status = uEditorService.updateById(id, actualizar);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Actualizado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario editor actualizado correctamente", HttpStatus.ACCEPTED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		case 4:
+			return new ResponseEntity<String>("El usuario editor no existe", HttpStatus.NOT_FOUND);
+
+		case 5:
+			return new ResponseEntity<String>("Usuario administrador no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+		default:
+			return new ResponseEntity<String>("Error al actualizar el usuario editor", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/eliminar")
 	public ResponseEntity<String> eliminarUsuarioEditor(@RequestParam Long id){
 		int status = uEditorService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<String>("Eliminado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario editor eliminado correctamente", HttpStatus.OK
+					);
+
+		case 1:
+			return new ResponseEntity<String>("El usuario editor no existe", HttpStatus.NOT_FOUND);
+
+		case 2:
+			return new ResponseEntity<String>("Usuario administrador no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+
+		default:
+			return new ResponseEntity<String>("Error al eliminar el usuario editor", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 }

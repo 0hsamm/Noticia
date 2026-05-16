@@ -2,9 +2,12 @@ package co.edu.unbosque.paginanoticia.service;
 
 import co.edu.unbosque.paginanoticia.dto.NoticiaDTO;
 import co.edu.unbosque.paginanoticia.entity.Noticia;
-import co.edu.unbosque.paginanoticia.entity.UsuarioComentarista;
+import co.edu.unbosque.paginanoticia.entity.UsuarioEditor;
+import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
+import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
 import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
-import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
+import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,7 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	private NoticiaRepository noticiaRepo;
 	
 	@Autowired
-	private UsuarioComentaristaRepository usuarioComentaristaRepo;
+	private UsuarioEditorRepository usuarioEditorRepo;
 	
 	@Autowired
 	private ModelMapper mapper;
@@ -31,32 +34,28 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	@Override
 	public int create(NoticiaDTO data) {
 
-	    if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
-
-	        return 1;
-	    }
-
+		try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getTitulo());
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
+		
 	    if (data.getTipoPublicacion() == null) {
-
 	        return 2;
 	    }
 
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    Optional<UsuarioComentarista> usuarioOpt = usuarioComentaristaRepo.findByNombre(username);
+	    Optional<UsuarioEditor> usuarioOpt = usuarioEditorRepo.findByNombre(username);
 
 	    if (usuarioOpt.isEmpty()) {
-
 	        return 3;
 	    }
 
 	    Noticia noticia = mapper.map(data, Noticia.class);
-	    noticia.setUsuarioComentarista(usuarioOpt.get());
-
+	    noticia.setUsuarioEditor(usuarioOpt.get());
 	    noticiaRepo.save(noticia);
-
 	    return 0;
 	}
 
@@ -71,33 +70,23 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	public int deleteById(Long id) {
 
 	    Optional<Noticia> noticiaOpt = noticiaRepo.findById(id);
-
 	    if (noticiaOpt.isEmpty()) {
-
 	        return 1;
 	    }
-
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    Optional<UsuarioComentarista> usuarioOpt = usuarioComentaristaRepo.findByNombre(username);
+	    Optional<UsuarioEditor> usuarioOpt = usuarioEditorRepo.findByNombre(username);
 
 	    if (usuarioOpt.isEmpty()) {
-
 	        return 2;
 	    }
 
 	    Noticia noticia = noticiaOpt.get();
-
-	    if (noticia.getUsuarioComentarista().getId()
-	            != usuarioOpt.get().getId()) {
-
+	    if (noticia.getUsuarioEditor().getId() != usuarioOpt.get().getId()) {
 	        return 3;
 	    }
 
 	    noticiaRepo.delete(noticia);
-
 	    return 0;
 	}
 
@@ -105,53 +94,38 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	public int updateById(Long id, NoticiaDTO data) {
 
 	    Optional<Noticia> noticiaOpt = noticiaRepo.findById(id);
-
 	    if (noticiaOpt.isEmpty()) {
-
 	        return 4;
 	    }
 
-	    if (data.getContenido() == null
-	            || data.getContenido().trim().isEmpty()) {
-
-	        return 1;
-	    }
+	    try {
+	    	LanzadorDeExcepcion.verificarPalabraVacia(data.getTitulo());
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
 
 	    if (data.getTipoPublicacion() == null) {
-
 	        return 2;
 	    }
 
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    Optional<UsuarioComentarista> usuarioOpt =
-	            usuarioComentaristaRepo.findByNombre(username);
+	    Optional<UsuarioEditor> usuarioOpt = usuarioEditorRepo.findByNombre(username);
 
 	    if (usuarioOpt.isEmpty()) {
-
 	        return 3;
 	    }
 
 	    Noticia noticia = noticiaOpt.get();
-
-	    if (noticia.getUsuarioComentarista().getId()
-	            != usuarioOpt.get().getId()) {
-
+	    if (noticia.getUsuarioEditor().getId() != usuarioOpt.get().getId()) {
 	        return 5;
 	    }
 
 	    noticia.setContenido(data.getContenido());
-
-	    noticia.setTipoPublicacion(
-	            data.getTipoPublicacion());
-
-	    noticia.setUsuarioComentarista(
-	            usuarioOpt.get());
-
+	    noticia.setTipoPublicacion(data.getTipoPublicacion());
+	    noticia.setUsuarioEditor(usuarioOpt.get());
 	    noticiaRepo.save(noticia);
-
 	    return 0;
 	}
 
@@ -166,7 +140,7 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	}
 
 	public List<NoticiaDTO> getByUsuarioComentarista(Long usuarioComentaristaId) {
-		if (!usuarioComentaristaRepo.existsById(usuarioComentaristaId)) {
+		if (!usuarioEditorRepo.existsById(usuarioComentaristaId)) {
 			return null;
 		}
 
@@ -178,8 +152,8 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 
 	private NoticiaDTO toDto(Noticia comentario) {
 		NoticiaDTO dto = mapper.map(comentario, NoticiaDTO.class);
-		if (comentario.getUsuarioComentarista() != null) {
-			dto.setUsuarioComentarista(comentario.getUsuarioComentarista().getNombre());
+		if (comentario.getUsuarioEditor() != null) {
+			dto.setUsuarioEditor(comentario.getUsuarioEditor().getNombre());
 		}
 		return dto;
 	}

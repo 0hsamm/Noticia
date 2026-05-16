@@ -34,11 +34,23 @@ public class NoticiaController {
 		NoticiaDTO nuevo = new NoticiaDTO(titulo, contenido, tipoPublicacion, usuarioComentarista);
 		int status = nService.create(nuevo);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Creado satisfactoriamente", HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
-		}
+		 switch (status) {
+
+	        case 0:
+	            return new ResponseEntity<String>("Noticia creada correctamente", HttpStatus.CREATED);
+
+	        case 1:
+	            return new ResponseEntity<String>("El contenido de la noticia está vacío", HttpStatus.BAD_REQUEST);
+
+	        case 2:
+	            return new ResponseEntity<String>("El tipo de publicación es obligatorio", HttpStatus.BAD_REQUEST);
+
+	        case 3:
+	            return new ResponseEntity<String>("El usuario editor no existe en sesión", HttpStatus.UNAUTHORIZED);
+
+	        default:
+	            return new ResponseEntity<String>("Error al crear la noticia", HttpStatus.BAD_REQUEST);
+	    }
 	}
 	
 	@GetMapping("/mostrartodo")
@@ -57,20 +69,50 @@ public class NoticiaController {
 		NoticiaDTO actualizar = new NoticiaDTO(titulo, contenido, tipoPublicacion, usuarioComentarista);
 		int status = nService.updateById(id, actualizar);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Actualizado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+        case 0:
+            return new ResponseEntity<String>("Noticia actualizada correctamente", HttpStatus.ACCEPTED);
+
+        case 1:
+            return new ResponseEntity<String>("El contenido de la noticia está vacío", HttpStatus.BAD_REQUEST);
+
+        case 2:
+            return new ResponseEntity<String>("El tipo de publicación es obligatorio", HttpStatus.BAD_REQUEST);
+
+        case 3:
+            return new ResponseEntity<String>("Usuario editor no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+        case 4:
+            return new ResponseEntity<String>("La noticia no existe", HttpStatus.NOT_FOUND);
+
+        case 5:
+            return new ResponseEntity<String>("No tienes permisos para modificar esta noticia", HttpStatus.FORBIDDEN);
+
+        default:
+            return new ResponseEntity<String>("Error al actualizar la noticia", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@DeleteMapping("/eliminar")
 	public ResponseEntity<String> eliminarNoticia(@RequestParam Long id){
 		int status = nService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<String>("Eliminado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+        case 0:
+            return new ResponseEntity<String>("Noticia eliminada correctamente", HttpStatus.OK);
+
+        case 1:
+            return new ResponseEntity<String>("La noticia no existe", HttpStatus.NOT_FOUND);
+
+        case 2:
+            return new ResponseEntity<String>("Usuario editor no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+        case 3:
+            return new ResponseEntity<String>("No tienes permisos para eliminar esta noticia", HttpStatus.FORBIDDEN);
+
+        default:
+            return new ResponseEntity<String>("Error al eliminar la noticia", HttpStatus.BAD_REQUEST);
 		}	
 	}
 	

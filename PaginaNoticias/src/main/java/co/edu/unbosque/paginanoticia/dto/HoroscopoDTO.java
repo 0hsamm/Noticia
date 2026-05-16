@@ -12,7 +12,7 @@ public class HoroscopoDTO {
 	private TipoHoroscopo tipoHoroscopo;
 	private String contenido;
 	private TipoPublicacion tipoPublicacion;
-	private long usuarioEditorId;
+	private String usuarioEditor;
 	
 	
 	public HoroscopoDTO() {
@@ -24,12 +24,12 @@ public class HoroscopoDTO {
 	
 
 	public HoroscopoDTO(TipoHoroscopo tipoHoroscopo, String contenido, TipoPublicacion tipoPublicacion,
-			long usuarioEditorId) {
+			String usuarioEditor) {
 		super();
 		this.tipoHoroscopo = tipoHoroscopo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
-		this.usuarioEditorId = usuarioEditorId;
+		this.usuarioEditor = usuarioEditor;
 	}
 
 
@@ -76,13 +76,13 @@ public class HoroscopoDTO {
 	}
 
 
-	public long getUsuarioEditorId() {
-		return usuarioEditorId;
+	public String getUsuarioEditor() {
+		return usuarioEditor;
 	}
 
 
-	public void setUsuarioEditorId(long usuarioEditorId) {
-		this.usuarioEditorId = usuarioEditorId;
+	public void setUsuarioEditor(String usuarioEditor) {
+		this.usuarioEditor = usuarioEditor;
 	}
 
 
@@ -91,7 +91,7 @@ public class HoroscopoDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoHoroscopo, tipoPublicacion, usuarioEditorId);
+		return Objects.hash(contenido, id, tipoHoroscopo, tipoPublicacion, usuarioEditor);
 	}
 
 
@@ -109,7 +109,7 @@ public class HoroscopoDTO {
 		HoroscopoDTO other = (HoroscopoDTO) obj;
 		return Objects.equals(contenido, other.contenido) && Objects.equals(id, other.id)
 				&& tipoHoroscopo == other.tipoHoroscopo && tipoPublicacion == other.tipoPublicacion
-				&& usuarioEditorId == other.usuarioEditorId;
+				&& usuarioEditor == other.usuarioEditor;
 	}
 
 
@@ -119,7 +119,7 @@ public class HoroscopoDTO {
 	@Override
 	public String toString() {
 		return "HoroscopoDTO [id=" + id + ", tipoHoroscopo=" + tipoHoroscopo + ", contenido=" + contenido
-				+ ", tipoPublicacion=" + tipoPublicacion + ", usuarioEditorId=" + usuarioEditorId + "]";
+				+ ", tipoPublicacion=" + tipoPublicacion + ", usuarioEditorId=" + usuarioEditor + "]";
 	}
 
 

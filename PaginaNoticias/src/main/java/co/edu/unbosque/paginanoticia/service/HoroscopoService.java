@@ -3,6 +3,8 @@ package co.edu.unbosque.paginanoticia.service;
 import co.edu.unbosque.paginanoticia.dto.HoroscopoDTO;
 import co.edu.unbosque.paginanoticia.entity.Horoscopo;
 import co.edu.unbosque.paginanoticia.entity.UsuarioEditor;
+import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
+import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
 import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import java.util.ArrayList;
@@ -29,9 +31,12 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 	@Override
 	public int create(HoroscopoDTO data) {
 
-	    if (data.getContenido() == null || data.getContenido().trim().isEmpty()) {
-	        return 1;
-	    }
+		try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
+		
 
 	    if (data.getTipoPublicacion() == null) {
 	        return 2;
@@ -63,103 +68,63 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 	@Override
 	public int deleteById(Long id) {
 
-	    // BUSCAR HOROSCOPO
 	    Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
-
 	    if (horoscopoOpt.isEmpty()) {
-
 	        return 1;
 	    }
 
-	    // OBTENER USUARIO AUTENTICADO
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    // BUSCAR EDITOR
 	    Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findByNombre(username);
 
 	    if (usuarioEditorOpt.isEmpty()) {
-
 	        return 2;
 	    }
 
 	    Horoscopo horoscopo = horoscopoOpt.get();
-
-	    // VALIDAR QUE EL HOROSCOPO
-	    // PERTENEZCA AL EDITOR
-	    if (horoscopo.getUsuarioEditor().getId()
-	            != usuarioEditorOpt.get().getId()) {
-
+	    if (horoscopo.getUsuarioEditor().getId() != usuarioEditorOpt.get().getId()) {
 	        return 3;
 	    }
 
-	    // ELIMINAR
 	    horoscopoRepo.delete(horoscopo);
-
 	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, HoroscopoDTO data) {
 
-	    // BUSCAR HOROSCOPO
 	    Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findById(id);
-
 	    if (horoscopoOpt.isEmpty()) {
-
 	        return 4;
 	    }
 
-	    // VALIDAR CONTENIDO
-	    if (data.getContenido() == null
-	            || data.getContenido().trim().isEmpty()) {
+	    try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getContenido());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
 
-	        return 1;
-	    }
-
-	    // VALIDAR TIPO PUBLICACION
 	    if (data.getTipoPublicacion() == null) {
-
 	        return 2;
 	    }
 
-	    // OBTENER USUARIO AUTENTICADO
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    // BUSCAR EDITOR
 	    Optional<UsuarioEditor> usuarioEditorOpt = usuarioEditorRepo.findByNombre(username);
 
 	    if (usuarioEditorOpt.isEmpty()) {
-
 	        return 3;
 	    }
 
 	    Horoscopo horoscopo = horoscopoOpt.get();
-
-	    // VALIDAR QUE EL HOROSCOPO
-	    // PERTENEZCA AL EDITOR
-	    if (horoscopo.getUsuarioEditor().getId()
-	            != usuarioEditorOpt.get().getId()) {
-
+	    if (horoscopo.getUsuarioEditor().getId() != usuarioEditorOpt.get().getId()) {
 	        return 5;
 	    }
 
-	    // ACTUALIZAR DATOS
 	    horoscopo.setContenido(data.getContenido());
-
-	    horoscopo.setTipoPublicacion(
-	            data.getTipoPublicacion());
-
-	    // SETEAR EDITOR AUTOMATICAMENTE
-	    horoscopo.setUsuarioEditor(
-	            usuarioEditorOpt.get());
-
-	    // GUARDAR
+	    horoscopo.setTipoPublicacion(data.getTipoPublicacion());
+	    horoscopo.setUsuarioEditor(usuarioEditorOpt.get());
 	    horoscopoRepo.save(horoscopo);
-
 	    return 0;
 	}
 
@@ -187,7 +152,7 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 	private HoroscopoDTO toDto(Horoscopo horoscopo) {
 		HoroscopoDTO dto = mapper.map(horoscopo, HoroscopoDTO.class);
 		if (horoscopo.getUsuarioEditor() != null) {
-			dto.setUsuarioEditorId(horoscopo.getUsuarioEditor().getId());
+			dto.setUsuarioEditor(horoscopo.getUsuarioEditor().getNombre());
 		}
 		return dto;
 	}

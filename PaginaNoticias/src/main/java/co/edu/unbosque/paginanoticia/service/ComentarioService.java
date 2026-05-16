@@ -54,13 +54,12 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         String username = auth.getName();
 
         Optional<UsuarioComentarista> comentaristaOpt = comentaristaRepo.findByNombre(username);
 
         if (comentaristaOpt.isEmpty()) {
-            return 3;
+            return 2;
         }
 
         Comentario comentario = new Comentario();
@@ -74,7 +73,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
             Optional<Noticia> noticiaOpt = noticiaRepo.findByTitulo(data.getTituloNoticia());
 
             if (noticiaOpt.isEmpty()) {
-                return 5;
+                return 3;
             }
 
             comentario.setNoticia(noticiaOpt.get());
@@ -84,7 +83,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
             Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findBySigno(data.getSignoHoroscopo());
             if (horoscopoOpt.isEmpty()) {
-                return 7;
+                return 4;
             }
 
             comentario.setHoroscopo(horoscopoOpt.get());

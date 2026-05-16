@@ -25,48 +25,93 @@ import co.edu.unbosque.paginanoticia.service.UsuarioNormalService;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioNormalController {
 
-	
+
 	@Autowired
 	private UsuarioNormalService usuarioNService;
-	
-	
+
+
 	@PostMapping("/crear")
 	public ResponseEntity<String> crearUsuario(@RequestParam String nombre, @RequestParam String contrasena, @RequestParam TipoUsuario tipoUsuario) {
 		UsuarioNormalDTO nuevo = new UsuarioNormalDTO(nombre, contrasena, tipoUsuario);
 		int status = usuarioNService.create(nuevo);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Creado satisfactoriamente", HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<String>("Error desconocido", HttpStatus.INTERNAL_SERVER_ERROR);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario normal creado correctamente", HttpStatus.CREATED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		default:
+			return new ResponseEntity<String>("Error al crear el usuario normal", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping("/actualizar")
 	public ResponseEntity<String> actualizarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String contrasena, @RequestParam TipoUsuario tipoUsuario) {
 		UsuarioNormalDTO actualizar = new UsuarioNormalDTO(nombre, contrasena, tipoUsuario);
 		int status = usuarioNService.updateById(id, actualizar);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Actualizado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Error desconocido", HttpStatus.INTERNAL_SERVER_ERROR);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario normal actualizado correctamente", HttpStatus.ACCEPTED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		case 4:
+			return new ResponseEntity<String>("El usuario no existe", HttpStatus.NOT_FOUND);
+
+		case 5:
+			return new ResponseEntity<String>("Usuario no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+		case 6:
+			return new ResponseEntity<String>("No tienes permisos para actualizar este usuario", HttpStatus.FORBIDDEN);
+
+		default:
+			return new ResponseEntity<String>("Error al actualizar el usuario normal", HttpStatus.BAD_REQUEST);
 		}
-	
+
 	}
-	
-	
+
+
 	@DeleteMapping("/eliminar")
 	public ResponseEntity<String> eliminarUsuario(@RequestParam Long id) {
 		int status = usuarioNService.deleteById(id);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Eliminado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Error desconocido", HttpStatus.INTERNAL_SERVER_ERROR);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario normal eliminado correctamente", HttpStatus.OK);
+
+		case 1:
+			return new ResponseEntity<String>("El usuario no existe", HttpStatus.NOT_FOUND);
+
+		case 2:
+			return new ResponseEntity<String>("Usuario no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+		case 3:
+			return new ResponseEntity<String>("No tienes permisos para eliminar este usuario", HttpStatus.FORBIDDEN);
+
+		default:
+			return new ResponseEntity<String>("Error al eliminar el usuario normal", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/mostrartodo")
 	public ResponseEntity<List<UsuarioNormalDTO>> obtenerTodo() {
 		List<UsuarioNormalDTO> usuarionormallist = usuarioNService.getAll();
@@ -76,5 +121,5 @@ public class UsuarioNormalController {
 			return new ResponseEntity<List<UsuarioNormalDTO>>(usuarionormallist, HttpStatus.ACCEPTED);
 		}
 	}
-	
+
 }

@@ -10,7 +10,7 @@ public class NoticiaDTO {
 	private String titulo;
 	private String contenido;
 	private TipoPublicacion tipoPublicacion;
-	private String usuarioComentarista;
+	private String usuarioEditor;
 	
 	
 	public NoticiaDTO() {
@@ -20,12 +20,12 @@ public class NoticiaDTO {
 
 	
 
-	public NoticiaDTO(String titulo, String contenido, TipoPublicacion tipoPublicacion, String usuarioComentarista) {
+	public NoticiaDTO(String titulo, String contenido, TipoPublicacion tipoPublicacion, String usuarioEditor) {
 		super();
 		this.titulo = titulo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
-		this.usuarioComentarista = usuarioComentarista;
+		this.usuarioEditor = usuarioEditor;
 	}
 
 
@@ -70,13 +70,13 @@ public class NoticiaDTO {
 	}
 
 
-	public String getUsuarioComentarista() {
-		return usuarioComentarista;
+	public String getUsuarioEditor() {
+		return usuarioEditor;
 	}
 
 
-	public void setUsuarioComentarista(String usuarioComentarista) {
-		this.usuarioComentarista = usuarioComentarista;
+	public void setUsuarioEditor(String usuarioEditor) {
+		this.usuarioEditor = usuarioEditor;
 	}
 
 
@@ -84,7 +84,7 @@ public class NoticiaDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenido, id, tipoPublicacion, titulo, usuarioComentarista);
+		return Objects.hash(contenido, id, tipoPublicacion, titulo, usuarioEditor);
 	}
 
 
@@ -101,7 +101,7 @@ public class NoticiaDTO {
 		NoticiaDTO other = (NoticiaDTO) obj;
 		return Objects.equals(contenido, other.contenido) && Objects.equals(id, other.id)
 				&& tipoPublicacion == other.tipoPublicacion && Objects.equals(titulo, other.titulo)
-				&& usuarioComentarista == other.usuarioComentarista;
+				&& usuarioEditor == other.usuarioEditor;
 	}
 
 
@@ -110,7 +110,7 @@ public class NoticiaDTO {
 	@Override
 	public String toString() {
 		return "NoticiaDTO [id=" + id + ", titulo=" + titulo + ", contenido=" + contenido + ", tipoPublicacion="
-				+ tipoPublicacion + ", usuarioComentarista=" + usuarioComentarista + "]";
+				+ tipoPublicacion + ", usuarioComentarista=" + usuarioEditor + "]";
 	}
 
 

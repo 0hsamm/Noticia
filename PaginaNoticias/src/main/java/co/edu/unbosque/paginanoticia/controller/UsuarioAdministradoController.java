@@ -24,24 +24,39 @@ import co.edu.unbosque.paginanoticia.service.UsuarioAdministradorService;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioAdministradoController {
 
-	
+
 	@Autowired
 	private UsuarioAdministradorService uAdminService;
-	
-	
-	
+
+
+
 	@PostMapping("/crear")
 	public ResponseEntity<String> crearUsuarioAdministrador(@RequestParam String nombre,@RequestParam String contrasena,@RequestParam TipoUsuario tipoUsuario) {
 		UsuarioAdministradorDTO nuevo = new UsuarioAdministradorDTO(nombre, contrasena, tipoUsuario);
 		int status = uAdminService.create(nuevo);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Creado satisfactoriamente", HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario administrador creado correctamente", HttpStatus.CREATED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos de tamaño", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		case 4:
+			return new ResponseEntity<String>("No tienes permisos para crear administradores", HttpStatus.UNAUTHORIZED);
+
+		default:
+			return new ResponseEntity<String>("Error al crear el usuario administrador", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/mostrartodo")
 	public ResponseEntity<List<UsuarioAdministradorDTO>> obtenerTodo(){
 		List<UsuarioAdministradorDTO> usuarioadministradorlist = uAdminService.getAll();
@@ -52,28 +67,61 @@ public class UsuarioAdministradoController {
 			return new ResponseEntity<List<UsuarioAdministradorDTO>>(usuarioadministradorlist, HttpStatus.ACCEPTED);
 		}
 	}
-	
+
 	@PutMapping("/actualizar")
 	public ResponseEntity<String> actualizarCarta(@RequestParam Long id, @RequestParam String nombre,@RequestParam String contrasena,@RequestParam TipoUsuario tipoUsuario) {
 		UsuarioAdministradorDTO actualizar = new UsuarioAdministradorDTO(nombre, contrasena, tipoUsuario);
 		int status = uAdminService.updateById(id, actualizar);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Actualizado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario administrador actualizado correctamente", HttpStatus.ACCEPTED);
+
+		case 1:
+			return new ResponseEntity<String>("El nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("La contraseña no cumple con los requisitos", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+
+		case 4:
+			return new ResponseEntity<String>("El usuario administrador no existe", HttpStatus.NOT_FOUND);
+
+		case 5:
+			return new ResponseEntity<String>("Usuario en sesión no encontrado", HttpStatus.UNAUTHORIZED);
+
+		case 6:
+			return new ResponseEntity<String>("No tienes permisos para actualizar este usuario administrador", HttpStatus.FORBIDDEN);
+
+		default:
+			return new ResponseEntity<String>("Error al actualizar el usuario administrador", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
+
 	@DeleteMapping("/eliminar")
 	public ResponseEntity<String> eliminarCarta(@RequestParam Long id){
 		int status = uAdminService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<String>("Eliminado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Usuario administrador eliminado correctamente", HttpStatus.OK);
+
+		case 1:
+			return new ResponseEntity<String>("El usuario administrador no existe", HttpStatus.NOT_FOUND);
+
+		case 2:
+			return new ResponseEntity<String>("Usuario en sesión no encontrado", HttpStatus.UNAUTHORIZED);
+
+		case 3:
+			return new ResponseEntity<String>("No tienes permisos para eliminar este usuario administrador", HttpStatus.FORBIDDEN);
+
+		default:
+			return new ResponseEntity<String>("Error al eliminar el usuario administrador", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 }

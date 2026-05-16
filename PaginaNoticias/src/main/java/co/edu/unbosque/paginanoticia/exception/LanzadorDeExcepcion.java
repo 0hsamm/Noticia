@@ -9,6 +9,13 @@ public class LanzadorDeExcepcion {
 		}
 	}
 	
+	public static void verificarTamanoContrasena(String s) throws InvalidPasswordException{
+		
+		if(s.length() < 8) {
+			throw new InvalidPasswordException();
+		}
+		
+	}
 	
 	
 	

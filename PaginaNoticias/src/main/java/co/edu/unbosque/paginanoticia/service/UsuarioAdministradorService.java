@@ -3,6 +3,9 @@ package co.edu.unbosque.paginanoticia.service;
 import co.edu.unbosque.paginanoticia.dto.UsuarioAdministradorDTO;
 import co.edu.unbosque.paginanoticia.entity.UsuarioAdministrador;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
+import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
+import co.edu.unbosque.paginanoticia.exception.InvalidPasswordException;
+import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
@@ -42,47 +45,32 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	public int create(UsuarioAdministradorDTO data) {
 
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 	    String username = auth.getName();
-
-	    Optional<UsuarioAdministrador> adminOpt =
-	            usuarioAdministradorRepo.findByNombre(username);
+	    Optional<UsuarioAdministrador> adminOpt = usuarioAdministradorRepo.findByNombre(username);
 
 	    if (adminOpt.isEmpty()) {
-
 	        return 4;
 	    }
 
-	    if (data.getNombre() == null
-	            || data.getNombre().trim().isEmpty()) {
+	    try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
 
-	        return 1;
-	    }
-
-	    if (data.getContrasena() == null
-	            || data.getContrasena().length() < 8) {
-
-	        return 2;
-	    }
+	    try {
+			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
+		} catch (InvalidPasswordException e) {
+			return 2;
+		}
 
 	    if (findNombreAlreadyTaken(data.getNombre())) {
-
 	        return 3;
 	    }
-
-	    UsuarioAdministrador usuarioAdministrador =
-	            mapper.map(data, UsuarioAdministrador.class);
-
-	    usuarioAdministrador.setContrasena(
-	            passwordEncoder.encode(
-	                    data.getContrasena()));
-
-	    usuarioAdministrador.setTipoUsuario(
-	            TipoUsuario.ADMIN);
-
-	    usuarioAdministradorRepo.save(
-	            usuarioAdministrador);
-
+	    UsuarioAdministrador usuarioAdministrador = mapper.map(data, UsuarioAdministrador.class);
+	    usuarioAdministrador.setContrasena(passwordEncoder.encode(data.getContrasena()));
+	    usuarioAdministrador.setTipoUsuario(TipoUsuario.ADMIN);
+	    usuarioAdministradorRepo.save(usuarioAdministrador);
 	    return 0;
 	}
 
@@ -97,97 +85,68 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	@Override
 	public int deleteById(Long id) {
 
-	    Optional<UsuarioAdministrador> encontrado =
-	            usuarioAdministradorRepo.findById(id);
-
+	    Optional<UsuarioAdministrador> encontrado = usuarioAdministradorRepo.findById(id);
 	    if (encontrado.isEmpty()) {
 	        return 1;
 	    }
 
-	    Authentication auth =
-	            SecurityContextHolder.getContext().getAuthentication();
-
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username = auth.getName();
-
-	    Optional<UsuarioAdministrador> adminOpt =
-	            usuarioAdministradorRepo.findByNombre(username);
+	    Optional<UsuarioAdministrador> adminOpt = usuarioAdministradorRepo.findByNombre(username);
 
 	    if (adminOpt.isEmpty()) {
 	        return 2;
 	    }
 
 	    UsuarioAdministrador administrador = encontrado.get();
-
-	    if (administrador.getId()
-	            != adminOpt.get().getId()) {
-
+	    if (administrador.getId() != adminOpt.get().getId()) {
 	        return 3;
 	    }
 
 	    usuarioAdministradorRepo.delete(administrador);
-
 	    return 0;
 	}
 
 	@Override
 	public int updateById(Long id, UsuarioAdministradorDTO data) {
 
-	    Optional<UsuarioAdministrador> encontrado =
-	            usuarioAdministradorRepo.findById(id);
-
+	    Optional<UsuarioAdministrador> encontrado = usuarioAdministradorRepo.findById(id);
 	    if (encontrado.isEmpty()) {
 	        return 4;
 	    }
 
-	    Authentication auth =
-	            SecurityContextHolder.getContext().getAuthentication();
-
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username = auth.getName();
-
-	    Optional<UsuarioAdministrador> adminOpt =
-	            usuarioAdministradorRepo.findByNombre(username);
+	    Optional<UsuarioAdministrador> adminOpt = usuarioAdministradorRepo.findByNombre(username);
 
 	    if (adminOpt.isEmpty()) {
 	        return 5;
 	    }
 
 	    UsuarioAdministrador administrador = encontrado.get();
-
-	    if (administrador.getId()
-	            != adminOpt.get().getId()) {
-
+	    if (administrador.getId() != adminOpt.get().getId()) {
 	        return 6;
 	    }
 
-	    if (data.getNombre() == null
-	            || data.getNombre().trim().isEmpty()) {
+	    try {
+			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
+		} catch (EmptyWordException e) {
+			return 1;
+		}
+	    try {
+			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
+		} catch (InvalidPasswordException e) {
+			return 2;
+		}
 
-	        return 1;
-	    }
-
-	    if (data.getContrasena() == null
-	            || data.getContrasena().length() < 8) {
-
-	        return 2;
-	    }
-
-	    if (!administrador.getNombre().equals(data.getNombre())
-	            && findNombreAlreadyTaken(data.getNombre())) {
-
+	    if (!administrador.getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
 	        return 3;
 	    }
 
 	    administrador.setNombre(data.getNombre());
-
-	    administrador.setContrasena(
-	            passwordEncoder.encode(
-	                    data.getContrasena()));
-
-	    administrador.setTipoUsuario(
-	            TipoUsuario.ADMIN);
-
+	    administrador.setContrasena(passwordEncoder.encode(data.getContrasena()));
+	    administrador.setTipoUsuario(TipoUsuario.ADMIN);
 	    usuarioAdministradorRepo.save(administrador);
-
 	    return 0;
 	}
 

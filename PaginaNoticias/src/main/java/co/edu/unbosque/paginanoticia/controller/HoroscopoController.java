@@ -27,23 +27,35 @@ import co.edu.unbosque.paginanoticia.service.HoroscopoService;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class HoroscopoController {
 
-	
+
 	@Autowired
 	private HoroscopoService hService;
-	
-	
+
+
 	@PostMapping("/crear")
-	public ResponseEntity<String> crearHoroscopo(@RequestParam TipoHoroscopo tipoHoroscopo, @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
-		HoroscopoDTO nuevo = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditorId);
+	public ResponseEntity<String> crearHoroscopo(@RequestParam TipoHoroscopo tipoHoroscopo, @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam String usuarioEditor) {
+		HoroscopoDTO nuevo = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditor);
 		int status = hService.create(nuevo);
 
-		if (status == 0) {
-			return new ResponseEntity<String>("Creado satisfactoriamente", HttpStatus.CREATED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+		case 0:
+			return new ResponseEntity<String>("Horóscopo creado correctamente", HttpStatus.CREATED);
+
+		case 1:
+			return new ResponseEntity<String>("El contenido del horóscopo está vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("El tipo de publicación es obligatorio", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El usuario editor no existe en sesión", HttpStatus.UNAUTHORIZED);
+
+		default:
+			return new ResponseEntity<String>("Error al crear el horóscopo", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/mostrartodo")
 	public ResponseEntity<List<HoroscopoDTO>> obtenerTodo(){
 		List<HoroscopoDTO> horoscopolist = hService.getAll();
@@ -54,28 +66,58 @@ public class HoroscopoController {
 			return new ResponseEntity<List<HoroscopoDTO>>(horoscopolist, HttpStatus.ACCEPTED);
 		}
 	}
-	
+
 	@PutMapping("/actualizar")
-	public ResponseEntity<String> actualizarHoroscopo(@RequestParam Long id,@RequestParam TipoHoroscopo tipoHoroscopo,  @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam long usuarioEditorId) {
-		HoroscopoDTO actualizar = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditorId);
+	public ResponseEntity<String> actualizarHoroscopo(@RequestParam Long id,@RequestParam TipoHoroscopo tipoHoroscopo,  @RequestParam String contenido,@RequestParam TipoPublicacion tipoPublicacion,@RequestParam String usuarioEditor) {
+		HoroscopoDTO actualizar = new HoroscopoDTO(tipoHoroscopo, contenido, tipoPublicacion, usuarioEditor);
 		int status = hService.updateById(id, actualizar);
 
-		if (status == 0) {
+		switch (status) {
+
+		case 0:
 			return new ResponseEntity<String>("Actualizado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+
+		case 1:
+			return new ResponseEntity<String>("El contenido está vacío", HttpStatus.BAD_REQUEST);
+
+		case 2:
+			return new ResponseEntity<String>("El tipo de publicación es obligatorio", HttpStatus.BAD_REQUEST);
+
+		case 3:
+			return new ResponseEntity<String>("El usuario editor no existe en sesión", HttpStatus.UNAUTHORIZED);
+
+		case 4:
+			return new ResponseEntity<String>("El horóscopo no existe", HttpStatus.NOT_FOUND);
+
+		case 5:
+			return new ResponseEntity<String>("No tienes permisos para modificar este horóscopo", HttpStatus.FORBIDDEN);
+
+		default:
+			return new ResponseEntity<String>("Dato ingresado no válido", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/eliminar")
 	public ResponseEntity<String> eliminarHoroscopo(@RequestParam Long id){
 		int status = hService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<String>("Eliminado satisfactoriamente", HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<String>("Dato ingresado no valido", HttpStatus.BAD_REQUEST);
+		switch (status) {
+
+        case 0:
+            return new ResponseEntity<String>("Horóscopo eliminado correctamente", HttpStatus.OK);
+
+        case 1:
+            return new ResponseEntity<String>("El horóscopo no existe", HttpStatus.NOT_FOUND);
+
+        case 2:
+            return new ResponseEntity<String>("Usuario editor no encontrado en sesión", HttpStatus.UNAUTHORIZED);
+
+        case 3:
+            return new ResponseEntity<String>("No tienes permisos para eliminar este horóscopo", HttpStatus.FORBIDDEN);
+
+        default:
+            return new ResponseEntity<String>("Error al eliminar el horóscopo", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
+
 }
