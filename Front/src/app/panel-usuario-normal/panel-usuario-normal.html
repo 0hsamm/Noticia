@@ -1,0 +1,94 @@
+<div class="panel">
+  <div class="cabecera bloque">
+    <div>
+      <h1>Panel de usuario</h1>
+      <p>Sesion actual: {{ nombreSesion }}</p>
+    </div>
+
+    <div class="acciones-cabecera">
+      <button type="button" class="btn-peligro" (click)="cerrarSesion()">Cerrar sesion</button>
+    </div>
+  </div>
+
+  <div class="bloque">
+    <h2>Noticias</h2>
+    @if (noticias.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>Contenido</th>
+            <th>Editor</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (noticia of noticias; track noticia.id ?? noticia.titulo) {
+            <tr>
+              <td>{{ noticia.titulo }}</td>
+              <td>{{ noticia.contenido }}</td>
+              <td>{{ noticia.usuarioEditor }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="estado-vacio">No hay noticias para mostrar.</p>
+    }
+  </div>
+
+  <div class="bloque">
+    <h2>Horoscopos</h2>
+    @if (horoscopos.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>Signo</th>
+            <th>Contenido</th>
+            <th>Editor</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (horoscopo of horoscopos; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+            <tr>
+              <td>{{ horoscopo.tipoHoroscopo }}</td>
+              <td>{{ horoscopo.contenido }}</td>
+              <td>{{ horoscopo.usuarioEditor }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="estado-vacio">No hay horoscopos para mostrar.</p>
+    }
+  </div>
+
+  <div class="bloque">
+    <h2>Comentarios</h2>
+    @if (comentarios.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>Comentario</th>
+            <th>Autor</th>
+            <th>Destino</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (comentario of comentarios; track comentario.id ?? comentario.fecha) {
+            <tr>
+              <td>{{ comentario.contenido }}</td>
+              <td>{{ comentario.nombreComentarista }}</td>
+              <td>
+                {{ comentario.tipoPublicacion === 'NOTICIA' ? comentario.tituloNoticia : comentario.signoHoroscopo }}
+              </td>
+              <td>{{ comentario.fecha | date: 'short' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="estado-vacio">No hay comentarios para mostrar.</p>
+    }
+  </div>
+</div>

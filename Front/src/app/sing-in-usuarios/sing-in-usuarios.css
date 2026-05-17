@@ -1,0 +1,93 @@
+:host {
+  display: block;
+}
+
+#contenedor-login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  padding: 24px;
+}
+
+#card-login {
+  background: white;
+  padding: 40px;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+#card-login h1 {
+  margin: 0;
+  text-align: center;
+  color: #111827;
+  font-size: 32px;
+}
+
+.subtitulo {
+  text-align: center;
+  color: #6b7280;
+  margin: 12px 0 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2563eb;
+}
+
+button {
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.btn-principal {
+  background: #10b981;
+  color: white;
+}
+
+.btn-principal:hover {
+  background: #059669;
+}
+
+.btn-secundario {
+  background: #0f172a;
+  color: white;
+}
+
+.btn-secundario:hover {
+  background: #1f2937;
+}

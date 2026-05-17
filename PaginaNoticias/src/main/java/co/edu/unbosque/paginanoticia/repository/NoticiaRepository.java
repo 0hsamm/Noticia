@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticiaRepository extends JpaRepository<Noticia, Long> {
 
-	List<Noticia> findByUsuarioComentarista_Id(Long usuarioComentaristaId);
+	List<Noticia> findByUsuarioEditor_Id(Long usuarioEditorId);
 	
 	Optional<Noticia> findByTitulo(String titulo);
 }

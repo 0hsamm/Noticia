@@ -1,0 +1,167 @@
+<div class="contenedor">
+  <aside class="menu">
+    <h1>Panel de comentarista</h1>
+    <p class="menu-subtitulo">Sesion actual: {{ nombreSesion }}</p>
+
+    <button type="button" [class.activo]="vistaActual === 'NOTICIAS'" (click)="cambiarVista('NOTICIAS')">
+      Comentar noticias
+    </button>
+    <button type="button" [class.activo]="vistaActual === 'HOROSCOPOS'" (click)="cambiarVista('HOROSCOPOS')">
+      Comentar horoscopos
+    </button>
+    <button type="button" [class.activo]="vistaActual === 'MIS_COMENTARIOS'" (click)="cambiarVista('MIS_COMENTARIOS')">
+      Mis comentarios
+    </button>
+
+    <button type="button" class="btn-cerrar" (click)="cerrarSesion()">
+      Cerrar sesion
+    </button>
+  </aside>
+
+  <main class="contenido">
+    <h2>Gestion de comentarios</h2>
+
+    <div class="bloque">
+      <p>{{ formulario.id ? 'Actualizar comentario' : 'Crear comentario' }}</p>
+
+      <select
+        name="tipoPublicacionComentario"
+        [(ngModel)]="formulario.tipoPublicacion"
+        (ngModelChange)="cambiarVista($event === tiposPublicacion.NOTICIA ? 'NOTICIAS' : 'HOROSCOPOS')">
+        <option [ngValue]="tiposPublicacion.NOTICIA">NOTICIA</option>
+        <option [ngValue]="tiposPublicacion.HOROSCOPO">HOROSCOPO</option>
+      </select>
+
+      @if (formulario.tipoPublicacion === tiposPublicacion.NOTICIA) {
+        <select
+          name="tituloNoticiaComentario"
+          [(ngModel)]="formulario.tituloNoticia">
+          @for (noticia of noticias; track noticia.id ?? noticia.titulo) {
+            <option [ngValue]="noticia.titulo">{{ noticia.titulo }}</option>
+          }
+        </select>
+      } @else {
+        <select
+          name="signoHoroscopoComentario"
+          [(ngModel)]="formulario.horoscopoId">
+          @for (horoscopo of horoscopos; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+            <option [ngValue]="horoscopo.id">{{ horoscopo.tipoHoroscopo }} - {{ horoscopo.usuarioEditor }}</option>
+          }
+        </select>
+      }
+
+      <textarea
+        name="contenidoComentario"
+        [(ngModel)]="formulario.contenido"
+        rows="5"
+        placeholder="Escribe tu comentario">
+      </textarea>
+
+      <button type="button" (click)="guardarComentario()">
+        {{ formulario.id ? 'Actualizar' : 'Comentar' }}
+      </button>
+
+      @if (formulario.id) {
+        <button type="button" class="btn-secundario" (click)="cancelarEdicion()">
+          Cancelar
+        </button>
+      }
+    </div>
+
+    @if (vistaActual === 'NOTICIAS') {
+      <div class="bloque">
+        <p>Noticias disponibles</p>
+
+        @if (noticias.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Contenido</th>
+                <th>Editor</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (noticia of noticias; track noticia.id ?? noticia.titulo) {
+                <tr>
+                  <td>{{ noticia.id }}</td>
+                  <td>{{ noticia.titulo }}</td>
+                  <td>{{ noticia.contenido }}</td>
+                  <td>{{ noticia.usuarioEditor }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p class="estado-vacio">No hay noticias disponibles para comentar.</p>
+        }
+      </div>
+    } @else if (vistaActual === 'HOROSCOPOS') {
+      <div class="bloque">
+        <p>Horoscopos disponibles</p>
+
+        @if (horoscopos.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Signo</th>
+                <th>Contenido</th>
+                <th>Editor</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (horoscopo of horoscopos; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+                <tr>
+                  <td>{{ horoscopo.id }}</td>
+                  <td>{{ horoscopo.tipoHoroscopo }}</td>
+                  <td>{{ horoscopo.contenido }}</td>
+                  <td>{{ horoscopo.usuarioEditor }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p class="estado-vacio">No hay horoscopos disponibles para comentar.</p>
+        }
+      </div>
+    } @else {
+      <div class="bloque">
+        <p>Mis comentarios</p>
+
+        @if (comentariosPropios.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Comentario</th>
+                <th>Destino</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (comentario of comentariosPropios; track comentario.id ?? comentario.fecha) {
+                <tr>
+                  <td>{{ comentario.id }}</td>
+                  <td>{{ comentario.contenido }}</td>
+                  <td>
+                    {{ comentario.tipoPublicacion === 'NOTICIA' ? comentario.tituloNoticia : comentario.signoHoroscopo }}
+                  </td>
+                  <td>{{ comentario.fecha | date: 'short' }}</td>
+                  <td>
+                    <button type="button" (click)="editarComentario(comentario)">Editar</button>
+                    <button type="button" class="btn-peligro" (click)="eliminarComentario(comentario)">Eliminar</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p class="estado-vacio">Aun no has realizado comentarios.</p>
+        }
+      </div>
+    }
+  </main>
+</div>

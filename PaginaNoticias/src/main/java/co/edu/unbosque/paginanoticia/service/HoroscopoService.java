@@ -121,6 +121,7 @@ public class HoroscopoService implements CRUDOperation<HoroscopoDTO> {
 	        return 5;
 	    }
 
+	    horoscopo.setTipoHoroscopo(data.getTipoHoroscopo());
 	    horoscopo.setContenido(data.getContenido());
 	    horoscopo.setTipoPublicacion(data.getTipoPublicacion());
 	    horoscopo.setUsuarioEditor(usuarioEditorOpt.get());

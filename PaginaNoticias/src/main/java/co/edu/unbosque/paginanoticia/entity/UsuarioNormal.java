@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarionormal")
+@Table(name = "usuarionormal_taller")
 public class UsuarioNormal extends Usuario{
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;

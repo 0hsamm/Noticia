@@ -12,5 +12,5 @@ public interface HoroscopoRepository extends JpaRepository<Horoscopo, Long> {
 
 	List<Horoscopo> findByUsuarioEditor_Id(Long usuarioEditorId);
 	
-	Optional<Horoscopo> findBySigno(TipoHoroscopo signo);
+	Optional<Horoscopo> findFirstByTipoHoroscopoOrderByIdDesc(TipoHoroscopo tipoHoroscopo);
 }

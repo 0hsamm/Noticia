@@ -1,0 +1,145 @@
+<div class="contenedor">
+  <aside class="menu">
+    <h1>Panel de editor</h1>
+    <p class="menu-subtitulo">Sesion actual: {{ nombreSesion }}</p>
+
+    <button type="button" [class.activo]="vistaActual === 'NOTICIAS'" (click)="cambiarVista('NOTICIAS')">
+      Noticias
+    </button>
+    <button type="button" [class.activo]="vistaActual === 'HOROSCOPOS'" (click)="cambiarVista('HOROSCOPOS')">
+      Horoscopos
+    </button>
+
+    <button type="button" class="btn-cerrar" (click)="cerrarSesion()">
+      Cerrar sesion
+    </button>
+  </aside>
+
+  <main class="contenido">
+    @if (vistaActual === 'NOTICIAS') {
+      <h2>Gestion de noticias</h2>
+
+      <div class="bloque">
+        <p>{{ formularioNoticia.id ? 'Actualizar noticia' : 'Crear noticia' }}</p>
+
+        <input
+          type="text"
+          name="tituloNoticia"
+          [(ngModel)]="formularioNoticia.titulo"
+          placeholder="Titulo de la noticia">
+
+        <textarea
+          name="contenidoNoticia"
+          [(ngModel)]="formularioNoticia.contenido"
+          rows="5"
+          placeholder="Contenido de la noticia">
+        </textarea>
+
+        <button type="button" (click)="guardarNoticia()">
+          {{ formularioNoticia.id ? 'Actualizar' : 'Crear' }}
+        </button>
+
+        @if (formularioNoticia.id) {
+          <button type="button" class="btn-secundario" (click)="cancelarEdicionNoticia()">
+            Cancelar
+          </button>
+        }
+      </div>
+
+      <div class="bloque">
+        <p>Mis noticias</p>
+
+        @if (noticiasPropias.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Contenido</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (noticia of noticiasPropias; track noticia.id ?? noticia.titulo) {
+                <tr>
+                  <td>{{ noticia.id }}</td>
+                  <td>{{ noticia.titulo }}</td>
+                  <td>{{ noticia.contenido }}</td>
+                  <td>
+                    <button type="button" (click)="editarNoticia(noticia)">Editar</button>
+                    <button type="button" class="btn-peligro" (click)="eliminarNoticia(noticia)">Eliminar</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p class="estado-vacio">Aun no has creado noticias.</p>
+        }
+      </div>
+    } @else {
+      <h2>Gestion de horoscopos</h2>
+
+      <div class="bloque">
+        <p>{{ formularioHoroscopo.id ? 'Actualizar horoscopo' : 'Crear horoscopo' }}</p>
+
+        <select
+          name="tipoHoroscopo"
+          [(ngModel)]="formularioHoroscopo.tipoHoroscopo">
+          @for (signo of tiposHoroscopo; track signo) {
+            <option [ngValue]="signo">{{ signo }}</option>
+          }
+        </select>
+
+        <textarea
+          name="contenidoHoroscopo"
+          [(ngModel)]="formularioHoroscopo.contenido"
+          rows="5"
+          placeholder="Contenido del horoscopo">
+        </textarea>
+
+        <button type="button" (click)="guardarHoroscopo()">
+          {{ formularioHoroscopo.id ? 'Actualizar' : 'Crear' }}
+        </button>
+
+        @if (formularioHoroscopo.id) {
+          <button type="button" class="btn-secundario" (click)="cancelarEdicionHoroscopo()">
+            Cancelar
+          </button>
+        }
+      </div>
+
+      <div class="bloque">
+        <p>Mis horoscopos</p>
+
+        @if (horoscoposPropios.length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Signo</th>
+                <th>Contenido</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (horoscopo of horoscoposPropios; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+                <tr>
+                  <td>{{ horoscopo.id }}</td>
+                  <td>{{ horoscopo.tipoHoroscopo }}</td>
+                  <td>{{ horoscopo.contenido }}</td>
+                  <td>
+                    <button type="button" (click)="editarHoroscopo(horoscopo)">Editar</button>
+                    <button type="button" class="btn-peligro" (click)="eliminarHoroscopo(horoscopo)">Eliminar</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p class="estado-vacio">Aun no has creado horoscopos.</p>
+        }
+      </div>
+    }
+  </main>
+</div>
