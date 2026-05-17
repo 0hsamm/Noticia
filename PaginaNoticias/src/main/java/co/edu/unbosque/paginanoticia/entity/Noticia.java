@@ -27,7 +27,7 @@ public class Noticia {
 	private TipoPublicacion tipoPublicacion;
 	
     @ManyToOne
-    @JoinColumn(name = "usuario_comentarista_id")
+    @JoinColumn(name = "usuario_editor_id")
     private UsuarioEditor usuarioEditor; 
 	
 	public Noticia() {

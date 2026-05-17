@@ -81,7 +81,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         }
 
         if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
-            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findBySigno(data.getSignoHoroscopo());
+            Optional<Horoscopo> horoscopoOpt = findHoroscopoForComment(data);
             if (horoscopoOpt.isEmpty()) {
                 return 4;
             }
@@ -155,6 +155,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         }
 
         Comentario comentario = comentarioOpt.get();
+        if (comentario.getComentarista().getId() != comentaristaOpt.get().getId()) {
+            return 6;
+        }
 
         comentario.setContenido(data.getContenido());
         comentario.setTipoPublicacion(data.getTipoPublicacion());
@@ -174,7 +177,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         }
         if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
 
-            Optional<Horoscopo> horoscopoOpt = horoscopoRepo.findBySigno(data.getSignoHoroscopo());
+            Optional<Horoscopo> horoscopoOpt = findHoroscopoForComment(data);
 
             if (horoscopoOpt.isEmpty()) {
                 return 4;
@@ -232,10 +235,23 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         if (comentario.getHoroscopo() != null) {
 
             dto.setSignoHoroscopo(comentario.getHoroscopo().getTipoHoroscopo());
+            dto.setHoroscopoId(comentario.getHoroscopo().getId());
         }
 
         dto.setTipoPublicacion(comentario.getTipoPublicacion());
 
         return dto;
+    }
+
+    private Optional<Horoscopo> findHoroscopoForComment(ComentarioDTO data) {
+        if (data.getHoroscopoId() != null) {
+            return horoscopoRepo.findById(data.getHoroscopoId());
+        }
+
+        if (data.getSignoHoroscopo() == null) {
+            return Optional.empty();
+        }
+
+        return horoscopoRepo.findFirstByTipoHoroscopoOrderByIdDesc(data.getSignoHoroscopo());
     }
 }

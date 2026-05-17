@@ -19,6 +19,8 @@ public class ComentarioDTO {
 	    private String tituloNoticia;
 
 	    private TipoHoroscopo signoHoroscopo;
+	    
+	    private Long horoscopoId;
 
 	    private TipoPublicacion tipoPublicacion;
 
@@ -113,6 +115,16 @@ public class ComentarioDTO {
 		}
 
 
+		public Long getHoroscopoId() {
+			return horoscopoId;
+		}
+
+
+		public void setHoroscopoId(Long horoscopoId) {
+			this.horoscopoId = horoscopoId;
+		}
+
+
 		public TipoPublicacion getTipoPublicacion() {
 			return tipoPublicacion;
 		}
@@ -128,7 +140,7 @@ public class ComentarioDTO {
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(contenido, fecha, id, nombreComentarista, signoHoroscopo, tipoPublicacion,
+			return Objects.hash(contenido, fecha, horoscopoId, id, nombreComentarista, signoHoroscopo, tipoPublicacion,
 					tituloNoticia);
 		}
 
@@ -146,7 +158,8 @@ public class ComentarioDTO {
 				return false;
 			ComentarioDTO other = (ComentarioDTO) obj;
 			return Objects.equals(contenido, other.contenido) && Objects.equals(fecha, other.fecha)
-					&& Objects.equals(id, other.id) && Objects.equals(nombreComentarista, other.nombreComentarista)
+					&& Objects.equals(horoscopoId, other.horoscopoId) && Objects.equals(id, other.id)
+					&& Objects.equals(nombreComentarista, other.nombreComentarista)
 					&& signoHoroscopo == other.signoHoroscopo && tipoPublicacion == other.tipoPublicacion
 					&& Objects.equals(tituloNoticia, other.tituloNoticia);
 		}
@@ -159,7 +172,7 @@ public class ComentarioDTO {
 		public String toString() {
 			return "ComentarioDTO [id=" + id + ", contenido=" + contenido + ", fecha=" + fecha + ", nombreComentarista="
 					+ nombreComentarista + ", tituloNoticia=" + tituloNoticia + ", signoHoroscopo=" + signoHoroscopo
-					+ ", tipoPublicacion=" + tipoPublicacion + "]";
+					+ ", horoscopoId=" + horoscopoId + ", tipoPublicacion=" + tipoPublicacion + "]";
 		}
 
 

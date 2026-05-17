@@ -3,24 +3,24 @@ package co.edu.unbosque.paginanoticia.dto;
 import java.util.List;
 import java.util.Objects;
 
-import co.edu.unbosque.paginanoticia.entity.Noticia;
+import co.edu.unbosque.paginanoticia.entity.Comentario;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
 public class UsuarioComentaristaDTO extends UsuarioDTO{
 	private Long id;
-	private List<Noticia> comentarios;
+	private List<Comentario> comentarios;
 	
 	public UsuarioComentaristaDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioComentaristaDTO(List<Noticia> comentarios) {
+	public UsuarioComentaristaDTO(List<Comentario> comentarios) {
 		super();
 		this.comentarios = comentarios;
 	}
 
 	public UsuarioComentaristaDTO(String nombre, String contrasena, TipoUsuario tipoUsuario,
-			List<Noticia> comentarios) {
+			List<Comentario> comentarios) {
 		super(nombre, contrasena, tipoUsuario);
 		this.comentarios = comentarios;
 	}
@@ -38,11 +38,11 @@ public class UsuarioComentaristaDTO extends UsuarioDTO{
 		this.id = id;
 	}
 
-	public List<Noticia> getComentarios() {
+	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(List<Noticia> comentarios) {
+	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
 

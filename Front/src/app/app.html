@@ -1,0 +1,20 @@
+<div class="app-shell">
+  @if (!sesionValida) {
+    @if (crearCuenta) {
+      <app-sing-in-usuarios (addVolver)="getVolverLogIn()"></app-sing-in-usuarios>
+    } @else {
+      <app-login-usuarios
+        (addEstado)="getEstado($event)"
+        (addCrearCuenta)="getCrearCuenta()">
+      </app-login-usuarios>
+    }
+  } @else if (rolActual === tiposUsuario.ADMIN) {
+    <app-panel-admin (addCerrarSesion)="cerrarSesion()"></app-panel-admin>
+  } @else if (rolActual === tiposUsuario.EDITOR) {
+    <app-panel-editor (addCerrarSesion)="cerrarSesion()"></app-panel-editor>
+  } @else if (rolActual === tiposUsuario.COMENTARISTA) {
+    <app-panel-comentarista (addCerrarSesion)="cerrarSesion()"></app-panel-comentarista>
+  } @else {
+    <app-panel-usuario-normal (addCerrarSesion)="cerrarSesion()"></app-panel-usuario-normal>
+  }
+</div>

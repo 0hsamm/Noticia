@@ -122,6 +122,7 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	        return 5;
 	    }
 
+	    noticia.setTitulo(data.getTitulo());
 	    noticia.setContenido(data.getContenido());
 	    noticia.setTipoPublicacion(data.getTipoPublicacion());
 	    noticia.setUsuarioEditor(usuarioOpt.get());
@@ -139,13 +140,13 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 		return noticiaRepo.existsById(id);
 	}
 
-	public List<NoticiaDTO> getByUsuarioComentarista(Long usuarioComentaristaId) {
-		if (!usuarioEditorRepo.existsById(usuarioComentaristaId)) {
+	public List<NoticiaDTO> getByUsuarioEditor(Long usuarioEditorId) {
+		if (!usuarioEditorRepo.existsById(usuarioEditorId)) {
 			return null;
 		}
 
 		List<NoticiaDTO> dtoList = new ArrayList<>();
-		noticiaRepo.findByUsuarioComentarista_Id(usuarioComentaristaId)
+		noticiaRepo.findByUsuarioEditor_Id(usuarioEditorId)
 				.forEach(comentario -> dtoList.add(toDto(comentario)));
 		return dtoList;
 	}

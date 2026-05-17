@@ -71,6 +71,13 @@ public class AuthController {
 		if (result == 0) {
 			return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado exitosamente");
 		}
+		if (result == 1) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El nombre no puede estar vacio");
+		}
+		if (result == 2) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("La contrasena debe tener al menos 8 caracteres");
+		}
 		if (result == 3) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("El nombre de usuario ya existe");
 		}
