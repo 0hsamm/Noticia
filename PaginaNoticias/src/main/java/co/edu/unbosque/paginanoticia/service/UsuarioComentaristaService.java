@@ -7,10 +7,13 @@ import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
 import co.edu.unbosque.paginanoticia.exception.InvalidPasswordException;
 import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
+import co.edu.unbosque.paginanoticia.repository.ComentarioRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
+import jakarta.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,9 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 
 	@Autowired
 	private UsuarioNormalRepository usuarioNormalRepo;
+	
+	@Autowired
+	private ComentarioRepository comentarioRepo;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -102,12 +108,14 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 	    if (adminOpt.isEmpty()) {
 	        return 2;
 	    }
+	    comentarioRepo.deleteByComentaristaId(id);
 
 	    usuarioComentaristaRepo.delete(encontrado.get());
 	    return 0;
 	}
 
 	@Override
+	@Transactional
 	public int updateById(Long id, UsuarioComentaristaDTO data) {
 
 	    Optional<UsuarioComentarista> encontrado = usuarioComentaristaRepo.findById(id);

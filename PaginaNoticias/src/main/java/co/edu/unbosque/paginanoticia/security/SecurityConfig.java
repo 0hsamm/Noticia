@@ -52,7 +52,8 @@ public class SecurityConfig {
 								.requestMatchers(
 										HttpMethod.GET,
 										"/usuarioadministrador/mostrartodo",
-										"/usuarionormal/mostrartodo")
+										"/usuarionormal/mostrartodo"
+										)
 								.hasRole("ADMIN")
 								.requestMatchers(
 										HttpMethod.POST,

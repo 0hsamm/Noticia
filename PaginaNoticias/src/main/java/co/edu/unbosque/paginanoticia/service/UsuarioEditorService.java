@@ -7,10 +7,14 @@ import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.exception.EmptyWordException;
 import co.edu.unbosque.paginanoticia.exception.InvalidPasswordException;
 import co.edu.unbosque.paginanoticia.exception.LanzadorDeExcepcion;
+import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
+import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
+import jakarta.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +45,12 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private NoticiaRepository noticiaRepo;
+
+	@Autowired
+	private HoroscopoRepository horoscopoRepo;
 
 	@Override
 	public int create(UsuarioEditorDTO data) {
@@ -85,6 +95,7 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	}
 
 	@Override
+    @Transactional
 	public int deleteById(Long id) {
 
 	    Optional<UsuarioEditor> encontrado = usuarioEditorRepo.findById(id);
@@ -101,6 +112,10 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	        return 2;
 	    }
 
+	    noticiaRepo.deleteByEditorId(id);
+	    
+	    horoscopoRepo.deleteByEditorId(id);
+	    
 	    usuarioEditorRepo.delete(encontrado.get());
 	    return 0;
 	}
