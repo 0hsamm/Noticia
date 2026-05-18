@@ -1,13 +1,21 @@
 package co.edu.unbosque.paginanoticia;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
-@SpringBootTest
-class PaginanoticiaApplicationTests {
+@SpringBootApplication
+public class PaginanoticiaApplicationTests {
 
-	@Test
-	void contextLoads() {
+	public static void main(String[] args) {
+		SpringApplication.run(PaginanoticiaApplication.class, args);
 	}
 
+	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
+		
+	}
+	
 }
