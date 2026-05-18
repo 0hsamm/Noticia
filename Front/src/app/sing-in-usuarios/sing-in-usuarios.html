@@ -1,0 +1,32 @@
+<div id="contenedor-login">
+  <div id="card-login">
+    <h1>Crear cuenta</h1>
+    <p class="subtitulo">Completa tus datos para registrarte.</p>
+
+    <form (ngSubmit)="registrarUsuario()">
+      <label for="nuevo-nombre">Usuario</label>
+      <input
+        id="nuevo-nombre"
+        type="text"
+        name="nuevoNombre"
+        [(ngModel)]="nombre"
+        placeholder="Ingresa un nombre de usuario">
+
+      <label for="nueva-contrasena">Contrasena</label>
+      <input
+        id="nueva-contrasena"
+        type="password"
+        name="nuevaContrasena"
+        [(ngModel)]="contrasena"
+        placeholder="Ingresa tu contrasena">
+
+      <button type="submit" class="btn-principal" [disabled]="cargando">
+        {{ cargando ? 'Registrando...' : 'Crear cuenta' }}
+      </button>
+
+      <button type="button" class="btn-secundario" (click)="volver()">
+        Volver al login
+      </button>
+    </form>
+  </div>
+</div>

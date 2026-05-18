@@ -1,0 +1,14 @@
+export enum TipoHoroscopo {
+  ARIES = 'ARIES',
+  TAURO = 'TAURO',
+  GEMINIS = 'GEMINIS',
+  CANCER = 'CANCER',
+  LEO = 'LEO',
+  VIRGO = 'VIRGO',
+  LIBRA = 'LIBRA',
+  ESCORPIO = 'ESCORPIO',
+  SAGITARIO = 'SAGITARIO',
+  CAPRICORNIO = 'CAPRICORNIO',
+  ACUARIO = 'ACUARIO',
+  PISCIS = 'PISCIS',
+}

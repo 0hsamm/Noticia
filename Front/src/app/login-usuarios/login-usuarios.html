@@ -1,0 +1,32 @@
+<div id="contenedor-login">
+  <div id="card-login">
+    <h1>Pagina de Noticias</h1>
+    <p class="subtitulo">Inicia sesion para continuar.</p>
+
+    <form (ngSubmit)="iniciarSesion()">
+      <label for="nombre">Usuario</label>
+      <input
+        id="nombre"
+        type="text"
+        name="nombre"
+        [(ngModel)]="nombre"
+        placeholder="Ingresa tu nombre de usuario">
+
+      <label for="contrasena">Contrasena</label>
+      <input
+        id="contrasena"
+        type="password"
+        name="contrasena"
+        [(ngModel)]="contrasena"
+        placeholder="Ingresa tu contrasena">
+
+      <button type="submit" class="btn-principal" [disabled]="cargando">
+        {{ cargando ? 'Ingresando...' : 'Iniciar sesion' }}
+      </button>
+
+      <button type="button" class="btn-secundario" (click)="mostrarRegistro()">
+        Crear cuenta
+      </button>
+    </form>
+  </div>
+</div>

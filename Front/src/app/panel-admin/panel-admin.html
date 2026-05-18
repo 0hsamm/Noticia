@@ -1,0 +1,97 @@
+<div class="contenedor">
+  <aside class="menu">
+    <h1>Panel de administrador</h1>
+    <p class="menu-subtitulo">Sesion actual: {{ nombreSesion }}</p>
+
+    <button type="button" [class.activo]="seccionActual === tiposUsuario.EDITOR" (click)="cambiarSeccion(tiposUsuario.EDITOR)">
+      Editores
+    </button>
+    <button type="button" [class.activo]="seccionActual === tiposUsuario.COMENTARISTA" (click)="cambiarSeccion(tiposUsuario.COMENTARISTA)">
+      Comentaristas
+    </button>
+    <button type="button" [class.activo]="seccionActual === tiposUsuario.ADMIN" (click)="cambiarSeccion(tiposUsuario.ADMIN)">
+      Administradores
+    </button>
+    <button type="button" [class.activo]="seccionActual === tiposUsuario.USUARIO" (click)="cambiarSeccion(tiposUsuario.USUARIO)">
+      Usuarios
+    </button>
+
+    <button type="button" class="btn-cerrar" (click)="cerrarSesion()">
+      Cerrar sesion
+    </button>
+  </aside>
+
+  <main class="contenido">
+    <h2>{{ tituloSeccion }}</h2>
+
+    @if (permiteGestion) {
+      <div class="bloque">
+        <p>{{ formulario.id ? 'Actualizar usuario' : 'Crear nuevo usuario' }}</p>
+
+        <div class="grid-form">
+          <input
+            type="text"
+            name="nombreUsuario"
+            [(ngModel)]="formulario.nombre"
+            placeholder="Nombre de usuario">
+
+          <input
+            type="password"
+            name="contrasenaUsuario"
+            [(ngModel)]="formulario.contrasena"
+            placeholder="Contrasena">
+        </div>
+
+        <button type="button" (click)="guardarUsuario()">
+          {{ formulario.id ? 'Actualizar' : 'Crear' }}
+        </button>
+
+        @if (formulario.id) {
+          <button type="button" class="btn-secundario" (click)="cancelarEdicion()">
+            Cancelar
+          </button>
+        }
+      </div>
+    } @else {
+      <div class="bloque">
+        <p>Vista de solo consulta para verificar todas las cuentas registradas.</p>
+      </div>
+    }
+
+    <div class="bloque">
+      <p>Usuarios registrados</p>
+
+      @if (usuariosActuales.length > 0) {
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              @if (permiteGestion) {
+                <th>Acciones</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (usuario of usuariosActuales; track usuario.id ?? usuario.nombre) {
+              <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.tipoUsuario }}</td>
+                @if (permiteGestion) {
+                  <td>
+                    <button type="button" (click)="editarUsuario(usuario)">Editar</button>
+                    <button type="button" class="btn-peligro" (click)="eliminarUsuario(usuario)">Eliminar</button>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <p class="estado-vacio">No hay usuarios registrados en esta seccion.</p>
+      }
+    </div>
+  </main>
+</div>
