@@ -34,6 +34,12 @@ export class PanelUsuarioNormal implements OnInit {
     this.cargarComentarios();
   }
 
+  refrescarPanel(): void {
+    this.cargarNoticias();
+    this.cargarHoroscopos();
+    this.cargarComentarios();
+  }
+
   cerrarSesion(): void {
     this.authService.postCerrarSesion().subscribe(() => {
       this.toastr.info('Sesion cerrada', 'Informacion');

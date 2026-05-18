@@ -51,10 +51,18 @@
             Cancelar
           </button>
         }
+
+        <button type="button" class="btn-secundario" (click)="refrescarPanel()">
+          Refrescar
+        </button>
       </div>
     } @else {
       <div class="bloque">
         <p>Vista de solo consulta para verificar todas las cuentas registradas.</p>
+
+        <button type="button" class="btn-secundario" (click)="refrescarPanel()">
+          Refrescar
+        </button>
       </div>
     }
 

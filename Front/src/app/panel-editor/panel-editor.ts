@@ -48,6 +48,11 @@ export class PanelEditor implements OnInit {
     this.vistaActual = vista;
   }
 
+  refrescarPanel(): void {
+    this.cargarNoticias();
+    this.cargarHoroscopos();
+  }
+
   guardarNoticia(): void {
     if (!this.formularioNoticia.titulo.trim() || !this.formularioNoticia.contenido.trim()) {
       this.toastr.warning('Debes completar titulo y contenido.', 'Campos requeridos');

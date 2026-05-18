@@ -76,6 +76,10 @@ export class PanelAdmin implements OnInit {
     this.cargarSeccionActiva();
   }
 
+  refrescarPanel(): void {
+    this.cargarSeccionActiva();
+  }
+
   guardarUsuario(): void {
     if (!this.permiteGestion) {
       return;

@@ -58,6 +58,12 @@ export class PanelComentarista implements OnInit {
     this.asignarDestinoPorDefecto();
   }
 
+  refrescarPanel(): void {
+    this.cargarNoticias();
+    this.cargarHoroscopos();
+    this.cargarComentarios();
+  }
+
   guardarComentario(): void {
     if (!this.formulario.contenido.trim()) {
       this.toastr.warning('Debes escribir el comentario.', 'Campos requeridos');
