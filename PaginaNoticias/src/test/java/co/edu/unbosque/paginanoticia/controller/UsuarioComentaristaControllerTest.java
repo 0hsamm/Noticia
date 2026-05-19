@@ -20,6 +20,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Clase de prueba para el controlador de usuarios comentaristas.
+ * Permite validar la creación, actualización, eliminación y consulta de usuarios comentaristas,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class UsuarioComentaristaControllerTest {
 
     @Mock
@@ -28,11 +33,17 @@ class UsuarioComentaristaControllerTest {
     @InjectMocks
     private UsuarioComentaristaController usuarioComentaristaController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida la creación correcta de un usuario comentarista.
+     */
     @Test
     void testCrearUsuarioComentaristaCorrectamente() {
 
@@ -51,6 +62,9 @@ class UsuarioComentaristaControllerTest {
                 response.getBody());
     }
 
+    /**
+     * Prueba que valida la creación de un usuario comentarista con nombre vacío.
+     */
     @Test
     void testCrearUsuarioComentaristaNombreVacio() {
 
@@ -66,6 +80,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de usuarios comentaristas cuando hay contenido.
+     */
     @Test
     void testObtenerTodoConContenido() {
 
@@ -86,6 +103,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de usuarios comentaristas cuando no hay registros.
+     */
     @Test
     void testObtenerTodoVacio() {
 
@@ -98,6 +118,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la actualización correcta de un usuario comentarista.
+     */
     @Test
     void testActualizarUsuarioComentaristaCorrectamente() {
 
@@ -116,6 +139,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el usuario comentarista no existe.
+     */
     @Test
     void testActualizarUsuarioComentaristaNoExiste() {
 
@@ -134,6 +160,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la eliminación correcta de un usuario comentarista.
+     */
     @Test
     void testEliminarUsuarioComentaristaCorrectamente() {
 
@@ -146,6 +175,9 @@ class UsuarioComentaristaControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el usuario comentarista no existe.
+     */
     @Test
     void testEliminarUsuarioComentaristaNoExiste() {
 

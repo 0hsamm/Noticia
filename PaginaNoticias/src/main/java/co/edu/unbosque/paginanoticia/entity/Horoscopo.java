@@ -14,50 +14,58 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad que representa un horóscopo dentro del sistema.
+ * Cada horóscopo está asociado a un usuario editor.
+ */
 @Entity
 @Table(name = "horoscopos")
 public class Horoscopo {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
-	
+
 	private TipoHoroscopo tipoHoroscopo;
+
 	private String contenido;
 
 	@Enumerated(EnumType.STRING)
 	private TipoPublicacion tipoPublicacion;
-	
-    @ManyToOne
-    @JoinColumn(name = "usuario_editor_id")
-    private UsuarioEditor usuarioEditor; 
-	
+
+	/**
+	 * Relación muchos a uno con UsuarioEditor.
+	 * Un editor puede crear múltiples horóscopos.
+	 */
+	@ManyToOne
+	@JoinColumn(name = "usuario_editor_id")
+	private UsuarioEditor usuarioEditor;
+
 	public Horoscopo() {
-		// TODO Auto-generated constructor stub
 	}
 
-	
-
+	/**
+	 * Constructor que inicializa los datos principales de un horóscopo.
+	 *
+	 * @param tipoHoroscopo tipo de horóscopo
+	 * @param contenido contenido del horóscopo
+	 * @param tipoPublicacion tipo de publicación del horóscopo
+	 * @param usuarioEditor usuario editor responsable
+	 */
 	public Horoscopo(TipoHoroscopo tipoHoroscopo, String contenido, TipoPublicacion tipoPublicacion,
 			UsuarioEditor usuarioEditor) {
-		super();
+
 		this.tipoHoroscopo = tipoHoroscopo;
 		this.contenido = contenido;
 		this.tipoPublicacion = tipoPublicacion;
 		this.usuarioEditor = usuarioEditor;
 	}
 
-
-
 	public TipoHoroscopo getTipoHoroscopo() {
 		return tipoHoroscopo;
 	}
 
-
-
 	public void setTipoHoroscopo(TipoHoroscopo tipoHoroscopo) {
 		this.tipoHoroscopo = tipoHoroscopo;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -91,14 +99,10 @@ public class Horoscopo {
 		this.usuarioEditor = usuarioEditor;
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(contenido, id, tipoHoroscopo, tipoPublicacion, usuarioEditor);
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -109,20 +113,16 @@ public class Horoscopo {
 		if (getClass() != obj.getClass())
 			return false;
 		Horoscopo other = (Horoscopo) obj;
-		return Objects.equals(contenido, other.contenido) && id == other.id && tipoHoroscopo == other.tipoHoroscopo
-				&& tipoPublicacion == other.tipoPublicacion && Objects.equals(usuarioEditor, other.usuarioEditor);
+		return Objects.equals(contenido, other.contenido)
+				&& id == other.id
+				&& tipoHoroscopo == other.tipoHoroscopo
+				&& tipoPublicacion == other.tipoPublicacion
+				&& Objects.equals(usuarioEditor, other.usuarioEditor);
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "Horoscopo [id=" + id + ", tipoHoroscopo=" + tipoHoroscopo + ", contenido=" + contenido
 				+ ", tipoPublicacion=" + tipoPublicacion + ", usuarioEditor=" + usuarioEditor + "]";
 	}
-
-	
-	
-	
-	
 }

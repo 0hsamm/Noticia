@@ -26,6 +26,11 @@ import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
 
+/**
+ * Clase de prueba para el servicio de usuario comentarista.
+ * Permite validar la lógica de creación, actualización y eliminación
+ * bajo distintos escenarios de negocio y validaciones de permisos.
+ */
 @ExtendWith(MockitoExtension.class)
 class UsuarioComentaristaServiceTest {
 
@@ -50,6 +55,9 @@ class UsuarioComentaristaServiceTest {
     @InjectMocks
     private UsuarioComentaristaService service;
 
+    /**
+     * Configuración inicial del contexto de seguridad antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
 
@@ -58,7 +66,10 @@ class UsuarioComentaristaServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador no existe.
+     */
     @Test
     void deberiaRetornar4SiAdminNoExiste() {
 
@@ -71,7 +82,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el nombre está vacío.
+     */
     @Test
     void deberiaRetornar1SiNombreEsVacio() {
 
@@ -87,7 +101,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que la contraseña es inválida.
+     */
     @Test
     void deberiaRetornar2SiContrasenaEsInvalida() {
 
@@ -104,7 +121,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el nombre ya existe.
+     */
     @Test
     void deberiaRetornar3SiNombreYaExiste() {
 
@@ -124,7 +144,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la creación correcta de un comentarista.
+     */
     @Test
     void deberiaCrearComentaristaCorrectamente() {
 
@@ -152,7 +175,10 @@ class UsuarioComentaristaServiceTest {
         verify(usuarioComentaristaRepo)
                 .save(any(UsuarioComentarista.class));
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el comentarista no existe al eliminar.
+     */
     @Test
     void deberiaRetornar1SiComentaristaNoExiste() {
 
@@ -163,7 +189,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador no existe al eliminar.
+     */
     @Test
     void deberiaRetornar2SiAdminNoExisteEnDelete() {
 
@@ -179,7 +208,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la eliminación correcta de un comentarista.
+     */
     @Test
     void deberiaEliminarComentaristaCorrectamente() {
 
@@ -199,7 +231,10 @@ class UsuarioComentaristaServiceTest {
 
         verify(usuarioComentaristaRepo).delete(comentarista);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el comentarista no existe al actualizar.
+     */
     @Test
     void deberiaRetornar4SiComentaristaNoExisteEnUpdate() {
 
@@ -212,7 +247,10 @@ class UsuarioComentaristaServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la actualización correcta de un comentarista.
+     */
     @Test
     void deberiaActualizarComentaristaCorrectamente() {
 

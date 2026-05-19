@@ -24,6 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Servicio encargado de la gestión de usuarios comentaristas.
+ * Permite crear, actualizar, eliminar y consultar comentaristas,
+ * validando autenticación, unicidad de nombre y reglas de seguridad de contraseña.
+ */
 @Service
 public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentaristaDTO> {
 
@@ -47,15 +52,18 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	
+
+	/**
+	 * Crea un nuevo usuario comentarista validando que el usuario autenticado
+	 * sea un administrador y que los datos cumplan las reglas de negocio.
+	 */
 	@Override
 	public int create(UsuarioComentaristaDTO data) {
 
-	    Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username = auth.getName();
 	    Optional<UsuarioAdministrador> adminOpt = usuarioAdministradorRepo.findByNombre(username);
-	    
+
 	    if (adminOpt.isEmpty()) {
 	        return 4;
 	    }
@@ -82,8 +90,10 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 	    usuarioComentaristaRepo.save(usuarioComentarista);
 	    return 0;
 	}
-	    
 
+	/**
+	 * Obtiene todos los usuarios comentaristas registrados en el sistema.
+	 */
 	@Override
 	public List<UsuarioComentaristaDTO> getAll() {
 		List<UsuarioComentarista> entityList = usuarioComentaristaRepo.findAll();
@@ -92,6 +102,10 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 		return dtoList;
 	}
 
+	/**
+	 * Elimina un usuario comentarista validando su existencia y el rol de administrador.
+	 * También elimina los comentarios asociados al usuario.
+	 */
 	@Override
 	public int deleteById(Long id) {
 
@@ -108,12 +122,16 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 	    if (adminOpt.isEmpty()) {
 	        return 2;
 	    }
-	    comentarioRepo.deleteByComentaristaId(id);
 
+	    comentarioRepo.deleteByComentaristaId(id);
 	    usuarioComentaristaRepo.delete(encontrado.get());
 	    return 0;
 	}
 
+	/**
+	 * Actualiza un usuario comentarista validando autenticación de administrador,
+	 * unicidad del nombre y reglas de contraseña.
+	 */
 	@Override
 	@Transactional
 	public int updateById(Long id, UsuarioComentaristaDTO data) {
@@ -136,14 +154,13 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
 		} catch (EmptyWordException e) {
 			return 1;
-
 		}
+
 	    try {
 			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
 		} catch (InvalidPasswordException e) {
 			return 2;
 		}
-	    
 
 	    if (!encontrado.get().getNombre().equals(data.getNombre()) && findNombreAlreadyTaken(data.getNombre())) {
 	        return 3;
@@ -167,6 +184,9 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 		return usuarioComentaristaRepo.existsById(id);
 	}
 
+	/**
+	 * Verifica si un nombre de usuario ya está registrado en cualquier tipo de usuario del sistema.
+	 */
 	private boolean findNombreAlreadyTaken(String nombre) {
 		return usuarioComentaristaRepo.findByNombre(nombre).isPresent()
 				|| usuarioAdministradorRepo.findByNombre(nombre).isPresent()
@@ -174,6 +194,9 @@ public class UsuarioComentaristaService implements CRUDOperation<UsuarioComentar
 				|| usuarioNormalRepo.findByNombre(nombre).isPresent();
 	}
 
+	/**
+	 * Convierte una entidad UsuarioComentarista a su DTO correspondiente.
+	 */
 	private UsuarioComentaristaDTO toDto(UsuarioComentarista entity) {
 		UsuarioComentaristaDTO dto = mapper.map(entity, UsuarioComentaristaDTO.class);
 		dto.setContrasena(null);

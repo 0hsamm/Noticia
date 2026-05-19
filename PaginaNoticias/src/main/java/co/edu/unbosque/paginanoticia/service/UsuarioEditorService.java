@@ -25,6 +25,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Servicio encargado de la gestión de usuarios editores.
+ * Permite crear, actualizar, eliminar y consultar editores,
+ * validando autenticación de administrador, unicidad de nombre
+ * y reglas de seguridad de contraseña.
+ */
 @Service
 public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	
@@ -52,6 +58,10 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	@Autowired
 	private HoroscopoRepository horoscopoRepo;
 
+	/**
+	 * Crea un nuevo usuario editor validando autenticación de administrador,
+	 * nombre único y requisitos de contraseña.
+	 */
 	@Override
 	public int create(UsuarioEditorDTO data) {
 
@@ -62,7 +72,7 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	    if (adminOpt.isEmpty()) {
 	        return 4;
 	    }
-	    
+
 	    try {
 			LanzadorDeExcepcion.verificarPalabraVacia(data.getNombre());
 		} catch (EmptyWordException e) {
@@ -86,6 +96,9 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	    return 0;
 	}
 
+	/**
+	 * Obtiene todos los usuarios editores registrados en el sistema.
+	 */
 	@Override
 	public List<UsuarioEditorDTO> getAll() {
 		List<UsuarioEditor> entityList = usuarioEditorRepo.findAll();
@@ -94,8 +107,12 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Elimina un usuario editor validando su existencia y rol de administrador.
+	 * También elimina noticias y horóscopos asociados al editor.
+	 */
 	@Override
-    @Transactional
+	@Transactional
 	public int deleteById(Long id) {
 
 	    Optional<UsuarioEditor> encontrado = usuarioEditorRepo.findById(id);
@@ -113,13 +130,15 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 	    }
 
 	    noticiaRepo.deleteByEditorId(id);
-	    
 	    horoscopoRepo.deleteByEditorId(id);
-	    
 	    usuarioEditorRepo.delete(encontrado.get());
 	    return 0;
 	}
 
+	/**
+	 * Actualiza un usuario editor validando autenticación,
+	 * unicidad del nombre y seguridad de la contraseña.
+	 */
 	@Override
 	public int updateById(Long id, UsuarioEditorDTO data) {
 
@@ -142,6 +161,7 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 		} catch (EmptyWordException e) {
 			return 1;
 		}
+
 	    try {
 	    	LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());			
 		} catch (InvalidPasswordException e) {
@@ -170,6 +190,9 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 		return usuarioEditorRepo.existsById(id);
 	}
 
+	/**
+	 * Verifica si un nombre de usuario ya existe en cualquier tipo de usuario del sistema.
+	 */
 	private boolean findNombreAlreadyTaken(String nombre) {
 		return usuarioEditorRepo.findByNombre(nombre).isPresent()
 				|| usuarioAdministradorRepo.findByNombre(nombre).isPresent()
@@ -177,6 +200,9 @@ public class UsuarioEditorService implements CRUDOperation<UsuarioEditorDTO> {
 				|| usuarioNormalRepo.findByNombre(nombre).isPresent();
 	}
 
+	/**
+	 * Convierte una entidad UsuarioEditor a su DTO correspondiente.
+	 */
 	private UsuarioEditorDTO toDto(UsuarioEditor entity) {
 		UsuarioEditorDTO dto = mapper.map(entity, UsuarioEditorDTO.class);
 		dto.setContrasena(null);

@@ -22,6 +22,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Clase de prueba para el controlador de comentarios.
+ * Permite validar la creación, actualización, eliminación y consulta de comentarios,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class ComentarioControllerTest {
 
     @Mock
@@ -30,11 +35,17 @@ class ComentarioControllerTest {
     @InjectMocks
     private ComentarioController comentarioController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida la creación correcta de un comentario.
+     */
     @Test
     void testCrearComentarioCorrectamente() {
 
@@ -54,6 +65,9 @@ class ComentarioControllerTest {
         assertEquals("Comentario creado correctamente", response.getBody());
     }
 
+    /**
+     * Prueba que valida la creación de un comentario con contenido vacío.
+     */
     @Test
     void testCrearComentarioContenidoVacio() {
 
@@ -73,6 +87,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la eliminación correcta de un comentario.
+     */
     @Test
     void testDeleteCorrectamente() {
 
@@ -85,6 +102,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el comentario a eliminar no existe.
+     */
     @Test
     void testDeleteComentarioNoExiste() {
 
@@ -97,6 +117,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la actualización correcta de un comentario.
+     */
     @Test
     void testActualizarComentarioCorrectamente() {
 
@@ -119,6 +142,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el comentario a actualizar no existe.
+     */
     @Test
     void testActualizarComentarioNoExiste() {
 
@@ -141,6 +167,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de comentarios cuando existen registros.
+     */
     @Test
     void testObtenerTodoConContenido() {
 
@@ -164,6 +193,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de comentarios cuando no existen registros.
+     */
     @Test
     void testObtenerTodoVacio() {
 
@@ -176,6 +208,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de comentarios por noticia cuando hay contenido.
+     */
     @Test
     void testGetByNoticiaConContenido() {
 
@@ -199,6 +234,9 @@ class ComentarioControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de comentarios por horóscopo cuando no hay registros.
+     */
     @Test
     void testGetByHoroscopoVacio() {
 

@@ -20,6 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Servicio encargado de la gestión de usuarios administradores.
+ * Permite crear, actualizar, eliminar y consultar administradores,
+ * validando reglas de negocio como autenticación, unicidad de nombre
+ * y seguridad de la contraseña.
+ */
 @Service
 public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdministradorDTO> {
 
@@ -41,6 +47,10 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 * Crea un nuevo usuario administrador validando autenticación,
+	 * nombre único y tamaño de contraseña.
+	 */
 	@Override
 	public int create(UsuarioAdministradorDTO data) {
 
@@ -67,6 +77,7 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	    if (findNombreAlreadyTaken(data.getNombre())) {
 	        return 3;
 	    }
+
 	    UsuarioAdministrador usuarioAdministrador = mapper.map(data, UsuarioAdministrador.class);
 	    usuarioAdministrador.setContrasena(passwordEncoder.encode(data.getContrasena()));
 	    usuarioAdministrador.setTipoUsuario(TipoUsuario.ADMIN);
@@ -74,6 +85,9 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	    return 0;
 	}
 
+	/**
+	 * Obtiene todos los usuarios administradores registrados en el sistema.
+	 */
 	@Override
 	public List<UsuarioAdministradorDTO> getAll() {
 		List<UsuarioAdministrador> entityList = usuarioAdministradorRepo.findAll();
@@ -82,6 +96,9 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 		return dtoList;
 	}
 
+	/**
+	 * Elimina un administrador validando su existencia y que el usuario autenticado sea el mismo.
+	 */
 	@Override
 	public int deleteById(Long id) {
 
@@ -107,6 +124,10 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 	    return 0;
 	}
 
+	/**
+	 * Actualiza un usuario administrador validando autenticación,
+	 * unicidad del nombre y seguridad de la contraseña.
+	 */
 	@Override
 	public int updateById(Long id, UsuarioAdministradorDTO data) {
 
@@ -133,6 +154,7 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 		} catch (EmptyWordException e) {
 			return 1;
 		}
+
 	    try {
 			LanzadorDeExcepcion.verificarTamanoContrasena(data.getContrasena());
 		} catch (InvalidPasswordException e) {
@@ -160,6 +182,9 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 		return usuarioAdministradorRepo.existsById(id);
 	}
 
+	/**
+	 * Verifica si un nombre de usuario ya existe en cualquier tipo de usuario del sistema.
+	 */
 	private boolean findNombreAlreadyTaken(String nombre) {
 		return usuarioAdministradorRepo.findByNombre(nombre).isPresent()
 				|| usuarioEditorRepo.findByNombre(nombre).isPresent()
@@ -167,6 +192,9 @@ public class UsuarioAdministradorService implements CRUDOperation<UsuarioAdminis
 				|| usuarioNormalRepo.findByNombre(nombre).isPresent();
 	}
 
+	/**
+	 * Convierte una entidad UsuarioAdministrador a su DTO correspondiente.
+	 */
 	private UsuarioAdministradorDTO toDto(UsuarioAdministrador entity) {
 		UsuarioAdministradorDTO dto = mapper.map(entity, UsuarioAdministradorDTO.class);
 		dto.setContrasena(null);

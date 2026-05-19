@@ -13,12 +13,21 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * Filtro encargado de interceptar cada petición HTTP para validar la autenticación basada en JWT.
+ * Se encarga de extraer el token desde el header Authorization, validar su contenido
+ * y, si es correcto, establecer la autenticación del usuario en el contexto de seguridad.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtUtil jwtUtil;
 	private final UserDetailsService userDetailsService;
 
+	/**
+	 * Constructor que inicializa las dependencias necesarias para la validación del JWT
+	 * y la carga de los detalles del usuario.
+	 */
 	public JwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
 		this.jwtUtil = jwtUtil;
 		this.userDetailsService = userDetailsService;

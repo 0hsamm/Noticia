@@ -26,6 +26,11 @@ import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
 import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 
+/**
+ * Clase de prueba para el servicio de comentarios.
+ * Permite validar la lógica de creación, eliminación y actualización de comentarios,
+ * verificando los diferentes casos de negocio.
+ */
 @ExtendWith(MockitoExtension.class)
 class ComentarioServiceTest {
 
@@ -47,6 +52,9 @@ class ComentarioServiceTest {
     @InjectMocks
     private ComentarioService service;
 
+    /**
+     * Configuración inicial del contexto de seguridad antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
 
@@ -55,7 +63,10 @@ class ComentarioServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el contenido del comentario está vacío.
+     */
     @Test
     void deberiaRetornar1SiContenidoEsVacio() {
 
@@ -66,7 +77,10 @@ class ComentarioServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el usuario comentarista no existe.
+     */
     @Test
     void deberiaRetornar2SiUsuarioNoExiste() {
 
@@ -80,7 +94,10 @@ class ComentarioServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que la noticia no existe.
+     */
     @Test
     void deberiaRetornar3SiNoticiaNoExiste() {
 
@@ -101,7 +118,10 @@ class ComentarioServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la creación correcta de un comentario.
+     */
     @Test
     void deberiaCrearComentarioCorrectamente() {
 
@@ -127,8 +147,10 @@ class ComentarioServiceTest {
 
         verify(comentarioRepo).save(org.mockito.ArgumentMatchers.any(Comentario.class));
     }
-    
-    
+
+    /**
+     * Prueba que valida el caso en el que el comentario no existe al eliminar.
+     */
     @Test
     void deberiaRetornar1SiComentarioNoExiste() {
 
@@ -139,7 +161,10 @@ class ComentarioServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el comentario no existe al actualizar.
+     */
     @Test
     void deberiaRetornar5SiComentarioNoExisteEnUpdate() {
 

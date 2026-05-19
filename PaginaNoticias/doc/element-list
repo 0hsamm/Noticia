@@ -1,0 +1,10 @@
+co.edu.unbosque.paginanoticia
+co.edu.unbosque.paginanoticia.configuration
+co.edu.unbosque.paginanoticia.controller
+co.edu.unbosque.paginanoticia.dto
+co.edu.unbosque.paginanoticia.entity
+co.edu.unbosque.paginanoticia.enums
+co.edu.unbosque.paginanoticia.exception
+co.edu.unbosque.paginanoticia.repository
+co.edu.unbosque.paginanoticia.security
+co.edu.unbosque.paginanoticia.service

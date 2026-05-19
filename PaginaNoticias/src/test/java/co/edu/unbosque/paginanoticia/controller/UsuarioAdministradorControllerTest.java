@@ -20,6 +20,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Clase de prueba para el controlador de usuarios administradores.
+ * Permite validar la creación, actualización, eliminación y consulta de usuarios administradores,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class UsuarioAdministradoControllerTest {
 
     @Mock
@@ -28,11 +33,17 @@ class UsuarioAdministradoControllerTest {
     @InjectMocks
     private UsuarioAdministradoController usuarioAdministradoController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida la creación correcta de un usuario administrador.
+     */
     @Test
     void testCrearUsuarioAdministradorCorrectamente() {
 
@@ -51,6 +62,9 @@ class UsuarioAdministradoControllerTest {
                 response.getBody());
     }
 
+    /**
+     * Prueba que valida la creación de un usuario administrador con nombre vacío.
+     */
     @Test
     void testCrearUsuarioAdministradorNombreVacio() {
 
@@ -66,6 +80,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de usuarios administradores cuando hay contenido.
+     */
     @Test
     void testObtenerTodoConContenido() {
 
@@ -86,6 +103,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de usuarios administradores cuando no hay registros.
+     */
     @Test
     void testObtenerTodoVacio() {
 
@@ -98,6 +118,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la actualización correcta de un usuario administrador.
+     */
     @Test
     void testActualizarAdministradorCorrectamente() {
 
@@ -116,6 +139,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el usuario administrador no existe.
+     */
     @Test
     void testActualizarAdministradorNoExiste() {
 
@@ -134,6 +160,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la eliminación correcta de un usuario administrador.
+     */
     @Test
     void testEliminarAdministradorCorrectamente() {
 
@@ -146,6 +175,9 @@ class UsuarioAdministradoControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el usuario administrador no existe.
+     */
     @Test
     void testEliminarAdministradorNoExiste() {
 

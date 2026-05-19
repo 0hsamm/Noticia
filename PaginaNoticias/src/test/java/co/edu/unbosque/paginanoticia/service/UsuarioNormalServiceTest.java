@@ -25,6 +25,11 @@ import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
 
+/**
+ * Pruebas unitarias del servicio de UsuarioNormal.
+ * Valida la creación, actualización, eliminación y reglas de negocio
+ * asociadas al usuario normal.
+ */
 @ExtendWith(MockitoExtension.class)
 class UsuarioNormalServiceTest {
 
@@ -68,7 +73,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
     @Test
     void deberiaRetornar2SiContrasenaEsInvalida() {
 
@@ -81,7 +86,6 @@ class UsuarioNormalServiceTest {
         assertEquals(2, resultado);
     }
 
-    
     @Test
     void deberiaRetornar3SiNombreYaExiste() {
 
@@ -96,7 +100,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
     @Test
     void deberiaCrearUsuarioCorrectamente() {
 
@@ -119,7 +123,7 @@ class UsuarioNormalServiceTest {
         verify(usuarioNormalRepo)
                 .save(any(UsuarioNormal.class));
     }
-    
+
     @Test
     void deberiaRetornar1SiUsuarioNoExiste() {
 
@@ -130,7 +134,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
     @Test
     void deberiaRetornar2SiUsuarioAutenticadoNoExiste() {
 
@@ -146,7 +150,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
     @Test
     void deberiaRetornar3SiUsuarioNoEsPropietario() {
 
@@ -166,7 +170,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
     @Test
     void deberiaEliminarUsuarioCorrectamente() {
 
@@ -185,7 +189,7 @@ class UsuarioNormalServiceTest {
 
         verify(usuarioNormalRepo).delete(usuario);
     }
-    
+
     @Test
     void deberiaRetornar4SiUsuarioNoExisteEnUpdate() {
 
@@ -198,7 +202,7 @@ class UsuarioNormalServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
     @Test
     void deberiaActualizarUsuarioCorrectamente() {
 

@@ -20,6 +20,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Clase de prueba para el controlador de noticias.
+ * Permite validar la creación, actualización, eliminación y consulta de noticias,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class NoticiaControllerTest {
 
     @Mock
@@ -28,11 +33,17 @@ class NoticiaControllerTest {
     @InjectMocks
     private NoticiaController noticiaController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida la creación correcta de una noticia.
+     */
     @Test
     void testCrearNoticiaCorrectamente() {
 
@@ -50,6 +61,9 @@ class NoticiaControllerTest {
         assertEquals("Noticia creada correctamente", response.getBody());
     }
 
+    /**
+     * Prueba que valida la creación de una noticia con contenido vacío.
+     */
     @Test
     void testCrearNoticiaContenidoVacio() {
 
@@ -66,6 +80,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de noticias cuando hay contenido.
+     */
     @Test
     void testObtenerTodoConContenido() {
 
@@ -87,6 +104,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de noticias cuando no hay registros.
+     */
     @Test
     void testObtenerTodoVacio() {
 
@@ -99,6 +119,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la actualización correcta de una noticia.
+     */
     @Test
     void testActualizarNoticiaCorrectamente() {
 
@@ -118,6 +141,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que la noticia no existe.
+     */
     @Test
     void testActualizarNoticiaNoExiste() {
 
@@ -137,6 +163,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la eliminación correcta de una noticia.
+     */
     @Test
     void testEliminarNoticiaCorrectamente() {
 
@@ -149,6 +178,9 @@ class NoticiaControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que la noticia a eliminar no existe.
+     */
     @Test
     void testEliminarNoticiaNoExiste() {
 

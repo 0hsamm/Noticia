@@ -27,6 +27,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+/**
+ * Clase de prueba para el controlador de autenticación.
+ * Permite validar el flujo de login y registro de usuarios,
+ * verificando las respuestas del controlador según los casos de uso.
+ */
 class AuthControllerTest {
 
     @Mock
@@ -41,11 +46,17 @@ class AuthControllerTest {
     @InjectMocks
     private AuthController authController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida el login exitoso y que la respuesta contenga el rol del usuario.
+     */
     @Test
     void testLoginReturnsRoleInResponse() throws Exception {
 
@@ -65,13 +76,19 @@ class AuthControllerTest {
 
         ResponseEntity<?> response = authController.login(loginRequest);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         ObjectMapper mapper = new ObjectMapper();
         String responseJson = mapper.writeValueAsString(response.getBody());
+
         System.out.println(responseJson);
+
         assertNotNull(responseJson);
         assertEquals(true, responseJson.contains("\"role\":\"USUARIO\""));
     }
 
+    /**
+     * Prueba que valida el registro exitoso de un usuario.
+     */
     @Test
     void testRegisterSuccess() {
 
@@ -86,6 +103,9 @@ class AuthControllerTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el usuario ya existe.
+     */
     @Test
     void testRegisterUserAlreadyExists() {
 

@@ -9,26 +9,46 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
+/**
+ * Clase que representa un usuario editor dentro del sistema.
+ * Hereda de Usuario y contiene la información específica de un editor.
+ */
 @Entity
 @Table(name = "usuarioeditor")
-public class UsuarioEditor extends Usuario{
+public class UsuarioEditor extends Usuario {
 
-	
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
-	
+
+	/**
+	 * Constructor vacío de la clase UsuarioEditor.
+	 */
 	public UsuarioEditor() {
-		// TODO Auto-generated constructor stub
+		// Constructor vacío requerido por JPA
 	}
 
+	/**
+	 * Constructor que permite crear un usuario editor con sus datos básicos.
+	 *
+	 * @param nombre nombre del editor
+	 * @param contrasena contraseña del editor
+	 * @param tipoUsuario tipo de usuario asignado
+	 */
 	public UsuarioEditor(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
 	}
 
+	/**
+	 * Retorna el identificador del usuario editor.
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Establece el identificador del usuario editor.
+	 *
+	 * @param id nuevo identificador
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -59,7 +79,4 @@ public class UsuarioEditor extends Usuario{
 	public String toString() {
 		return "UsuarioEditor [id=" + id + "]";
 	}
-	
-	
-	
 }

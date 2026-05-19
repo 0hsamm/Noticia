@@ -26,6 +26,11 @@ import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
 
+/**
+ * Pruebas unitarias del servicio de UsuarioEditor.
+ * Valida la creación, actualización, eliminación y validaciones
+ * de negocio relacionadas con el usuario editor.
+ */
 @ExtendWith(MockitoExtension.class)
 class UsuarioEditorServiceTest {
 
@@ -58,7 +63,10 @@ class UsuarioEditorServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    
+
+    /**
+     * Verifica que retorne 4 cuando el administrador autenticado no existe.
+     */
     @Test
     void deberiaRetornar4SiAdminNoExiste() {
 
@@ -71,7 +79,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Verifica que retorne 1 cuando el nombre del editor está vacío.
+     */
     @Test
     void deberiaRetornar1SiNombreEsVacio() {
 
@@ -87,7 +98,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Verifica que retorne 2 cuando la contraseña no cumple los requisitos.
+     */
     @Test
     void deberiaRetornar2SiContrasenaEsInvalida() {
 
@@ -104,7 +118,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Verifica que retorne 3 cuando el nombre del editor ya existe.
+     */
     @Test
     void deberiaRetornar3SiNombreYaExiste() {
 
@@ -124,7 +141,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Verifica la creación correcta de un usuario editor.
+     */
     @Test
     void deberiaCrearEditorCorrectamente() {
 
@@ -152,7 +172,10 @@ class UsuarioEditorServiceTest {
         verify(usuarioEditorRepo)
                 .save(any(UsuarioEditor.class));
     }
-    
+
+    /**
+     * Verifica que retorne 1 cuando el editor no existe.
+     */
     @Test
     void deberiaRetornar1SiEditorNoExiste() {
 
@@ -163,7 +186,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Verifica que retorne 2 cuando el administrador no existe en la eliminación.
+     */
     @Test
     void deberiaRetornar2SiAdminNoExisteEnDelete() {
 
@@ -179,7 +205,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Verifica la eliminación correcta de un editor.
+     */
     @Test
     void deberiaEliminarEditorCorrectamente() {
 
@@ -199,7 +228,10 @@ class UsuarioEditorServiceTest {
 
         verify(usuarioEditorRepo).delete(editor);
     }
-    
+
+    /**
+     * Verifica que retorne 4 cuando el editor no existe en actualización.
+     */
     @Test
     void deberiaRetornar4SiEditorNoExisteEnUpdate() {
 
@@ -212,7 +244,10 @@ class UsuarioEditorServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Verifica la actualización correcta de un editor.
+     */
     @Test
     void deberiaActualizarEditorCorrectamente() {
 

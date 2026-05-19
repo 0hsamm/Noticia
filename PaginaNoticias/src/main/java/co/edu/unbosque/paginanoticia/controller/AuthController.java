@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controlador encargado de manejar la autenticación y el registro de usuarios.
+ * Permite iniciar sesión y registrar nuevos usuarios en el sistema.
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -35,6 +39,13 @@ public class AuthController {
 		this.usuarioNormalService = usuarioNormalService;
 	}
 
+	/**
+	 * Realiza el proceso de autenticación de un usuario.
+	 * Si las credenciales son válidas, genera un token JWT y retorna el rol del usuario.
+	 *
+	 * @param loginRequest datos de inicio de sesión (nombre y contraseña)
+	 * @return token JWT y rol del usuario si la autenticación es exitosa
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody UsuarioDTO loginRequest) {
 		try {
@@ -59,6 +70,13 @@ public class AuthController {
 		}
 	}
 
+	/**
+	 * Permite registrar un nuevo usuario en el sistema.
+	 * Valida los datos y retorna un mensaje según el resultado del proceso.
+	 *
+	 * @param registerRequest datos del usuario a registrar
+	 * @return respuesta indicando el estado del registro
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody UsuarioDTO registerRequest) {
 		UsuarioNormalDTO nuevoUsuario =
@@ -68,6 +86,7 @@ public class AuthController {
 						TipoUsuario.USUARIO);
 
 		int result = usuarioNormalService.create(nuevoUsuario);
+
 		if (result == 0) {
 			return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado exitosamente");
 		}
@@ -84,6 +103,10 @@ public class AuthController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar el usuario");
 	}
 
+	/**
+	 * Clase interna que representa la respuesta de autenticación.
+	 * Contiene el token JWT y el rol del usuario autenticado.
+	 */
 	private static class AuthResponse {
 		private final String token;
 		private final String role;

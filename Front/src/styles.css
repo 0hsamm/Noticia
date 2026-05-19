@@ -1,21 +1,73 @@
+/**
+ * Configuración global aplicada a todos los elementos.
+ *
+ * box-sizing: border-box permite que el padding
+ * y el border se incluyan dentro del ancho
+ * y alto total de los elementos.
+ */
 * {
   box-sizing: border-box;
 }
 
+/**
+ * Estilos globales aplicados al documento HTML y body.
+ *
+ * Se eliminan márgenes y espacios predeterminados,
+ * se define la fuente principal de la aplicación
+ * y se establece el fondo general.
+ */
 html,
 body {
+
+  /**
+   * Elimina márgenes externos predeterminados.
+   */
   margin: 0;
+
+  /**
+   * Elimina relleno interno predeterminado.
+   */
   padding: 0;
+
+  /**
+   * Garantiza que el documento tenga
+   * una altura mínima completa.
+   */
   min-height: 100%;
+
+  /**
+   * Fuente principal utilizada en toda la aplicación.
+   */
   font-family: Arial, Helvetica, sans-serif;
+
+  /**
+   * Color de fondo global de la aplicación.
+   */
   background: #f3f4f6;
+
+  /**
+   * Color principal del texto.
+   */
   color: #111827;
 }
 
+/**
+ * Configuración específica del body.
+ *
+ * Garantiza que el contenido ocupe
+ * al menos toda la altura visible del navegador.
+ */
 body {
   min-height: 100vh;
 }
 
+/**
+ * Configuración tipográfica heredada
+ * para elementos de formulario.
+ *
+ * Permite que botones, entradas y áreas de texto
+ * utilicen la misma fuente definida globalmente.
+ */
 button,
 input,
 select,

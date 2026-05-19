@@ -24,6 +24,11 @@ import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
 import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 
+/**
+ * Servicio encargado de la gestión de comentarios.
+ * Permite crear, actualizar, eliminar y consultar comentarios asociados a noticias u horóscopos,
+ * validando reglas de negocio como la autenticación del usuario y la consistencia de datos.
+ */
 @Service
 public class ComentarioService implements CRUDOperation<ComentarioDTO> {
 
@@ -42,6 +47,10 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
     @Autowired
     private ModelMapper mapper;
 
+    /**
+     * Crea un nuevo comentario asociado a una noticia o un horóscopo.
+     * Valida contenido vacío y la existencia del usuario comentarista autenticado.
+     */
     @Override
     public int create(ComentarioDTO data) {
 
@@ -95,14 +104,22 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return 0;
     }
 
+    /**
+     * Obtiene la lista de todos los comentarios registrados en el sistema
+     * y los convierte a DTO para su transporte.
+     */
     @Override
     public List<ComentarioDTO> getAll() {
         List<ComentarioDTO> dtoList = new ArrayList<>();
-        comentarioRepo.findAll() .forEach(comentario -> dtoList.add(toDto(comentario)));
+        comentarioRepo.findAll().forEach(comentario -> dtoList.add(toDto(comentario)));
 
         return dtoList;
     }
 
+    /**
+     * Elimina un comentario por su ID, validando que el usuario autenticado
+     * sea el propietario del comentario.
+     */
     @Override
     public int deleteById(Long id) {
 
@@ -110,7 +127,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         if (comentarioOpt.isEmpty()) {
             return 1;
         }
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Optional<UsuarioComentarista> usuarioOpt = comentaristaRepo.findByNombre(username);
@@ -128,6 +145,10 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return 0;
     }
 
+    /**
+     * Actualiza un comentario existente validando permisos del usuario
+     * y consistencia de la información.
+     */
     @Override
     public int updateById(Long id, ComentarioDTO data) {
 
@@ -172,9 +193,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
             }
 
             comentario.setNoticia(noticiaOpt.get());
-
             comentario.setHoroscopo(null);
         }
+
         if (data.getTipoPublicacion() == TipoPublicacion.HOROSCOPO) {
 
             Optional<Horoscopo> horoscopoOpt = findHoroscopoForComment(data);
@@ -182,7 +203,7 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
             if (horoscopoOpt.isEmpty()) {
                 return 4;
             }
-            
+
             comentario.setHoroscopo(horoscopoOpt.get());
             comentario.setNoticia(null);
         }
@@ -202,6 +223,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return comentarioRepo.existsById(id);
     }
 
+    /**
+     * Obtiene los comentarios asociados a una noticia específica.
+     */
     public List<ComentarioDTO> getByNoticia(Long noticiaId) {
 
         List<ComentarioDTO> dtoList = new ArrayList<>();
@@ -210,7 +234,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return dtoList;
     }
 
-
+    /**
+     * Obtiene los comentarios asociados a un horóscopo específico.
+     */
     public List<ComentarioDTO> getByHoroscopo(Long horoscopoId) {
 
         List<ComentarioDTO> dtoList = new ArrayList<>();
@@ -219,7 +245,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return dtoList;
     }
 
-
+    /**
+     * Convierte una entidad Comentario a su DTO correspondiente.
+     */
     private ComentarioDTO toDto(Comentario comentario) {
 
         ComentarioDTO dto = mapper.map(comentario, ComentarioDTO.class);
@@ -243,6 +271,9 @@ public class ComentarioService implements CRUDOperation<ComentarioDTO> {
         return dto;
     }
 
+    /**
+     * Busca el horóscopo asociado al comentario según el DTO recibido.
+     */
     private Optional<Horoscopo> findHoroscopoForComment(ComentarioDTO data) {
         if (data.getHoroscopoId() != null) {
             return horoscopoRepo.findById(data.getHoroscopoId());

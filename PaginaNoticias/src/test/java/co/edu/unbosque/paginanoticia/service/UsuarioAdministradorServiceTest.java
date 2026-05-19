@@ -20,12 +20,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import co.edu.unbosque.paginanoticia.dto.UsuarioAdministradorDTO;
 import co.edu.unbosque.paginanoticia.entity.UsuarioAdministrador;
-import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.repository.UsuarioAdministradorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioComentaristaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioNormalRepository;
 
+/**
+ * Clase de prueba para el servicio de usuario administrador.
+ * Permite validar la lógica de creación, actualización, eliminación y validaciones
+ * de seguridad relacionadas con el administrador autenticado.
+ */
 @ExtendWith(MockitoExtension.class)
 class UsuarioAdministradorServiceTest {
 
@@ -50,6 +54,9 @@ class UsuarioAdministradorServiceTest {
     @InjectMocks
     private UsuarioAdministradorService service;
 
+    /**
+     * Configuración inicial del contexto de seguridad antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
 
@@ -58,7 +65,10 @@ class UsuarioAdministradorServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador autenticado no existe.
+     */
     @Test
     void deberiaRetornar4SiAdminAutenticadoNoExiste() {
 
@@ -71,7 +81,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el nombre está vacío.
+     */
     @Test
     void deberiaRetornar1SiNombreEsVacio() {
 
@@ -87,7 +100,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que la contraseña es inválida.
+     */
     @Test
     void deberiaRetornar2SiContrasenaEsInvalida() {
 
@@ -104,7 +120,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el nombre ya existe.
+     */
     @Test
     void deberiaRetornar3SiNombreYaExiste() {
 
@@ -124,7 +143,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la creación correcta de un administrador.
+     */
     @Test
     void deberiaCrearAdministradorCorrectamente() {
 
@@ -152,7 +174,10 @@ class UsuarioAdministradorServiceTest {
         verify(usuarioAdministradorRepo)
                 .save(any(UsuarioAdministrador.class));
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador no existe al eliminar.
+     */
     @Test
     void deberiaRetornar1SiAdministradorNoExiste() {
 
@@ -163,12 +188,12 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador no es propietario.
+     */
     @Test
     void deberiaRetornar3SiAdminNoEsPropietario() {
-
-        UsuarioAdministrador propietario = new UsuarioAdministrador();
-        propietario.setId(1L);
 
         UsuarioAdministrador adminActual = new UsuarioAdministrador();
         adminActual.setId(2L);
@@ -186,7 +211,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la eliminación correcta de un administrador.
+     */
     @Test
     void deberiaEliminarAdministradorCorrectamente() {
 
@@ -205,7 +233,10 @@ class UsuarioAdministradorServiceTest {
 
         verify(usuarioAdministradorRepo).delete(admin);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el administrador no existe al actualizar.
+     */
     @Test
     void deberiaRetornar4SiAdminNoExisteEnUpdate() {
 
@@ -218,7 +249,10 @@ class UsuarioAdministradorServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la actualización correcta de un administrador.
+     */
     @Test
     void deberiaActualizarAdministradorCorrectamente() {
 

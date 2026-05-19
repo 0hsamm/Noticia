@@ -14,6 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase encargada de la generación, validación y extracción de información de los tokens JWT.
+ * Permite obtener datos como el usuario, la expiración y el rol desde el token,
+ * así como crear nuevos tokens con información adicional del usuario.
+ */
 @Component
 public class JwtUtil {
 

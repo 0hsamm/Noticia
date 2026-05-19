@@ -16,11 +16,19 @@ import co.edu.unbosque.paginanoticia.dto.UsuarioEditorDTO;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.service.UsuarioEditorService;
 
+/**
+ * Clase de prueba para el controlador de usuarios editor.
+ * Permite validar la creación, actualización, eliminación y consulta de usuarios editor,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class UsuarioEditorControllerTest {
 
 	private UsuarioEditorController controller;
 	private UsuarioEditorService service;
 
+	/**
+	 * Configuración inicial de los mocks y del controlador antes de cada prueba.
+	 */
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
@@ -38,6 +46,9 @@ class UsuarioEditorControllerTest {
 		}
 	}
 
+	/**
+	 * Prueba que valida la creación correcta de un usuario editor.
+	 */
 	@Test
 	void testCrearUsuarioEditorCreado() {
 
@@ -53,6 +64,9 @@ class UsuarioEditorControllerTest {
 		assertEquals("Usuario editor creado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la creación de un usuario editor con nombre vacío.
+	 */
 	@Test
 	void testCrearUsuarioEditorNombreVacio() {
 
@@ -68,6 +82,9 @@ class UsuarioEditorControllerTest {
 		assertEquals("El nombre no puede estar vacio", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la obtención de usuarios editor cuando hay datos.
+	 */
 	@Test
 	void testObtenerTodoConDatos() {
 
@@ -89,6 +106,9 @@ class UsuarioEditorControllerTest {
 		assertEquals(1, response.getBody().size());
 	}
 
+	/**
+	 * Prueba que valida la obtención de usuarios editor cuando no hay datos.
+	 */
 	@Test
 	void testObtenerTodoVacio() {
 
@@ -99,6 +119,9 @@ class UsuarioEditorControllerTest {
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 	}
 
+	/**
+	 * Prueba que valida la actualización correcta de un usuario editor.
+	 */
 	@Test
 	void testActualizarUsuarioEditorCorrectamente() {
 
@@ -115,6 +138,9 @@ class UsuarioEditorControllerTest {
 		assertEquals("Usuario editor actualizado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la eliminación correcta de un usuario editor.
+	 */
 	@Test
 	void testEliminarUsuarioEditorCorrectamente() {
 
@@ -126,6 +152,9 @@ class UsuarioEditorControllerTest {
 		assertEquals("Usuario editor eliminado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida el caso en el que el usuario editor no existe.
+	 */
 	@Test
 	void testEliminarUsuarioEditorNoExiste() {
 

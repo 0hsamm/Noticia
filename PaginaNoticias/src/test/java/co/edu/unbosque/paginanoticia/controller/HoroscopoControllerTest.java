@@ -21,6 +21,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Clase de prueba para el controlador de horóscopos.
+ * Permite validar la creación, actualización, eliminación y consulta de horóscopos,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class HoroscopoControllerTest {
 
     @Mock
@@ -29,11 +34,17 @@ class HoroscopoControllerTest {
     @InjectMocks
     private HoroscopoController horoscopoController;
 
+    /**
+     * Inicializa los mocks antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Prueba que valida la creación correcta de un horóscopo.
+     */
     @Test
     void testCrearHoroscopoCorrectamente() {
 
@@ -51,6 +62,9 @@ class HoroscopoControllerTest {
         assertEquals("Horoscopo creado correctamente", response.getBody());
     }
 
+    /**
+     * Prueba que valida la creación de un horóscopo con contenido vacío.
+     */
     @Test
     void testCrearHoroscopoContenidoVacio() {
 
@@ -67,6 +81,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de todos los horóscopos cuando hay contenido.
+     */
     @Test
     void testObtenerTodoConContenido() {
 
@@ -88,6 +105,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la obtención de horóscopos cuando no hay registros.
+     */
     @Test
     void testObtenerTodoVacio() {
 
@@ -100,6 +120,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la actualización correcta de un horóscopo.
+     */
     @Test
     void testActualizarHoroscopoCorrectamente() {
 
@@ -119,6 +142,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el horóscopo no existe.
+     */
     @Test
     void testActualizarHoroscopoNoExiste() {
 
@@ -138,6 +164,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida la eliminación correcta de un horóscopo.
+     */
     @Test
     void testEliminarHoroscopoCorrectamente() {
 
@@ -150,6 +179,9 @@ class HoroscopoControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    /**
+     * Prueba que valida el caso en el que el horóscopo a eliminar no existe.
+     */
     @Test
     void testEliminarHoroscopoNoExiste() {
 

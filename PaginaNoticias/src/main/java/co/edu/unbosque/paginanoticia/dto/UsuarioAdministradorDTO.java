@@ -4,56 +4,55 @@ import java.util.Objects;
 
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
-public class UsuarioAdministradorDTO extends UsuarioDTO{
+/**
+ * Clase DTO que representa la información de un usuario administrador.
+ * Extiende de UsuarioDTO y agrega el identificador único del administrador.
+ */
+public class UsuarioAdministradorDTO extends UsuarioDTO {
 
 	private Long id;
-	
+
 	public UsuarioAdministradorDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Constructor que inicializa los datos principales del usuario administrador.
+	 *
+	 * @param nombre nombre del usuario
+	 * @param contrasena contraseña del usuario
+	 * @param tipoUsuario tipo de usuario administrador
+	 */
 	public UsuarioAdministradorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
-		// TODO Auto-generated constructor stub
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(id);
-		return result;
+		return Objects.hash(super.hashCode(), id);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
 		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		UsuarioAdministradorDTO other = (UsuarioAdministradorDTO) obj;
-		return id == other.id;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
 		return "UsuarioAdministradorDTO [id=" + id + "]";
 	}
-	
-	
-	
-	
-	
 }

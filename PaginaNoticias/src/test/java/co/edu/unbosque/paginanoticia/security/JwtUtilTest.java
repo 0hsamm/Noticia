@@ -13,10 +13,19 @@ import org.junit.jupiter.api.Test;
 import co.edu.unbosque.paginanoticia.entity.Usuario;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
+/**
+ * Clase de prueba para la utilidad JWT.
+ * Permite validar la generación de tokens, extracción de datos del token
+ * y verificación de su validez.
+ */
 class JwtUtilTest {
 
 	private JwtUtil jwtUtil;
 
+	/**
+	 * Configuración inicial de la utilidad JWT antes de cada prueba,
+	 * incluyendo la asignación de una clave secreta de prueba.
+	 */
 	@BeforeEach
 	void setUp() {
 
@@ -39,6 +48,9 @@ class JwtUtilTest {
 		}
 	}
 
+	/**
+	 * Prueba que valida la generación de un token JWT.
+	 */
 	@Test
 	void testGenerateToken() {
 
@@ -54,6 +66,9 @@ class JwtUtilTest {
 		assertTrue(token.length() > 0);
 	}
 
+	/**
+	 * Prueba que valida la extracción del nombre de usuario desde el token.
+	 */
 	@Test
 	void testExtractUsername() {
 
@@ -70,6 +85,9 @@ class JwtUtilTest {
 		assertEquals("samuel", username);
 	}
 
+	/**
+	 * Prueba que valida la extracción del rol desde el token.
+	 */
 	@Test
 	void testExtractRole() {
 
@@ -86,6 +104,9 @@ class JwtUtilTest {
 		assertEquals("ADMIN", role);
 	}
 
+	/**
+	 * Prueba que valida la extracción de la fecha de expiración del token.
+	 */
 	@Test
 	void testExtractExpiration() {
 
@@ -103,6 +124,9 @@ class JwtUtilTest {
 		assertTrue(expiration.after(new Date()));
 	}
 
+	/**
+	 * Prueba que valida la verificación de un token JWT válido.
+	 */
 	@Test
 	void testValidateToken() {
 

@@ -1,0 +1,1346 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">front documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PanelUsuarioNormal</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/panel-usuario-normal/panel-usuario-normal.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-panel-usuario-normal</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./panel-usuario-normal.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./panel-usuario-normal.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#comentarios" >comentarios</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#comentarioService" >comentarioService</a>
+                            </li>
+                            <li>
+                                <a href="#horoscopos" >horoscopos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#horoscopoService" >horoscopoService</a>
+                            </li>
+                            <li>
+                                <a href="#nombreSesion" >nombreSesion</a>
+                            </li>
+                            <li>
+                                <a href="#noticias" >noticias</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#noticiaService" >noticiaService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#toastr" >toastr</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarComentarios" >cargarComentarios</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarHoroscopos" >cargarHoroscopos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarNoticias" >cargarNoticias</a>
+                            </li>
+                            <li>
+                                <a href="#cerrarSesion" >cerrarSesion</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#obtenerMensajeError" >obtenerMensajeError</a>
+                            </li>
+                            <li>
+                                <a href="#refrescarPanel" >refrescarPanel</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addCerrarSesion" >addCerrarSesion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addCerrarSesion"></a>
+                        <b>addCerrarSesion</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarComentarios"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarComentarios</b></span>
+                        <a href="#cargarComentarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarComentarios()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarHoroscopos"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarHoroscopos</b></span>
+                        <a href="#cargarHoroscopos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarHoroscopos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarNoticias"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarNoticias</b></span>
+                        <a href="#cargarNoticias"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarNoticias()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cerrarSesion"></a>
+                    <span class="name">
+                        <span ><b>cerrarSesion</b></span>
+                        <a href="#cerrarSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cerrarSesion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="obtenerMensajeError"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>obtenerMensajeError</b></span>
+                        <a href="#obtenerMensajeError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>obtenerMensajeError(error: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:174</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refrescarPanel"></a>
+                    <span class="name">
+                        <span ><b>refrescarPanel</b></span>
+                        <a href="#refrescarPanel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refrescarPanel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="comentarios"></a>
+                    <span class="name">
+                        <span ><b>comentarios</b></span>
+                        <a href="#comentarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Comentario.html" target="_self" >Comentario[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="comentarioService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>comentarioService</b></span>
+                        <a href="#comentarioService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ComentarioService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="horoscopos"></a>
+                    <span class="name">
+                        <span ><b>horoscopos</b></span>
+                        <a href="#horoscopos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="horoscopoService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>horoscopoService</b></span>
+                        <a href="#horoscopoService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(HoroscopoService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nombreSesion"></a>
+                    <span class="name">
+                        <span ><b>nombreSesion</b></span>
+                        <a href="#nombreSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.authService.obtenerNombreActual() ?? &#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="noticias"></a>
+                    <span class="name">
+                        <span ><b>noticias</b></span>
+                        <a href="#noticias"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Noticia.html" target="_self" >Noticia[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="noticiaService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>noticiaService</b></span>
+                        <a href="#noticiaService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(NoticiaService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toastr"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>toastr</b></span>
+                        <a href="#toastr"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ToastrService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/panel-usuario-normal/panel-usuario-normal.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, OnInit, Output, inject } from &#x27;@angular/core&#x27;;
+
+// Importa el servicio de notificaciones emergentes
+import { ToastrService } from &#x27;ngx-toastr&#x27;;
+
+// Importa los modelos utilizados en el componente
+import { Comentario } from &#x27;../models/comentario.model&#x27;;
+import { Horoscopo } from &#x27;../models/horoscopo.model&#x27;;
+import { Noticia } from &#x27;../models/noticia.model&#x27;;
+
+// Importa los servicios necesarios para autenticacion y consumo de datos
+import { AuthService } from &#x27;../services/auth.service&#x27;;
+import { ComentarioService } from &#x27;../services/comentario.service&#x27;;
+import { HoroscopoService } from &#x27;../services/horoscopo.service&#x27;;
+import { NoticiaService } from &#x27;../services/noticia.service&#x27;;
+
+// Decorador que define la configuracion del componente
+@Component({
+
+  // Selector utilizado en las vistas HTML
+  selector: &#x27;app-panel-usuario-normal&#x27;,
+
+  // Indica que el componente no es standalone
+  standalone: false,
+
+  // Archivo HTML asociado al componente
+  templateUrl: &#x27;./panel-usuario-normal.html&#x27;,
+
+  // Archivo CSS asociado al componente
+  styleUrl: &#x27;./panel-usuario-normal.css&#x27;,
+})
+
+// Clase principal del componente PanelUsuarioNormal
+export class PanelUsuarioNormal implements OnInit {
+
+  // Evento emitido cuando el usuario cierra sesion
+  @Output() addCerrarSesion &#x3D; new EventEmitter&lt;void&gt;();
+
+  // Servicio para gestionar noticias
+  private readonly noticiaService &#x3D; inject(NoticiaService);
+
+  // Servicio para gestionar horoscopos
+  private readonly horoscopoService &#x3D; inject(HoroscopoService);
+
+  // Servicio para gestionar comentarios
+  private readonly comentarioService &#x3D; inject(ComentarioService);
+
+  // Servicio de autenticacion
+  private readonly authService &#x3D; inject(AuthService);
+
+  // Servicio de notificaciones toastr
+  private readonly toastr &#x3D; inject(ToastrService);
+
+  // Lista de noticias disponibles
+  noticias: Noticia[] &#x3D; [];
+
+  // Lista de horoscopos disponibles
+  horoscopos: Horoscopo[] &#x3D; [];
+
+  // Lista de comentarios disponibles
+  comentarios: Comentario[] &#x3D; [];
+
+  // Nombre del usuario con sesion activa
+  nombreSesion &#x3D; this.authService.obtenerNombreActual() ?? &#x27;&#x27;;
+
+  // Metodo del ciclo de vida que se ejecuta al inicializar el componente
+  ngOnInit(): void {
+
+    // Carga las noticias disponibles
+    this.cargarNoticias();
+
+    // Carga los horoscopos disponibles
+    this.cargarHoroscopos();
+
+    // Carga los comentarios disponibles
+    this.cargarComentarios();
+  }
+
+  // Metodo que recarga toda la informacion del panel
+  refrescarPanel(): void {
+
+    // Recarga noticias
+    this.cargarNoticias();
+
+    // Recarga horoscopos
+    this.cargarHoroscopos();
+
+    // Recarga comentarios
+    this.cargarComentarios();
+  }
+
+  // Metodo encargado de cerrar la sesion del usuario
+  cerrarSesion(): void {
+
+    // Realiza la peticion de cierre de sesion
+    this.authService.postCerrarSesion().subscribe(() &#x3D;&gt; {
+
+      // Muestra mensaje informativo
+      this.toastr.info(&#x27;Sesion cerrada&#x27;, &#x27;Informacion&#x27;);
+
+      // Emite el evento de cierre de sesion
+      this.addCerrarSesion.emit();
+    });
+  }
+
+  // Metodo privado para obtener las noticias desde el servicio
+  private cargarNoticias(): void {
+
+    // Solicita todas las noticias
+    this.noticiaService.getAll().subscribe({
+
+      // Respuesta exitosa
+      next: (noticias) &#x3D;&gt; {
+
+        // Guarda las noticias obtenidas
+        this.noticias &#x3D; noticias;
+      },
+
+      // Manejo de errores
+      error: (error) &#x3D;&gt; {
+
+        // Muestra mensaje de error
+        this.toastr.error(this.obtenerMensajeError(error), &#x27;Error&#x27;);
+      },
+    });
+  }
+
+  // Metodo privado para obtener los horoscopos desde el servicio
+  private cargarHoroscopos(): void {
+
+    // Solicita todos los horoscopos
+    this.horoscopoService.getAll().subscribe({
+
+      // Respuesta exitosa
+      next: (horoscopos) &#x3D;&gt; {
+
+        // Guarda los horoscopos obtenidos
+        this.horoscopos &#x3D; horoscopos;
+      },
+
+      // Manejo de errores
+      error: (error) &#x3D;&gt; {
+
+        // Muestra mensaje de error
+        this.toastr.error(this.obtenerMensajeError(error), &#x27;Error&#x27;);
+      },
+    });
+  }
+
+  // Metodo privado para obtener los comentarios desde el servicio
+  private cargarComentarios(): void {
+
+    // Solicita todos los comentarios
+    this.comentarioService.getAll().subscribe({
+
+      // Respuesta exitosa
+      next: (comentarios) &#x3D;&gt; {
+
+        // Guarda los comentarios obtenidos
+        this.comentarios &#x3D; comentarios;
+      },
+
+      // Manejo de errores
+      error: (error) &#x3D;&gt; {
+
+        // Muestra mensaje de error
+        this.toastr.error(this.obtenerMensajeError(error), &#x27;Error&#x27;);
+      },
+    });
+  }
+
+  // Metodo privado para obtener mensajes de error personalizados
+  private obtenerMensajeError(error: { error?: unknown }): string {
+
+    // Verifica si el error recibido es una cadena de texto
+    if (typeof error?.error &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+
+      // Retorna el mensaje recibido desde el backend
+      return error.error;
+    }
+
+    // Mensaje generico en caso de no existir informacion detallada
+    return &#x27;No fue posible cargar la informacion&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;panel&quot;&gt;
+  &lt;div class&#x3D;&quot;cabecera bloque&quot;&gt;
+    &lt;div&gt;
+      &lt;h1&gt;Panel de usuario&lt;/h1&gt;
+      &lt;p&gt;Sesion actual: {{ nombreSesion }}&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;acciones-cabecera&quot;&gt;
+      &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-secundario&quot; (click)&#x3D;&quot;refrescarPanel()&quot;&gt;Refrescar&lt;/button&gt;
+      &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-peligro&quot; (click)&#x3D;&quot;cerrarSesion()&quot;&gt;Cerrar sesion&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;bloque&quot;&gt;
+    &lt;h2&gt;Noticias&lt;/h2&gt;
+    @if (noticias.length &gt; 0) {
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Titulo&lt;/th&gt;
+            &lt;th&gt;Contenido&lt;/th&gt;
+            &lt;th&gt;Editor&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          @for (noticia of noticias; track noticia.id ?? noticia.titulo) {
+            &lt;tr&gt;
+              &lt;td&gt;{{ noticia.titulo }}&lt;/td&gt;
+              &lt;td&gt;{{ noticia.contenido }}&lt;/td&gt;
+              &lt;td&gt;{{ noticia.usuarioEditor }}&lt;/td&gt;
+            &lt;/tr&gt;
+          }
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    } @else {
+      &lt;p class&#x3D;&quot;estado-vacio&quot;&gt;No hay noticias para mostrar.&lt;/p&gt;
+    }
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;bloque&quot;&gt;
+    &lt;h2&gt;Horoscopos&lt;/h2&gt;
+    @if (horoscopos.length &gt; 0) {
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Signo&lt;/th&gt;
+            &lt;th&gt;Contenido&lt;/th&gt;
+            &lt;th&gt;Editor&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          @for (horoscopo of horoscopos; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+            &lt;tr&gt;
+              &lt;td&gt;{{ horoscopo.tipoHoroscopo }}&lt;/td&gt;
+              &lt;td&gt;{{ horoscopo.contenido }}&lt;/td&gt;
+              &lt;td&gt;{{ horoscopo.usuarioEditor }}&lt;/td&gt;
+            &lt;/tr&gt;
+          }
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    } @else {
+      &lt;p class&#x3D;&quot;estado-vacio&quot;&gt;No hay horoscopos para mostrar.&lt;/p&gt;
+    }
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;bloque&quot;&gt;
+    &lt;h2&gt;Comentarios&lt;/h2&gt;
+    @if (comentarios.length &gt; 0) {
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Comentario&lt;/th&gt;
+            &lt;th&gt;Autor&lt;/th&gt;
+            &lt;th&gt;Destino&lt;/th&gt;
+            &lt;th&gt;Fecha&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          @for (comentario of comentarios; track comentario.id ?? comentario.fecha) {
+            &lt;tr&gt;
+              &lt;td&gt;{{ comentario.contenido }}&lt;/td&gt;
+              &lt;td&gt;{{ comentario.nombreComentarista }}&lt;/td&gt;
+              &lt;td&gt;
+                {{ comentario.tipoPublicacion &#x3D;&#x3D;&#x3D; &#x27;NOTICIA&#x27; ? comentario.tituloNoticia : comentario.signoHoroscopo }}
+              &lt;/td&gt;
+              &lt;td&gt;{{ comentario.fecha | date: &#x27;short&#x27; }}&lt;/td&gt;
+            &lt;/tr&gt;
+          }
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    } @else {
+      &lt;p class&#x3D;&quot;estado-vacio&quot;&gt;No hay comentarios para mostrar.&lt;/p&gt;
+    }
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="panel">  <div class="cabecera bloque">    <div>      <h1>Panel de usuario</h1>      <p>Sesion actual: {{ nombreSesion }}</p>    </div>    <div class="acciones-cabecera">      <button type="button" class="btn-secundario" (click)="refrescarPanel()">Refrescar</button>      <button type="button" class="btn-peligro" (click)="cerrarSesion()">Cerrar sesion</button>    </div>  </div>  <div class="bloque">    <h2>Noticias</h2>    @if (noticias.length > 0) {      <table>        <thead>          <tr>            <th>Titulo</th>            <th>Contenido</th>            <th>Editor</th>          </tr>        </thead>        <tbody>          @for (noticia of noticias; track noticia.id ?? noticia.titulo) {            <tr>              <td>{{ noticia.titulo }}</td>              <td>{{ noticia.contenido }}</td>              <td>{{ noticia.usuarioEditor }}</td>            </tr>          }        </tbody>      </table>    } @else {      <p class="estado-vacio">No hay noticias para mostrar.</p>    }  </div>  <div class="bloque">    <h2>Horoscopos</h2>    @if (horoscopos.length > 0) {      <table>        <thead>          <tr>            <th>Signo</th>            <th>Contenido</th>            <th>Editor</th>          </tr>        </thead>        <tbody>          @for (horoscopo of horoscopos; track horoscopo.id ?? horoscopo.tipoHoroscopo) {            <tr>              <td>{{ horoscopo.tipoHoroscopo }}</td>              <td>{{ horoscopo.contenido }}</td>              <td>{{ horoscopo.usuarioEditor }}</td>            </tr>          }        </tbody>      </table>    } @else {      <p class="estado-vacio">No hay horoscopos para mostrar.</p>    }  </div>  <div class="bloque">    <h2>Comentarios</h2>    @if (comentarios.length > 0) {      <table>        <thead>          <tr>            <th>Comentario</th>            <th>Autor</th>            <th>Destino</th>            <th>Fecha</th>          </tr>        </thead>        <tbody>          @for (comentario of comentarios; track comentario.id ?? comentario.fecha) {            <tr>              <td>{{ comentario.contenido }}</td>              <td>{{ comentario.nombreComentarista }}</td>              <td>                {{ comentario.tipoPublicacion === \'NOTICIA\' ? comentario.tituloNoticia : comentario.signoHoroscopo }}              </td>              <td>{{ comentario.fecha | date: \'short\' }}</td>            </tr>          }        </tbody>      </table>    } @else {      <p class="estado-vacio">No hay comentarios para mostrar.</p>    }  </div></div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'LoginUsuarios', 'selector': 'app-login-usuarios'},{'name': 'PanelAdmin', 'selector': 'app-panel-admin'},{'name': 'PanelComentarista', 'selector': 'app-panel-comentarista'},{'name': 'PanelEditor', 'selector': 'app-panel-editor'},{'name': 'PanelUsuarioNormal', 'selector': 'app-panel-usuario-normal'},{'name': 'SingInUsuarios', 'selector': 'app-sing-in-usuarios'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PanelUsuarioNormal'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PanelUsuarioNormal.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

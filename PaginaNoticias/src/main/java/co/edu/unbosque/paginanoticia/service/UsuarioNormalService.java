@@ -21,6 +21,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Servicio encargado de la gestión de usuarios normales.
+ * Permite crear, actualizar, eliminar y consultar usuarios,
+ * validando reglas de negocio como unicidad de nombre y seguridad de contraseña.
+ */
 @Service
 public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 
@@ -42,6 +47,10 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 * Crea un nuevo usuario normal validando reglas de negocio
+	 * como nombre vacío, contraseña válida y unicidad del nombre.
+	 */
 	@Override
 	public int create(UsuarioNormalDTO data) {
 
@@ -68,6 +77,9 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 	    return 0;
 	}
 
+	/**
+	 * Obtiene todos los usuarios normales registrados en el sistema.
+	 */
 	@Override
 	public List<UsuarioNormalDTO> getAll() {
 		List<UsuarioNormal> entityList = usuarioNormalRepo.findAll();
@@ -76,6 +88,9 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Elimina un usuario normal validando autenticación del propio usuario.
+	 */
 	@Override
 	public int deleteById(Long id) {
 
@@ -103,6 +118,10 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 	    return 0;
 	}
 
+	/**
+	 * Actualiza un usuario normal validando autenticación,
+	 * existencia del usuario y reglas de negocio.
+	 */
 	@Override
 	public int updateById(Long id, UsuarioNormalDTO data) {
 
@@ -158,6 +177,9 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 		return usuarioNormalRepo.existsById(id);
 	}
 
+	/**
+	 * Verifica si el nombre ya está registrado en cualquier tipo de usuario del sistema.
+	 */
 	private boolean findNombreAlreadyTaken(String nombre) {
 		return usuarioNormalRepo.findByNombre(nombre).isPresent()
 				|| usuarioAdministradorRepo.findByNombre(nombre).isPresent()
@@ -165,13 +187,12 @@ public class UsuarioNormalService implements CRUDOperation<UsuarioNormalDTO> {
 				|| usuarioComentaristaRepo.findByNombre(nombre).isPresent();
 	}
 
+	/**
+	 * Convierte una entidad UsuarioNormal a su DTO correspondiente.
+	 */
 	private UsuarioNormalDTO toDto(UsuarioNormal entity) {
 		UsuarioNormalDTO dto = mapper.map(entity, UsuarioNormalDTO.class);
 		dto.setContrasena(null);
 		return dto;
 	}
-	
-
-	
-	
 }

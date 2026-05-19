@@ -1,3 +1,9 @@
+/**
+ * Enum que representa los signos del zodiaco.
+ * Se utiliza para tipar el campo de horóscopo en la aplicación.
+ *
+ * Cada valor corresponde a un signo zodiacal estándar.
+ */
 export enum TipoHoroscopo {
   ARIES = 'ARIES',
   TAURO = 'TAURO',

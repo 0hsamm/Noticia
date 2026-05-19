@@ -25,6 +25,11 @@ import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 import co.edu.unbosque.paginanoticia.repository.HoroscopoRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 
+/**
+ * Clase de prueba para el servicio de horóscopos.
+ * Permite validar la lógica de creación, eliminación, actualización y consulta,
+ * verificando los diferentes casos de negocio.
+ */
 @ExtendWith(MockitoExtension.class)
 class HoroscopoServiceTest {
 
@@ -40,6 +45,9 @@ class HoroscopoServiceTest {
     @InjectMocks
     private HoroscopoService service;
 
+    /**
+     * Configuración inicial del contexto de seguridad antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
 
@@ -48,7 +56,10 @@ class HoroscopoServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el contenido está vacío.
+     */
     @Test
     void deberiaRetornar1SiContenidoEsVacio() {
 
@@ -59,7 +70,10 @@ class HoroscopoServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el tipo de publicación es nulo.
+     */
     @Test
     void deberiaRetornar2SiTipoPublicacionEsNull() {
 
@@ -70,7 +84,10 @@ class HoroscopoServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el editor no existe.
+     */
     @Test
     void deberiaRetornar3SiEditorNoExiste() {
 
@@ -85,7 +102,10 @@ class HoroscopoServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la creación correcta de un horóscopo.
+     */
     @Test
     void deberiaCrearHoroscopoCorrectamente() {
 
@@ -109,7 +129,10 @@ class HoroscopoServiceTest {
 
         verify(horoscopoRepo).save(any(Horoscopo.class));
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el horóscopo no existe.
+     */
     @Test
     void deberiaRetornar1SiHoroscopoNoExiste() {
 
@@ -120,7 +143,10 @@ class HoroscopoServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el editor no es propietario del horóscopo.
+     */
     @Test
     void deberiaRetornar3SiEditorNoEsPropietario() {
 
@@ -143,7 +169,10 @@ class HoroscopoServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la eliminación correcta de un horóscopo.
+     */
     @Test
     void deberiaEliminarCorrectamente() {
 
@@ -165,7 +194,10 @@ class HoroscopoServiceTest {
 
         verify(horoscopoRepo).delete(horoscopo);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el horóscopo no existe al actualizar.
+     */
     @Test
     void deberiaRetornar4SiHoroscopoNoExisteEnUpdate() {
 
@@ -178,7 +210,10 @@ class HoroscopoServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la actualización correcta de un horóscopo.
+     */
     @Test
     void deberiaActualizarCorrectamente() {
 
@@ -204,7 +239,10 @@ class HoroscopoServiceTest {
 
         verify(horoscopoRepo).save(horoscopo);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el editor no existe al consultar.
+     */
     @Test
     void deberiaRetornarNullSiEditorNoExisteEnGetByUsuario() {
 

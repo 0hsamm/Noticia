@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Servicio encargado de la gestión de noticias.
+ * Permite crear, actualizar, eliminar y consultar noticias,
+ * validando reglas de negocio como autenticación del usuario editor
+ * y validación de contenido obligatorio.
+ */
 @Service
 public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 
@@ -29,8 +35,10 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	@Autowired
 	private ModelMapper mapper;
 
-
-
+	/**
+	 * Crea una nueva noticia asociada al usuario editor autenticado.
+	 * Valida que el título, contenido y tipo de publicación sean válidos.
+	 */
 	@Override
 	public int create(NoticiaDTO data) {
 
@@ -59,6 +67,10 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	    return 0;
 	}
 
+	/**
+	 * Obtiene todas las noticias registradas en el sistema
+	 * y las convierte a DTO.
+	 */
 	@Override
 	public List<NoticiaDTO> getAll() {
 		List<NoticiaDTO> dtoList = new ArrayList<>();
@@ -66,6 +78,9 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Elimina una noticia por su ID validando existencia y propiedad del usuario editor.
+	 */
 	@Override
 	public int deleteById(Long id) {
 
@@ -73,6 +88,7 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	    if (noticiaOpt.isEmpty()) {
 	        return 1;
 	    }
+
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username = auth.getName();
 	    Optional<UsuarioEditor> usuarioOpt = usuarioEditorRepo.findByNombre(username);
@@ -90,6 +106,10 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 	    return 0;
 	}
 
+	/**
+	 * Actualiza una noticia existente validando contenido, tipo de publicación
+	 * y permisos del usuario editor.
+	 */
 	@Override
 	public int updateById(Long id, NoticiaDTO data) {
 
@@ -140,6 +160,9 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 		return noticiaRepo.existsById(id);
 	}
 
+	/**
+	 * Obtiene todas las noticias asociadas a un usuario editor específico.
+	 */
 	public List<NoticiaDTO> getByUsuarioEditor(Long usuarioEditorId) {
 		if (!usuarioEditorRepo.existsById(usuarioEditorId)) {
 			return null;
@@ -151,6 +174,9 @@ public class NoticiaService implements CRUDOperation<NoticiaDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Convierte una entidad Noticia a su DTO correspondiente.
+	 */
 	private NoticiaDTO toDto(Noticia comentario) {
 		NoticiaDTO dto = mapper.map(comentario, NoticiaDTO.class);
 		if (comentario.getUsuarioEditor() != null) {

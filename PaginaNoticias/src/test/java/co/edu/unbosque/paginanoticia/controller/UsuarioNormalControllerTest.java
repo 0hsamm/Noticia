@@ -16,11 +16,19 @@ import co.edu.unbosque.paginanoticia.dto.UsuarioNormalDTO;
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 import co.edu.unbosque.paginanoticia.service.UsuarioNormalService;
 
+/**
+ * Clase de prueba para el controlador de usuarios normales.
+ * Permite validar la creación, actualización, eliminación y consulta de usuarios normales,
+ * verificando las respuestas del controlador según los diferentes casos de uso.
+ */
 class UsuarioNormalControllerTest {
 
 	private UsuarioNormalController controller;
 	private UsuarioNormalService service;
 
+	/**
+	 * Configuración inicial de los mocks y del controlador antes de cada prueba.
+	 */
 	@BeforeEach
 	void setUp() {
 
@@ -44,6 +52,9 @@ class UsuarioNormalControllerTest {
 		}
 	}
 
+	/**
+	 * Prueba que valida la creación correcta de un usuario normal.
+	 */
 	@Test
 	void testCrearUsuarioCorrectamente() {
 
@@ -59,6 +70,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("Usuario normal creado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la creación de un usuario normal con nombre vacío.
+	 */
 	@Test
 	void testCrearUsuarioNombreVacio() {
 
@@ -74,6 +88,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("El nombre no puede estar vacio", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la creación de un usuario normal con contraseña inválida.
+	 */
 	@Test
 	void testCrearUsuarioContrasenaInvalida() {
 
@@ -89,6 +106,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("La contrasena no cumple con los requisitos", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la obtención de usuarios normales cuando hay datos.
+	 */
 	@Test
 	void testObtenerTodoConDatos() {
 
@@ -111,6 +131,9 @@ class UsuarioNormalControllerTest {
 		assertEquals(1, response.getBody().size());
 	}
 
+	/**
+	 * Prueba que valida la obtención de usuarios normales cuando no hay datos.
+	 */
 	@Test
 	void testObtenerTodoVacio() {
 
@@ -122,6 +145,9 @@ class UsuarioNormalControllerTest {
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 	}
 
+	/**
+	 * Prueba que valida la actualización correcta de un usuario normal.
+	 */
 	@Test
 	void testActualizarUsuarioCorrectamente() {
 
@@ -139,6 +165,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("Usuario normal actualizado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida el caso en el que el usuario no existe.
+	 */
 	@Test
 	void testActualizarUsuarioNoExiste() {
 
@@ -156,6 +185,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("El usuario no existe", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida la eliminación correcta de un usuario normal.
+	 */
 	@Test
 	void testEliminarUsuarioCorrectamente() {
 
@@ -167,6 +199,9 @@ class UsuarioNormalControllerTest {
 		assertEquals("Usuario normal eliminado correctamente", response.getBody());
 	}
 
+	/**
+	 * Prueba que valida el caso en el que no se tienen permisos para eliminar el usuario.
+	 */
 	@Test
 	void testEliminarUsuarioSinPermisos() {
 

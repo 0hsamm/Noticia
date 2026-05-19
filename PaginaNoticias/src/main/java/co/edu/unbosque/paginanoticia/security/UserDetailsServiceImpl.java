@@ -11,6 +11,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio encargado de la carga de usuarios para el sistema de autenticación.
+ * Busca el usuario en los diferentes repositorios según su tipo y lo retorna
+ * como un objeto UserDetails para el proceso de autenticación de Spring Security.
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -19,6 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private final UsuarioComentaristaRepository usuarioComentaristaRepository;
 	private final UsuarioNormalRepository usuarioNormalRepository;
 
+	/**
+	 * Constructor que inyecta los repositorios de los diferentes tipos de usuario.
+	 */
 	public UserDetailsServiceImpl(
 			UsuarioAdministradorRepository usuarioAdministradorRepository,
 			UsuarioEditorRepository usuarioEditorRepository,

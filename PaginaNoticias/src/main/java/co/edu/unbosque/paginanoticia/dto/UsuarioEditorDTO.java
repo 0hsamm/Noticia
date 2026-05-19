@@ -4,13 +4,24 @@ import java.util.Objects;
 
 import co.edu.unbosque.paginanoticia.enums.TipoUsuario;
 
-public class UsuarioEditorDTO extends UsuarioDTO{
+/**
+ * Clase DTO que representa la información de un usuario editor.
+ * Extiende de UsuarioDTO y añade el identificador único del editor.
+ */
+public class UsuarioEditorDTO extends UsuarioDTO {
+
 	private Long id;
-	
+
 	public UsuarioEditorDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Constructor que inicializa los datos básicos del usuario editor.
+	 *
+	 * @param nombre nombre del usuario
+	 * @param contrasena contraseña del usuario
+	 * @param tipoUsuario tipo de usuario editor
+	 */
 	public UsuarioEditorDTO(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
 	}
@@ -25,18 +36,13 @@ public class UsuarioEditorDTO extends UsuarioDTO{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(id);
-		return result;
+		return Objects.hash(super.hashCode(), id);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
 		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
@@ -49,7 +55,4 @@ public class UsuarioEditorDTO extends UsuarioDTO{
 	public String toString() {
 		return "UsuarioEditorDTO [id=" + id + "]";
 	}
-	
-	
-
 }

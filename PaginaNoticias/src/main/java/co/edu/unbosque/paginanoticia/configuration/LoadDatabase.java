@@ -16,11 +16,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Clase de configuración encargada de precargar datos en la base de datos.
+ * Inicializa usuarios por defecto si no existen registros previos.
+ */
 @Configuration
 public class LoadDatabase {
 
 	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
+	/**
+	 * Ejecuta la carga inicial de datos cuando la aplicación inicia.
+	 *
+	 * @param usuarioAdministradorRepository repositorio de usuarios administradores
+	 * @param usuarioEditorRepository repositorio de usuarios editores
+	 * @param usuarioComentaristaRepository repositorio de usuarios comentaristas
+	 * @param usuarioNormalRepository repositorio de usuarios normales
+	 * @param passwordEncoder codificador de contraseñas
+	 * @return proceso de inicialización de la base de datos
+	 */
 	@Bean
 	CommandLineRunner initDatabase(
 			UsuarioAdministradorRepository usuarioAdministradorRepository,
@@ -36,11 +50,13 @@ public class LoadDatabase {
 					usuarioEditorRepository,
 					usuarioComentaristaRepository,
 					usuarioNormalRepository)) {
+
 				UsuarioAdministrador admin =
 						new UsuarioAdministrador(
 								"admin",
 								passwordEncoder.encode("1234567890"),
 								TipoUsuario.ADMIN);
+
 				usuarioAdministradorRepository.save(admin);
 				log.info("Precargando usuario administrador");
 			}
@@ -51,11 +67,13 @@ public class LoadDatabase {
 					usuarioEditorRepository,
 					usuarioComentaristaRepository,
 					usuarioNormalRepository)) {
+
 				UsuarioEditor editor =
 						new UsuarioEditor(
 								"editor",
 								passwordEncoder.encode("1234567890"),
 								TipoUsuario.EDITOR);
+
 				usuarioEditorRepository.save(editor);
 				log.info("Precargando usuario editor");
 			}
@@ -66,11 +84,13 @@ public class LoadDatabase {
 					usuarioEditorRepository,
 					usuarioComentaristaRepository,
 					usuarioNormalRepository)) {
+
 				UsuarioComentarista comentarista =
 						new UsuarioComentarista(
 								"comentarista",
 								passwordEncoder.encode("1234567890"),
 								TipoUsuario.COMENTARISTA);
+
 				usuarioComentaristaRepository.save(comentarista);
 				log.info("Precargando usuario comentarista");
 			}
@@ -81,23 +101,36 @@ public class LoadDatabase {
 					usuarioEditorRepository,
 					usuarioComentaristaRepository,
 					usuarioNormalRepository)) {
+
 				UsuarioNormal usuarioNormal =
 						new UsuarioNormal(
 								"normaluser",
 								passwordEncoder.encode("1234567890"),
 								TipoUsuario.USUARIO);
+
 				usuarioNormalRepository.save(usuarioNormal);
 				log.info("Precargando usuario normal");
 			}
 		};
 	}
 
+	/**
+	 * Verifica si existe algún usuario con el nombre indicado en cualquiera de los repositorios.
+	 *
+	 * @param nombre nombre de usuario a buscar
+	 * @param usuarioAdministradorRepository repositorio de administradores
+	 * @param usuarioEditorRepository repositorio de editores
+	 * @param usuarioComentaristaRepository repositorio de comentaristas
+	 * @param usuarioNormalRepository repositorio de usuarios normales
+	 * @return true si el usuario ya existe en algún repositorio, false en caso contrario
+	 */
 	private boolean existsAnyUserWithName(
 			String nombre,
 			UsuarioAdministradorRepository usuarioAdministradorRepository,
 			UsuarioEditorRepository usuarioEditorRepository,
 			UsuarioComentaristaRepository usuarioComentaristaRepository,
 			UsuarioNormalRepository usuarioNormalRepository) {
+
 		return usuarioAdministradorRepository.findByNombre(nombre).isPresent()
 				|| usuarioEditorRepository.findByNombre(nombre).isPresent()
 				|| usuarioComentaristaRepository.findByNombre(nombre).isPresent()

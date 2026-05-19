@@ -9,32 +9,49 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa un usuario administrador dentro del sistema.
+ * Hereda de Usuario y contiene la información específica del administrador.
+ */
 @Entity
 @Table(name = "usuarioadministrador")
-public class UsuarioAdministrador extends Usuario{
+public class UsuarioAdministrador extends Usuario {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
-	
+
+	/**
+	 * Constructor vacío de la clase UsuarioAdministrador.
+	 */
 	public UsuarioAdministrador() {
-		// TODO Auto-generated constructor stub
+		// Constructor vacío requerido por JPA
 	}
 
+	/**
+	 * Constructor que permite crear un usuario administrador con sus datos básicos.
+	 *
+	 * @param nombre nombre del administrador
+	 * @param contrasena contraseña del administrador
+	 * @param tipoUsuario tipo de usuario asignado
+	 */
 	public UsuarioAdministrador(String nombre, String contrasena, TipoUsuario tipoUsuario) {
 		super(nombre, contrasena, tipoUsuario);
-	
 	}
 
-	
-	
+	/**
+	 * Retorna el identificador del usuario administrador.
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Establece el identificador del usuario administrador.
+	 *
+	 * @param id nuevo identificador
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -62,12 +79,4 @@ public class UsuarioAdministrador extends Usuario{
 	public String toString() {
 		return "UsuarioAdministrador [id=" + id + "]";
 	}
-	
-	
-
-	
-	
-	
-	
-	
 }

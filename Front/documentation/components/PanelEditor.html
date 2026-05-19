@@ -1,0 +1,2520 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">front documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PanelEditor</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/panel-editor/panel-editor.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente encargado de gestionar las noticias
+y los horóscopos creados por un editor.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-panel-editor</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./panel-editor.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./panel-editor.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#formularioHoroscopo" >formularioHoroscopo</a>
+                            </li>
+                            <li>
+                                <a href="#formularioNoticia" >formularioNoticia</a>
+                            </li>
+                            <li>
+                                <a href="#horoscopos" >horoscopos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#horoscopoService" >horoscopoService</a>
+                            </li>
+                            <li>
+                                <a href="#nombreSesion" >nombreSesion</a>
+                            </li>
+                            <li>
+                                <a href="#noticias" >noticias</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#noticiaService" >noticiaService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tiposHoroscopo" >tiposHoroscopo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#toastr" >toastr</a>
+                            </li>
+                            <li>
+                                <a href="#vistaActual" >vistaActual</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cambiarVista" >cambiarVista</a>
+                            </li>
+                            <li>
+                                <a href="#cancelarEdicionHoroscopo" >cancelarEdicionHoroscopo</a>
+                            </li>
+                            <li>
+                                <a href="#cancelarEdicionNoticia" >cancelarEdicionNoticia</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarHoroscopos" >cargarHoroscopos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarNoticias" >cargarNoticias</a>
+                            </li>
+                            <li>
+                                <a href="#cerrarSesion" >cerrarSesion</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#crearFormularioHoroscopo" >crearFormularioHoroscopo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#crearFormularioNoticia" >crearFormularioNoticia</a>
+                            </li>
+                            <li>
+                                <a href="#editarHoroscopo" >editarHoroscopo</a>
+                            </li>
+                            <li>
+                                <a href="#editarNoticia" >editarNoticia</a>
+                            </li>
+                            <li>
+                                <a href="#eliminarHoroscopo" >eliminarHoroscopo</a>
+                            </li>
+                            <li>
+                                <a href="#eliminarNoticia" >eliminarNoticia</a>
+                            </li>
+                            <li>
+                                <a href="#guardarHoroscopo" >guardarHoroscopo</a>
+                            </li>
+                            <li>
+                                <a href="#guardarNoticia" >guardarNoticia</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#obtenerMensajeError" >obtenerMensajeError</a>
+                            </li>
+                            <li>
+                                <a href="#refrescarPanel" >refrescarPanel</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addCerrarSesion" >addCerrarSesion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#noticiasPropias" >noticiasPropias</a>
+                                </li>
+                                <li>
+                                    <a href="#horoscoposPropios" >horoscoposPropios</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addCerrarSesion"></a>
+                        <b>addCerrarSesion</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/panel-editor/panel-editor.ts:26</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Evento emitido al cerrar sesión.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cambiarVista"></a>
+                    <span class="name">
+                        <span ><b>cambiarVista</b></span>
+                        <a href="#cambiarVista"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cambiarVista(vista: "NOTICIAS" | "HOROSCOPOS")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cambia la vista activa del panel.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>vista</td>
+                                            <td>
+                                                        <code>&quot;NOTICIAS&quot; | &quot;HOROSCOPOS&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Vista seleccionada.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelarEdicionHoroscopo"></a>
+                    <span class="name">
+                        <span ><b>cancelarEdicionHoroscopo</b></span>
+                        <a href="#cancelarEdicionHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelarEdicionHoroscopo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="353"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:353</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Restablece el formulario de horóscopos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelarEdicionNoticia"></a>
+                    <span class="name">
+                        <span ><b>cancelarEdicionNoticia</b></span>
+                        <a href="#cancelarEdicionNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelarEdicionNoticia()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="346"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:346</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Restablece el formulario de noticias.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarHoroscopos"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarHoroscopos</b></span>
+                        <a href="#cargarHoroscopos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarHoroscopos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="390"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:390</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene todos los horóscopos desde el servicio.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarNoticias"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarNoticias</b></span>
+                        <a href="#cargarNoticias"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarNoticias()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="373"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:373</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene todas las noticias desde el servicio.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cerrarSesion"></a>
+                    <span class="name">
+                        <span ><b>cerrarSesion</b></span>
+                        <a href="#cerrarSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cerrarSesion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="360"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:360</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cierra la sesión actual del usuario.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="crearFormularioHoroscopo"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>crearFormularioHoroscopo</b></span>
+                        <a href="#crearFormularioHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>crearFormularioHoroscopo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="420"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:420</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera un formulario vacío para horóscopos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="crearFormularioNoticia"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>crearFormularioNoticia</b></span>
+                        <a href="#crearFormularioNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>crearFormularioNoticia()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="407"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:407</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera un formulario vacío para noticias.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Noticia.html" target="_self" >Noticia</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarHoroscopo"></a>
+                    <span class="name">
+                        <span ><b>editarHoroscopo</b></span>
+                        <a href="#editarHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarHoroscopo(horoscopo: <a href="../interfaces/Horoscopo.html" target="_self">Horoscopo</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="270"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:270</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga un horóscopo en el formulario para edición.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>horoscopo</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Horóscopo seleccionado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarNoticia"></a>
+                    <span class="name">
+                        <span ><b>editarNoticia</b></span>
+                        <a href="#editarNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarNoticia(noticia: <a href="../interfaces/Noticia.html" target="_self">Noticia</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="258"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:258</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga una noticia en el formulario para edición.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>noticia</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Noticia.html" target="_self" >Noticia</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Noticia seleccionada.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarHoroscopo"></a>
+                    <span class="name">
+                        <span ><b>eliminarHoroscopo</b></span>
+                        <a href="#eliminarHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarHoroscopo(horoscopo: <a href="../interfaces/Horoscopo.html" target="_self">Horoscopo</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="315"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un horóscopo registrado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>horoscopo</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Horóscopo seleccionado.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarNoticia"></a>
+                    <span class="name">
+                        <span ><b>eliminarNoticia</b></span>
+                        <a href="#eliminarNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarNoticia(noticia: <a href="../interfaces/Noticia.html" target="_self">Noticia</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="282"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:282</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Elimina una noticia registrada.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>noticia</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Noticia.html" target="_self" >Noticia</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Noticia seleccionada.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarHoroscopo"></a>
+                    <span class="name">
+                        <span ><b>guardarHoroscopo</b></span>
+                        <a href="#guardarHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>guardarHoroscopo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:197</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Guarda o actualiza un horóscopo.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarNoticia"></a>
+                    <span class="name">
+                        <span ><b>guardarNoticia</b></span>
+                        <a href="#guardarNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>guardarNoticia()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Guarda o actualiza una noticia.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="87"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Método ejecutado al inicializar el componente.
+Carga noticias y horóscopos disponibles.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="obtenerMensajeError"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>obtenerMensajeError</b></span>
+                        <a href="#obtenerMensajeError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>obtenerMensajeError(error: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="436"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:436</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene un mensaje de error legible.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>error</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Objeto de error recibido.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Mensaje de error procesado.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refrescarPanel"></a>
+                    <span class="name">
+                        <span ><b>refrescarPanel</b></span>
+                        <a href="#refrescarPanel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refrescarPanel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/panel-editor/panel-editor.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Recarga noticias y horóscopos.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/panel-editor/panel-editor.ts:41</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Servicio encargado de autenticación y sesión.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formularioHoroscopo"></a>
+                    <span class="name">
+                        <span ><b>formularioHoroscopo</b></span>
+                        <a href="#formularioHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.crearFormularioHoroscopo()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/panel-editor/panel-editor.ts:76</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulario utilizado para crear o editar horóscopos.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formularioNoticia"></a>
+                    <span class="name">
+                        <span ><b>formularioNoticia</b></span>
+                        <a href="#formularioNoticia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Noticia.html" target="_self" >Noticia</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.crearFormularioNoticia()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/panel-editor/panel-editor.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formulario utilizado para crear o editar noticias.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="horoscopos"></a>
+                    <span class="name">
+                        <span ><b>horoscopos</b></span>
+                        <a href="#horoscopos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/panel-editor/panel-editor.ts:56</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de horóscopos registrados.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="horoscopoService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>horoscopoService</b></span>
+                        <a href="#horoscopoService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(HoroscopoService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/panel-editor/panel-editor.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Servicio para operaciones relacionadas con horóscopos.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nombreSesion"></a>
+                    <span class="name">
+                        <span ><b>nombreSesion</b></span>
+                        <a href="#nombreSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.authService.obtenerNombreActual() ?? &#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/panel-editor/panel-editor.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nombre del usuario autenticado actualmente.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="noticias"></a>
+                    <span class="name">
+                        <span ><b>noticias</b></span>
+                        <a href="#noticias"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Noticia.html" target="_self" >Noticia[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/panel-editor/panel-editor.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de noticias registradas.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="noticiaService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>noticiaService</b></span>
+                        <a href="#noticiaService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(NoticiaService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/panel-editor/panel-editor.ts:31</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Servicio para operaciones relacionadas con noticias.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tiposHoroscopo"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tiposHoroscopo</b></span>
+                        <a href="#tiposHoroscopo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Object.values(TipoHoroscopo)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/panel-editor/panel-editor.ts:81</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de signos zodiacales disponibles.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toastr"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>toastr</b></span>
+                        <a href="#toastr"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ToastrService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/panel-editor/panel-editor.ts:46</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Servicio utilizado para mostrar notificaciones emergentes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="vistaActual"></a>
+                    <span class="name">
+                        <span ><b>vistaActual</b></span>
+                        <a href="#vistaActual"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;NOTICIAS&quot; | &quot;HOROSCOPOS&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;NOTICIAS&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/panel-editor/panel-editor.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Vista activa del panel.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="noticiasPropias"></a>
+                        <span class="name"><b>noticiasPropias</b><a href="#noticiasPropias"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>noticiasPropias()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">src/app/panel-editor/panel-editor.ts:96</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Obtiene únicamente las noticias
+creadas por el editor actual.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../interfaces/Noticia.html" target="_self" >Noticia[]</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="horoscoposPropios"></a>
+                        <span class="name"><b>horoscoposPropios</b><a href="#horoscoposPropios"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>horoscoposPropios()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/panel-editor/panel-editor.ts:107</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Obtiene únicamente los horóscopos
+creados por el editor actual.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../interfaces/Horoscopo.html" target="_self" >Horoscopo[]</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, OnInit, Output, inject } from &#x27;@angular/core&#x27;;
+import { ToastrService } from &#x27;ngx-toastr&#x27;;
+import { TipoHoroscopo } from &#x27;../enums/tipo-horoscopo.enum&#x27;;
+import { TipoPublicacion } from &#x27;../enums/tipo-publicacion.enum&#x27;;
+import { Horoscopo } from &#x27;../models/horoscopo.model&#x27;;
+import { Noticia } from &#x27;../models/noticia.model&#x27;;
+import { AuthService } from &#x27;../services/auth.service&#x27;;
+import { HoroscopoService } from &#x27;../services/horoscopo.service&#x27;;
+import { NoticiaService } from &#x27;../services/noticia.service&#x27;;
+
+/**
+ * Componente encargado de gestionar las noticias
+ * y los horóscopos creados por un editor.
+ */
+@Component({
+  selector: &#x27;app-panel-editor&#x27;,
+  standalone: false,
+  templateUrl: &#x27;./panel-editor.html&#x27;,
+  styleUrl: &#x27;./panel-editor.css&#x27;,
+})
+export class PanelEditor implements OnInit {
+
+  /**
+   * Evento emitido al cerrar sesión.
+   */
+  @Output() addCerrarSesion &#x3D; new EventEmitter&lt;void&gt;();
+
+  /**
+   * Servicio para operaciones relacionadas con noticias.
+   */
+  private readonly noticiaService &#x3D; inject(NoticiaService);
+
+  /**
+   * Servicio para operaciones relacionadas con horóscopos.
+   */
+  private readonly horoscopoService &#x3D; inject(HoroscopoService);
+
+  /**
+   * Servicio encargado de autenticación y sesión.
+   */
+  private readonly authService &#x3D; inject(AuthService);
+
+  /**
+   * Servicio utilizado para mostrar notificaciones emergentes.
+   */
+  private readonly toastr &#x3D; inject(ToastrService);
+
+  /**
+   * Lista de noticias registradas.
+   */
+  noticias: Noticia[] &#x3D; [];
+
+  /**
+   * Lista de horóscopos registrados.
+   */
+  horoscopos: Horoscopo[] &#x3D; [];
+
+  /**
+   * Vista activa del panel.
+   */
+  vistaActual: &#x27;NOTICIAS&#x27; | &#x27;HOROSCOPOS&#x27; &#x3D; &#x27;NOTICIAS&#x27;;
+
+  /**
+   * Nombre del usuario autenticado actualmente.
+   */
+  nombreSesion &#x3D; this.authService.obtenerNombreActual() ?? &#x27;&#x27;;
+
+  /**
+   * Formulario utilizado para crear o editar noticias.
+   */
+  formularioNoticia: Noticia &#x3D; this.crearFormularioNoticia();
+
+  /**
+   * Formulario utilizado para crear o editar horóscopos.
+   */
+  formularioHoroscopo: Horoscopo &#x3D; this.crearFormularioHoroscopo();
+
+  /**
+   * Lista de signos zodiacales disponibles.
+   */
+  protected readonly tiposHoroscopo &#x3D; Object.values(TipoHoroscopo);
+
+  /**
+   * Método ejecutado al inicializar el componente.
+   * Carga noticias y horóscopos disponibles.
+   */
+  ngOnInit(): void {
+    this.cargarNoticias();
+    this.cargarHoroscopos();
+  }
+
+  /**
+   * Obtiene únicamente las noticias
+   * creadas por el editor actual.
+   */
+  get noticiasPropias(): Noticia[] {
+
+    return this.noticias.filter(
+      (noticia) &#x3D;&gt; noticia.usuarioEditor &#x3D;&#x3D;&#x3D; this.nombreSesion,
+    );
+  }
+
+  /**
+   * Obtiene únicamente los horóscopos
+   * creados por el editor actual.
+   */
+  get horoscoposPropios(): Horoscopo[] {
+
+    return this.horoscopos.filter(
+      (horoscopo) &#x3D;&gt; horoscopo.usuarioEditor &#x3D;&#x3D;&#x3D; this.nombreSesion,
+    );
+  }
+
+  /**
+   * Cambia la vista activa del panel.
+   *
+   * @param vista Vista seleccionada.
+   */
+  cambiarVista(vista: &#x27;NOTICIAS&#x27; | &#x27;HOROSCOPOS&#x27;): void {
+    this.vistaActual &#x3D; vista;
+  }
+
+  /**
+   * Recarga noticias y horóscopos.
+   */
+  refrescarPanel(): void {
+    this.cargarNoticias();
+    this.cargarHoroscopos();
+  }
+
+  /**
+   * Guarda o actualiza una noticia.
+   */
+  guardarNoticia(): void {
+
+    /**
+     * Validación de campos obligatorios.
+     */
+    if (
+      !this.formularioNoticia.titulo.trim()
+      || !this.formularioNoticia.contenido.trim()
+    ) {
+
+      this.toastr.warning(
+        &#x27;Debes completar titulo y contenido.&#x27;,
+        &#x27;Campos requeridos&#x27;,
+      );
+
+      return;
+    }
+
+    /**
+     * Construcción del objeto final de la noticia.
+     */
+    const payload: Noticia &#x3D; {
+      ...this.formularioNoticia,
+      titulo: this.formularioNoticia.titulo.trim(),
+      contenido: this.formularioNoticia.contenido.trim(),
+      tipoPublicacion: TipoPublicacion.NOTICIA,
+      usuarioEditor: this.nombreSesion,
+    };
+
+    /**
+     * Determina si se crea o actualiza la noticia.
+     */
+    const peticion &#x3D; payload.id
+      ? this.noticiaService.updateById(payload.id, payload)
+      : this.noticiaService.create(payload);
+
+    /**
+     * Ejecución de la petición.
+     */
+    peticion.subscribe({
+
+      next: (mensaje) &#x3D;&gt; {
+
+        this.toastr.success(mensaje, &#x27;Noticia guardada&#x27;);
+
+        this.formularioNoticia &#x3D; this.crearFormularioNoticia();
+
+        this.cargarNoticias();
+      },
+
+      error: (error) &#x3D;&gt; {
+
+        this.toastr.error(
+          this.obtenerMensajeError(error),
+          &#x27;No fue posible guardar la noticia&#x27;,
+        );
+      },
+    });
+  }
+
+  /**
+   * Guarda o actualiza un horóscopo.
+   */
+  guardarHoroscopo(): void {
+
+    /**
+     * Validación del contenido del horóscopo.
+     */
+    if (!this.formularioHoroscopo.contenido.trim()) {
+
+      this.toastr.warning(
+        &#x27;Debes escribir el contenido del horoscopo.&#x27;,
+        &#x27;Campos requeridos&#x27;,
+      );
+
+      return;
+    }
+
+    /**
+     * Construcción del objeto final del horóscopo.
+     */
+    const payload: Horoscopo &#x3D; {
+      ...this.formularioHoroscopo,
+      contenido: this.formularioHoroscopo.contenido.trim(),
+      tipoPublicacion: TipoPublicacion.HOROSCOPO,
+      usuarioEditor: this.nombreSesion,
+    };
+
+    /**
+     * Determina si se crea o actualiza el horóscopo.
+     */
+    const peticion &#x3D; payload.id
+      ? this.horoscopoService.updateById(payload.id, payload)
+      : this.horoscopoService.create(payload);
+
+    /**
+     * Ejecución de la petición.
+     */
+    peticion.subscribe({
+
+      next: (mensaje) &#x3D;&gt; {
+
+        this.toastr.success(mensaje, &#x27;Horoscopo guardado&#x27;);
+
+        this.formularioHoroscopo &#x3D; this.crearFormularioHoroscopo();
+
+        this.cargarHoroscopos();
+      },
+
+      error: (error) &#x3D;&gt; {
+
+        this.toastr.error(
+          this.obtenerMensajeError(error),
+          &#x27;No fue posible guardar el horoscopo&#x27;,
+        );
+      },
+    });
+  }
+
+  /**
+   * Carga una noticia en el formulario para edición.
+   *
+   * @param noticia Noticia seleccionada.
+   */
+  editarNoticia(noticia: Noticia): void {
+
+    this.formularioNoticia &#x3D; { ...noticia };
+
+    this.vistaActual &#x3D; &#x27;NOTICIAS&#x27;;
+  }
+
+  /**
+   * Carga un horóscopo en el formulario para edición.
+   *
+   * @param horoscopo Horóscopo seleccionado.
+   */
+  editarHoroscopo(horoscopo: Horoscopo): void {
+
+    this.formularioHoroscopo &#x3D; { ...horoscopo };
+
+    this.vistaActual &#x3D; &#x27;HOROSCOPOS&#x27;;
+  }
+
+  /**
+   * Elimina una noticia registrada.
+   *
+   * @param noticia Noticia seleccionada.
+   */
+  eliminarNoticia(noticia: Noticia): void {
+
+    /**
+     * Verifica que exista un identificador válido.
+     */
+    if (!noticia.id) {
+      return;
+    }
+
+    this.noticiaService.deleteById(noticia.id).subscribe({
+
+      next: (mensaje) &#x3D;&gt; {
+
+        this.toastr.success(mensaje, &#x27;Noticia eliminada&#x27;);
+
+        this.cargarNoticias();
+      },
+
+      error: (error) &#x3D;&gt; {
+
+        this.toastr.error(
+          this.obtenerMensajeError(error),
+          &#x27;No fue posible eliminar la noticia&#x27;,
+        );
+      },
+    });
+  }
+
+  /**
+   * Elimina un horóscopo registrado.
+   *
+   * @param horoscopo Horóscopo seleccionado.
+   */
+  eliminarHoroscopo(horoscopo: Horoscopo): void {
+
+    /**
+     * Verifica que exista un identificador válido.
+     */
+    if (!horoscopo.id) {
+      return;
+    }
+
+    this.horoscopoService.deleteById(horoscopo.id).subscribe({
+
+      next: (mensaje) &#x3D;&gt; {
+
+        this.toastr.success(mensaje, &#x27;Horoscopo eliminado&#x27;);
+
+        this.cargarHoroscopos();
+      },
+
+      error: (error) &#x3D;&gt; {
+
+        this.toastr.error(
+          this.obtenerMensajeError(error),
+          &#x27;No fue posible eliminar el horoscopo&#x27;,
+        );
+      },
+    });
+  }
+
+  /**
+   * Restablece el formulario de noticias.
+   */
+  cancelarEdicionNoticia(): void {
+    this.formularioNoticia &#x3D; this.crearFormularioNoticia();
+  }
+
+  /**
+   * Restablece el formulario de horóscopos.
+   */
+  cancelarEdicionHoroscopo(): void {
+    this.formularioHoroscopo &#x3D; this.crearFormularioHoroscopo();
+  }
+
+  /**
+   * Cierra la sesión actual del usuario.
+   */
+  cerrarSesion(): void {
+
+    this.authService.postCerrarSesion().subscribe(() &#x3D;&gt; {
+
+      this.toastr.info(&#x27;Sesion cerrada&#x27;, &#x27;Informacion&#x27;);
+
+      this.addCerrarSesion.emit();
+    });
+  }
+
+  /**
+   * Obtiene todas las noticias desde el servicio.
+   */
+  private cargarNoticias(): void {
+
+    this.noticiaService.getAll().subscribe({
+
+      next: (noticias) &#x3D;&gt; {
+        this.noticias &#x3D; noticias;
+      },
+
+      error: (error) &#x3D;&gt; {
+        this.toastr.error(this.obtenerMensajeError(error), &#x27;Error&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Obtiene todos los horóscopos desde el servicio.
+   */
+  private cargarHoroscopos(): void {
+
+    this.horoscopoService.getAll().subscribe({
+
+      next: (horoscopos) &#x3D;&gt; {
+        this.horoscopos &#x3D; horoscopos;
+      },
+
+      error: (error) &#x3D;&gt; {
+        this.toastr.error(this.obtenerMensajeError(error), &#x27;Error&#x27;);
+      },
+    });
+  }
+
+  /**
+   * Genera un formulario vacío para noticias.
+   */
+  private crearFormularioNoticia(): Noticia {
+
+    return {
+      titulo: &#x27;&#x27;,
+      contenido: &#x27;&#x27;,
+      tipoPublicacion: TipoPublicacion.NOTICIA,
+      usuarioEditor: this.nombreSesion,
+    };
+  }
+
+  /**
+   * Genera un formulario vacío para horóscopos.
+   */
+  private crearFormularioHoroscopo(): Horoscopo {
+
+    return {
+      tipoHoroscopo: TipoHoroscopo.ARIES,
+      contenido: &#x27;&#x27;,
+      tipoPublicacion: TipoPublicacion.HOROSCOPO,
+      usuarioEditor: this.nombreSesion,
+    };
+  }
+
+  /**
+   * Obtiene un mensaje de error legible.
+   *
+   * @param error Objeto de error recibido.
+   * @returns Mensaje de error procesado.
+   */
+  private obtenerMensajeError(error: { error?: unknown }): string {
+
+    if (typeof error?.error &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      return error.error;
+    }
+
+    return &#x27;No fue posible completar la operacion&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;contenedor&quot;&gt;
+  &lt;aside class&#x3D;&quot;menu&quot;&gt;
+    &lt;h1&gt;Panel de editor&lt;/h1&gt;
+    &lt;p class&#x3D;&quot;menu-subtitulo&quot;&gt;Sesion actual: {{ nombreSesion }}&lt;/p&gt;
+
+    &lt;button type&#x3D;&quot;button&quot; [class.activo]&#x3D;&quot;vistaActual &#x3D;&#x3D;&#x3D; &#x27;NOTICIAS&#x27;&quot; (click)&#x3D;&quot;cambiarVista(&#x27;NOTICIAS&#x27;)&quot;&gt;
+      Noticias
+    &lt;/button&gt;
+    &lt;button type&#x3D;&quot;button&quot; [class.activo]&#x3D;&quot;vistaActual &#x3D;&#x3D;&#x3D; &#x27;HOROSCOPOS&#x27;&quot; (click)&#x3D;&quot;cambiarVista(&#x27;HOROSCOPOS&#x27;)&quot;&gt;
+      Horoscopos
+    &lt;/button&gt;
+
+    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-cerrar&quot; (click)&#x3D;&quot;cerrarSesion()&quot;&gt;
+      Cerrar sesion
+    &lt;/button&gt;
+  &lt;/aside&gt;
+
+  &lt;main class&#x3D;&quot;contenido&quot;&gt;
+    @if (vistaActual &#x3D;&#x3D;&#x3D; &#x27;NOTICIAS&#x27;) {
+      &lt;h2&gt;Gestion de noticias&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;bloque&quot;&gt;
+        &lt;p&gt;{{ formularioNoticia.id ? &#x27;Actualizar noticia&#x27; : &#x27;Crear noticia&#x27; }}&lt;/p&gt;
+
+        &lt;input
+          type&#x3D;&quot;text&quot;
+          name&#x3D;&quot;tituloNoticia&quot;
+          [(ngModel)]&#x3D;&quot;formularioNoticia.titulo&quot;
+          placeholder&#x3D;&quot;Titulo de la noticia&quot;&gt;
+
+        &lt;textarea
+          name&#x3D;&quot;contenidoNoticia&quot;
+          [(ngModel)]&#x3D;&quot;formularioNoticia.contenido&quot;
+          rows&#x3D;&quot;5&quot;
+          placeholder&#x3D;&quot;Contenido de la noticia&quot;&gt;
+        &lt;/textarea&gt;
+
+        &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;guardarNoticia()&quot;&gt;
+          {{ formularioNoticia.id ? &#x27;Actualizar&#x27; : &#x27;Crear&#x27; }}
+        &lt;/button&gt;
+
+        @if (formularioNoticia.id) {
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-secundario&quot; (click)&#x3D;&quot;cancelarEdicionNoticia()&quot;&gt;
+            Cancelar
+          &lt;/button&gt;
+        }
+
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-secundario&quot; (click)&#x3D;&quot;refrescarPanel()&quot;&gt;
+          Refrescar
+        &lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;bloque&quot;&gt;
+        &lt;p&gt;Mis noticias&lt;/p&gt;
+
+        @if (noticiasPropias.length &gt; 0) {
+          &lt;table&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Titulo&lt;/th&gt;
+                &lt;th&gt;Contenido&lt;/th&gt;
+                &lt;th&gt;Acciones&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+              @for (noticia of noticiasPropias; track noticia.id ?? noticia.titulo) {
+                &lt;tr&gt;
+                  &lt;td&gt;{{ noticia.id }}&lt;/td&gt;
+                  &lt;td&gt;{{ noticia.titulo }}&lt;/td&gt;
+                  &lt;td&gt;{{ noticia.contenido }}&lt;/td&gt;
+                  &lt;td&gt;
+                    &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;editarNoticia(noticia)&quot;&gt;Editar&lt;/button&gt;
+                    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-peligro&quot; (click)&#x3D;&quot;eliminarNoticia(noticia)&quot;&gt;Eliminar&lt;/button&gt;
+                  &lt;/td&gt;
+                &lt;/tr&gt;
+              }
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        } @else {
+          &lt;p class&#x3D;&quot;estado-vacio&quot;&gt;Aun no has creado noticias.&lt;/p&gt;
+        }
+      &lt;/div&gt;
+    } @else {
+      &lt;h2&gt;Gestion de horoscopos&lt;/h2&gt;
+
+      &lt;div class&#x3D;&quot;bloque&quot;&gt;
+        &lt;p&gt;{{ formularioHoroscopo.id ? &#x27;Actualizar horoscopo&#x27; : &#x27;Crear horoscopo&#x27; }}&lt;/p&gt;
+
+        &lt;select
+          name&#x3D;&quot;tipoHoroscopo&quot;
+          [(ngModel)]&#x3D;&quot;formularioHoroscopo.tipoHoroscopo&quot;&gt;
+          @for (signo of tiposHoroscopo; track signo) {
+            &lt;option [ngValue]&#x3D;&quot;signo&quot;&gt;{{ signo }}&lt;/option&gt;
+          }
+        &lt;/select&gt;
+
+        &lt;textarea
+          name&#x3D;&quot;contenidoHoroscopo&quot;
+          [(ngModel)]&#x3D;&quot;formularioHoroscopo.contenido&quot;
+          rows&#x3D;&quot;5&quot;
+          placeholder&#x3D;&quot;Contenido del horoscopo&quot;&gt;
+        &lt;/textarea&gt;
+
+        &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;guardarHoroscopo()&quot;&gt;
+          {{ formularioHoroscopo.id ? &#x27;Actualizar&#x27; : &#x27;Crear&#x27; }}
+        &lt;/button&gt;
+
+        @if (formularioHoroscopo.id) {
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-secundario&quot; (click)&#x3D;&quot;cancelarEdicionHoroscopo()&quot;&gt;
+            Cancelar
+          &lt;/button&gt;
+        }
+
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-secundario&quot; (click)&#x3D;&quot;refrescarPanel()&quot;&gt;
+          Refrescar
+        &lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;bloque&quot;&gt;
+        &lt;p&gt;Mis horoscopos&lt;/p&gt;
+
+        @if (horoscoposPropios.length &gt; 0) {
+          &lt;table&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Signo&lt;/th&gt;
+                &lt;th&gt;Contenido&lt;/th&gt;
+                &lt;th&gt;Acciones&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+              @for (horoscopo of horoscoposPropios; track horoscopo.id ?? horoscopo.tipoHoroscopo) {
+                &lt;tr&gt;
+                  &lt;td&gt;{{ horoscopo.id }}&lt;/td&gt;
+                  &lt;td&gt;{{ horoscopo.tipoHoroscopo }}&lt;/td&gt;
+                  &lt;td&gt;{{ horoscopo.contenido }}&lt;/td&gt;
+                  &lt;td&gt;
+                    &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;editarHoroscopo(horoscopo)&quot;&gt;Editar&lt;/button&gt;
+                    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn-peligro&quot; (click)&#x3D;&quot;eliminarHoroscopo(horoscopo)&quot;&gt;Eliminar&lt;/button&gt;
+                  &lt;/td&gt;
+                &lt;/tr&gt;
+              }
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        } @else {
+          &lt;p class&#x3D;&quot;estado-vacio&quot;&gt;Aun no has creado horoscopos.&lt;/p&gt;
+        }
+      &lt;/div&gt;
+    }
+  &lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="contenedor">  <aside class="menu">    <h1>Panel de editor</h1>    <p class="menu-subtitulo">Sesion actual: {{ nombreSesion }}</p>    <button type="button" [class.activo]="vistaActual === \'NOTICIAS\'" (click)="cambiarVista(\'NOTICIAS\')">      Noticias    </button>    <button type="button" [class.activo]="vistaActual === \'HOROSCOPOS\'" (click)="cambiarVista(\'HOROSCOPOS\')">      Horoscopos    </button>    <button type="button" class="btn-cerrar" (click)="cerrarSesion()">      Cerrar sesion    </button>  </aside>  <main class="contenido">    @if (vistaActual === \'NOTICIAS\') {      <h2>Gestion de noticias</h2>      <div class="bloque">        <p>{{ formularioNoticia.id ? \'Actualizar noticia\' : \'Crear noticia\' }}</p>        <input          type="text"          name="tituloNoticia"          [(ngModel)]="formularioNoticia.titulo"          placeholder="Titulo de la noticia">        <textarea          name="contenidoNoticia"          [(ngModel)]="formularioNoticia.contenido"          rows="5"          placeholder="Contenido de la noticia">        </textarea>        <button type="button" (click)="guardarNoticia()">          {{ formularioNoticia.id ? \'Actualizar\' : \'Crear\' }}        </button>        @if (formularioNoticia.id) {          <button type="button" class="btn-secundario" (click)="cancelarEdicionNoticia()">            Cancelar          </button>        }        <button type="button" class="btn-secundario" (click)="refrescarPanel()">          Refrescar        </button>      </div>      <div class="bloque">        <p>Mis noticias</p>        @if (noticiasPropias.length > 0) {          <table>            <thead>              <tr>                <th>ID</th>                <th>Titulo</th>                <th>Contenido</th>                <th>Acciones</th>              </tr>            </thead>            <tbody>              @for (noticia of noticiasPropias; track noticia.id ?? noticia.titulo) {                <tr>                  <td>{{ noticia.id }}</td>                  <td>{{ noticia.titulo }}</td>                  <td>{{ noticia.contenido }}</td>                  <td>                    <button type="button" (click)="editarNoticia(noticia)">Editar</button>                    <button type="button" class="btn-peligro" (click)="eliminarNoticia(noticia)">Eliminar</button>                  </td>                </tr>              }            </tbody>          </table>        } @else {          <p class="estado-vacio">Aun no has creado noticias.</p>        }      </div>    } @else {      <h2>Gestion de horoscopos</h2>      <div class="bloque">        <p>{{ formularioHoroscopo.id ? \'Actualizar horoscopo\' : \'Crear horoscopo\' }}</p>        <select          name="tipoHoroscopo"          [(ngModel)]="formularioHoroscopo.tipoHoroscopo">          @for (signo of tiposHoroscopo; track signo) {            <option [ngValue]="signo">{{ signo }}</option>          }        </select>        <textarea          name="contenidoHoroscopo"          [(ngModel)]="formularioHoroscopo.contenido"          rows="5"          placeholder="Contenido del horoscopo">        </textarea>        <button type="button" (click)="guardarHoroscopo()">          {{ formularioHoroscopo.id ? \'Actualizar\' : \'Crear\' }}        </button>        @if (formularioHoroscopo.id) {          <button type="button" class="btn-secundario" (click)="cancelarEdicionHoroscopo()">            Cancelar          </button>        }        <button type="button" class="btn-secundario" (click)="refrescarPanel()">          Refrescar        </button>      </div>      <div class="bloque">        <p>Mis horoscopos</p>        @if (horoscoposPropios.length > 0) {          <table>            <thead>              <tr>                <th>ID</th>                <th>Signo</th>                <th>Contenido</th>                <th>Acciones</th>              </tr>            </thead>            <tbody>              @for (horoscopo of horoscoposPropios; track horoscopo.id ?? horoscopo.tipoHoroscopo) {                <tr>                  <td>{{ horoscopo.id }}</td>                  <td>{{ horoscopo.tipoHoroscopo }}</td>                  <td>{{ horoscopo.contenido }}</td>                  <td>                    <button type="button" (click)="editarHoroscopo(horoscopo)">Editar</button>                    <button type="button" class="btn-peligro" (click)="eliminarHoroscopo(horoscopo)">Eliminar</button>                  </td>                </tr>              }            </tbody>          </table>        } @else {          <p class="estado-vacio">Aun no has creado horoscopos.</p>        }      </div>    }  </main></div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'LoginUsuarios', 'selector': 'app-login-usuarios'},{'name': 'PanelAdmin', 'selector': 'app-panel-admin'},{'name': 'PanelComentarista', 'selector': 'app-panel-comentarista'},{'name': 'PanelEditor', 'selector': 'app-panel-editor'},{'name': 'PanelUsuarioNormal', 'selector': 'app-panel-usuario-normal'},{'name': 'SingInUsuarios', 'selector': 'app-sing-in-usuarios'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PanelEditor'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PanelEditor.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

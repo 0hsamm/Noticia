@@ -25,6 +25,11 @@ import co.edu.unbosque.paginanoticia.enums.TipoPublicacion;
 import co.edu.unbosque.paginanoticia.repository.NoticiaRepository;
 import co.edu.unbosque.paginanoticia.repository.UsuarioEditorRepository;
 
+/**
+ * Clase de prueba para el servicio de noticias.
+ * Permite validar la lógica de creación, actualización, eliminación y consulta
+ * de noticias bajo distintos escenarios de negocio.
+ */
 @ExtendWith(MockitoExtension.class)
 class NoticiaServiceTest {
 
@@ -40,6 +45,9 @@ class NoticiaServiceTest {
     @InjectMocks
     private NoticiaService service;
 
+    /**
+     * Configuración inicial del contexto de seguridad antes de cada prueba.
+     */
     @BeforeEach
     void setup() {
 
@@ -48,6 +56,10 @@ class NoticiaServiceTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
+
+    /**
+     * Prueba que valida el caso en el que el título está vacío.
+     */
     @Test
     void deberiaRetornar1SiTituloEsVacio() {
 
@@ -59,7 +71,10 @@ class NoticiaServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el contenido está vacío.
+     */
     @Test
     void deberiaRetornar1SiContenidoEsVacio() {
 
@@ -71,7 +86,10 @@ class NoticiaServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el tipo de publicación es nulo.
+     */
     @Test
     void deberiaRetornar2SiTipoPublicacionEsNull() {
 
@@ -83,7 +101,10 @@ class NoticiaServiceTest {
 
         assertEquals(2, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el editor no existe.
+     */
     @Test
     void deberiaRetornar3SiEditorNoExiste() {
 
@@ -99,7 +120,10 @@ class NoticiaServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la creación correcta de una noticia.
+     */
     @Test
     void deberiaCrearNoticiaCorrectamente() {
 
@@ -124,7 +148,10 @@ class NoticiaServiceTest {
 
         verify(noticiaRepo).save(any(Noticia.class));
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que la noticia no existe.
+     */
     @Test
     void deberiaRetornar1SiNoticiaNoExiste() {
 
@@ -135,7 +162,10 @@ class NoticiaServiceTest {
 
         assertEquals(1, resultado);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el usuario no es propietario.
+     */
     @Test
     void deberiaRetornar3SiUsuarioNoEsPropietario() {
 
@@ -158,7 +188,10 @@ class NoticiaServiceTest {
 
         assertEquals(3, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la eliminación correcta de una noticia.
+     */
     @Test
     void deberiaEliminarNoticiaCorrectamente() {
 
@@ -180,7 +213,10 @@ class NoticiaServiceTest {
 
         verify(noticiaRepo).delete(noticia);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que la noticia no existe al actualizar.
+     */
     @Test
     void deberiaRetornar4SiNoticiaNoExisteEnUpdate() {
 
@@ -193,7 +229,10 @@ class NoticiaServiceTest {
 
         assertEquals(4, resultado);
     }
-    
+
+    /**
+     * Prueba que valida la actualización correcta de una noticia.
+     */
     @Test
     void deberiaActualizarNoticiaCorrectamente() {
 
@@ -220,7 +259,10 @@ class NoticiaServiceTest {
 
         verify(noticiaRepo).save(noticia);
     }
-    
+
+    /**
+     * Prueba que valida el caso en el que el usuario editor no existe.
+     */
     @Test
     void deberiaRetornarNullSiUsuarioEditorNoExiste() {
 

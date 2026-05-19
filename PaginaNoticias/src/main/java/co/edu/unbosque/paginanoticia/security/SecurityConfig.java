@@ -21,6 +21,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Clase de configuración de seguridad de la aplicación.
+ * Se encarga de definir las reglas de acceso a los endpoints, la autenticación basada en JWT,
+ * la configuración del proveedor de autenticación, el manejo de sesiones y la política de CORS.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -28,12 +33,19 @@ public class SecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthFilter;
 	private final UserDetailsService userDetailsService;
 
+	/**
+	 * Constructor que inyecta el filtro JWT y el servicio de detalles del usuario.
+	 */
 	public SecurityConfig(
 			JwtAuthenticationFilter jwtAuthFilter, UserDetailsService userDetailsService) {
 		this.jwtAuthFilter = jwtAuthFilter;
 		this.userDetailsService = userDetailsService;
 	}
 
+	/**
+	 * Configura la cadena de filtros de seguridad HTTP.
+	 * Define qué rutas son públicas, cuáles requieren autenticación y qué roles pueden acceder a cada recurso.
+	 */
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(Customizer.withDefaults())
@@ -87,6 +99,10 @@ public class SecurityConfig {
 		return http.build();
 	}
 
+	/**
+	 * Configura el proveedor de autenticación basado en base de datos.
+	 * Utiliza un servicio de usuarios y un codificador de contraseñas BCrypt.
+	 */
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
@@ -94,17 +110,27 @@ public class SecurityConfig {
 		return authProvider;
 	}
 
+	/**
+	 * Retorna el administrador de autenticación del sistema.
+	 */
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
 			throws Exception {
 		return config.getAuthenticationManager();
 	}
 
+	/**
+	 * Define el codificador de contraseñas utilizado para el almacenamiento seguro de credenciales.
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	/**
+	 * Configura la política de CORS para permitir la comunicación con el frontend.
+	 * Permite solicitudes desde la aplicación Angular en localhost:4200.
+	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
